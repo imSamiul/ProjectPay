@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import navbarLogo from "../../assets/nav-logo.png";
 import ThemeSwap from "./ThemeSwap";
 
@@ -6,7 +6,7 @@ function Navbar() {
   const navItem = [
     {
       title: "Overview",
-      link: "overview",
+      link: ".",
     },
     {
       title: "Add Clients",
@@ -39,11 +39,17 @@ function Navbar() {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {navItem.map((item, index) => (
-                <Link to={item.link} key={index}>
+                <NavLink
+                  to={item.link}
+                  key={index}
+                  className={({ isActive }) =>
+                    `rounded-md ${isActive && "bg-[#dda15e]/20"}`
+                  }
+                >
                   <li>
                     <p>{item.title}</p>
                   </li>
-                </Link>
+                </NavLink>
               ))}
             </ul>
           </div>
@@ -58,11 +64,17 @@ function Navbar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             {navItem.map((item, index) => (
-              <Link to={item.link} key={index}>
+              <NavLink
+                to={item.link}
+                key={index}
+                className={({ isActive }) =>
+                  `rounded-md ${isActive && "bg-[#dda15e]/20"}`
+                }
+              >
                 <li>
                   <p>{item.title}</p>
                 </li>
-              </Link>
+              </NavLink>
             ))}
           </ul>
         </div>
