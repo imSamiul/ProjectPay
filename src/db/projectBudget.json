@@ -1,0 +1,80 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "Project 1",
+      "budget": 8000,
+      "advance": 500,
+      "payment": [
+        {
+          "id": 1,
+          "amount": 500,
+          "date": "2021-01-01"
+        },
+        {
+          "id": 2,
+          "amount": 500,
+          "date": "2021-01-02"
+        }
+      ],
+      "projectNo": "P001",
+      "client": "Client 1",
+      "startDate": "2021-01-01",
+      "endDate": "2021-01-31",
+      "status": "Active",
+      "description": "Project 1 Description",
+      "team": [
+        {
+          "id": 1,
+          "name": "Team Member 1",
+          "role": "Role 1"
+        },
+        {
+          "id": 2,
+          "name": "Team Member 2",
+          "role": "Role 2"
+        }
+      ],
+      "clientPhone": "1234567890",
+      "clientEmail": "example@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Project 2",
+      "budget": 10000,
+      "advance": 1000,
+      "payment": [
+        {
+          "id": 1,
+          "amount": 1000,
+          "date": "2021-01-01"
+        },
+        {
+          "id": 2,
+          "amount": 1000,
+          "date": "2021-01-02"
+        }
+      ],
+      "projectNo": "P002",
+      "client": "Client 2",
+      "startDate": "2021-01-01",
+      "endDate": "2021-01-31",
+      "status": "Active",
+      "description": "Project 2 Description",
+      "team": [
+        {
+          "id": 1,
+          "name": "Team Member 1",
+          "role": "Role 1"
+        },
+        {
+          "id": 2,
+          "name": "Team Member 2",
+          "role": "Role 2"
+        }
+      ],
+      "clientPhone": "1234567890",
+      "clientEmail": "example2@example.com"
+    }
+  ]
+}

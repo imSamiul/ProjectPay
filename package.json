@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "json-server": "json-server --watch ./src/db/projectBudget.json --port 3001"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-query-devtools": "^5.56.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "6",
@@ -17,6 +20,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@tanstack/eslint-plugin-query": "^5.56.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
