@@ -1,5 +1,3 @@
-import React from "react";
-import { useGetProjectOverview } from "../../services/projectQueries";
 import AllProject from "./AllProject";
 
 function OverView() {

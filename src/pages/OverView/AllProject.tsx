@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetProjectOverview } from "../../services/projectQueries";
 import { ProjectType } from "../../types/projectType";
 

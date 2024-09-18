@@ -3,6 +3,7 @@ import AppLayout from "./components/ui/AppLayout";
 import OverView from "./pages/OverView/OverView";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import AddClient from "./pages/AddClient/AddClient";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,12 +16,16 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: "/payments",
+    path: "/",
     element: <AppLayout />,
     children: [
       {
         index: true,
         element: <OverView />,
+      },
+      {
+        path: "/add-clients",
+        element: <AddClient />,
       },
     ],
   },

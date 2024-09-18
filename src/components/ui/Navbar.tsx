@@ -6,7 +6,7 @@ function Navbar() {
   const navItem = [
     {
       title: "Overview",
-      link: ".",
+      link: "/",
     },
     {
       title: "Add Clients",
