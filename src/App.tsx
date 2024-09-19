@@ -4,6 +4,7 @@ import OverView from "./pages/OverView/OverView";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AddClient from "./pages/AddClient/AddClient";
+import ClientList from "./pages/ClientList/ClientList";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/add-clients",
         element: <AddClient />,
+      },
+      {
+        path: "/client-list",
+        element: <ClientList />,
       },
     ],
   },

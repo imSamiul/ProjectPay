@@ -12,6 +12,10 @@ function Navbar() {
       title: "Add Clients",
       link: "/add-clients",
     },
+    {
+      title: "Client List",
+      link: "/client-list",
+    },
   ];
   return (
     <div>
