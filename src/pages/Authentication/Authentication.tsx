@@ -1,10 +1,14 @@
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 import authenticationPageImage from "../../assets/authentication-page-image.jpg";
 
 function Authentication() {
+  const location = useLocation();
+  const isAtRootAuthPath = location.pathname === "/authentication";
   return (
     <div className="flex">
-      <Navigate to="/authentication/login" replace={true} />
+      {isAtRootAuthPath && (
+        <Navigate to="/authentication/login" replace={true} />
+      )}
       <div className="flex-1 flex flex-col items-center justify-center">
         <Outlet />
       </div>
