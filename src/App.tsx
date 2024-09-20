@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AddClient from "./pages/AddClient/AddClient";
 import ClientList from "./pages/ClientList/ClientList";
+import Welcome from "./pages/Welcome";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,12 +19,16 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
     path: "/",
     element: <AppLayout />,
     children: [
       {
         index: true,
-        element: <OverView />,
+        element: <Welcome />,
       },
       {
         path: "/add-clients",

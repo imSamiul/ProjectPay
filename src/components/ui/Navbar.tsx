@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import navbarLogo from "../../assets/nav-logo.png";
 import ThemeSwap from "./ThemeSwap";
+import Button from "./Button";
+import LinkButton from "./LinkButton";
 
 function Navbar() {
+  const userType = null;
   const navItem = [
     {
       title: "Overview",
@@ -17,6 +20,7 @@ function Navbar() {
       link: "/client-list",
     },
   ];
+
   return (
     <div>
       <div className="navbar bg-[#606C38] text-white font-lexend">
@@ -42,19 +46,20 @@ function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              {navItem.map((item, index) => (
-                <NavLink
-                  to={item.link}
-                  key={index}
-                  className={({ isActive }) =>
-                    `rounded-md ${isActive && "bg-[#dda15e]/20"}`
-                  }
-                >
-                  <li>
-                    <p>{item.title}</p>
-                  </li>
-                </NavLink>
-              ))}
+              {userType &&
+                navItem.map((item, index) => (
+                  <NavLink
+                    to={item.link}
+                    key={index}
+                    className={({ isActive }) =>
+                      `rounded-md ${isActive && "bg-[#dda15e]/20"}`
+                    }
+                  >
+                    <li>
+                      <p>{item.title}</p>
+                    </li>
+                  </NavLink>
+                ))}
             </ul>
           </div>
           <Link
@@ -67,23 +72,25 @@ function Navbar() {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            {navItem.map((item, index) => (
-              <NavLink
-                to={item.link}
-                key={index}
-                className={({ isActive }) =>
-                  `rounded-md ${isActive && "bg-[#dda15e]/20"}`
-                }
-              >
-                <li>
-                  <p>{item.title}</p>
-                </li>
-              </NavLink>
-            ))}
+            {userType &&
+              navItem.map((item, index) => (
+                <NavLink
+                  to={item.link}
+                  key={index}
+                  className={({ isActive }) =>
+                    `rounded-md ${isActive && "bg-[#dda15e]/20"}`
+                  }
+                >
+                  <li>
+                    <p>{item.title}</p>
+                  </li>
+                </NavLink>
+              ))}
           </ul>
         </div>
         <div className="navbar-end flex items-center gap-2 ">
-          <button className="btn text-white">Button</button>
+          <LinkButton title="Sign In | Sign Up" to="/login" classNames="btn" />
+
           <ThemeSwap />
         </div>
       </div>
