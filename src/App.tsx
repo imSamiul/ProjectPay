@@ -7,6 +7,8 @@ import AddClient from "./pages/AddClient/AddClient";
 import ClientList from "./pages/ClientList/ClientList";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Authentication from "./pages/Authentication/Authentication";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,9 +21,20 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: "/login",
-    element: <Login />,
+    path: "/authentication",
+    element: <Authentication />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signUp",
+        element: <SignUp />,
+      },
+    ],
   },
+
   {
     path: "/",
     element: <AppLayout />,

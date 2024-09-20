@@ -89,7 +89,11 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end flex items-center gap-2 ">
-          <LinkButton title="Sign In | Sign Up" to="/login" classNames="btn" />
+          <LinkButton
+            title="Sign In | Sign Up"
+            to="/authentication/login"
+            classNames="btn"
+          />
 
           <ThemeSwap />
         </div>
