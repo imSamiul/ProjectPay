@@ -1,11 +1,10 @@
 import Button from "../components/ui/Button";
 import LinkButton from "../components/ui/LinkButton";
-
-import { useValidateSignUpForm } from "../hooks/useValidateSignUpForm";
+import { useSignUpForm } from "../hooks/useSignUpForm";
 
 function SignUp() {
   const { formValues, error, handleFormValues, onSubmitHandler } =
-    useValidateSignUpForm();
+    useSignUpForm();
 
   return (
     <div>

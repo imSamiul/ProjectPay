@@ -11,7 +11,7 @@ const initialValues: UserType = {
   userType: "Client",
 };
 
-export function useValidateSignUpForm() {
+export function useSignUpForm() {
   const [formValues, setFormValues] = useState<UserType>(initialValues);
   const [error, setError] = useState<string | null>(null);
 
