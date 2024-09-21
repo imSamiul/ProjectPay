@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ClientType } from "../types/clientType";
-import { createClient } from "./apis";
 
-export function useCreateClient() {
+import { createUser } from "./apis";
+import { UserType } from "../types/userType";
+
+export function useCreateUser() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (clientObj: ClientType) => createClient(clientObj),
+    mutationFn: (userObj: UserType) => createUser(userObj),
     onSuccess: (data) => {
       console.log(data);
     },
@@ -14,7 +15,7 @@ export function useCreateClient() {
     },
     onSettled: async (data, error) => {
       console.log(data, error);
-      await queryClient.invalidateQueries({ queryKey: ["clients"] });
+      await queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ClientType } from "../types/clientType";
+
+import { UserType } from "../types/userType";
 
 const BASE_URL = "http://localhost:3001";
 const MONGOOSE_URL = "http://localhost:4000";
@@ -14,6 +15,8 @@ export async function getClientList() {
 }
 
 // POST:
-export async function createClient(clientObj: ClientType) {
-  return await axios.post(`${MONGOOSE_URL}/client`, clientObj);
+export async function createUser(clientObj: UserType) {
+  console.log(clientObj);
+
+  return await axios.post(`${MONGOOSE_URL}/user`, clientObj);
 }
