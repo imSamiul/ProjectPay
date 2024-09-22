@@ -16,7 +16,5 @@ export async function getClientList() {
 
 // POST:
 export async function createUser(clientObj: UserType) {
-  console.log(clientObj);
-
-  return await axios.post(`${MONGOOSE_URL}/user`, clientObj);
+  return (await axios.post(`${MONGOOSE_URL}/user`, clientObj)).data;
 }

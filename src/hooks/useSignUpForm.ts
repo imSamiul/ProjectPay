@@ -79,7 +79,6 @@ export function useSignUpForm() {
       return;
     }
 
-    console.log(formValues);
     createUserMutation.mutate(formValues);
     setFormValues(initialValues);
   };
