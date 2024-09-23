@@ -1,8 +1,8 @@
 export type UserType = {
   id?: string;
-  name: string;
+  name?: string;
   email: string;
-  phone: string;
+  phone?: string;
   password: string;
-  userType: "Client" | "Admin" | "Project-Manager";
+  userType?: "Client" | "Admin" | "Project-Manager";
 };
