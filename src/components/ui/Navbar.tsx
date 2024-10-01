@@ -1,11 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
-import navbarLogo from "../../assets/nav-logo.png";
-import ThemeSwap from "./ThemeSwap";
-import Button from "./Button";
+import { Link } from "@tanstack/react-router";
 import LinkButton from "./LinkButton";
+import ThemeSwap from "./ThemeSwap";
+import navbarLogo from "../../assets/nav-logo.png";
 
 function Navbar() {
-  const userType = null;
+  const userType = "client";
   const navItem = [
     {
       title: "Overview",
@@ -48,23 +47,19 @@ function Navbar() {
             >
               {userType &&
                 navItem.map((item, index) => (
-                  <NavLink
-                    to={item.link}
-                    key={index}
-                    className={({ isActive }) =>
-                      `rounded-md ${isActive && "bg-[#dda15e]/20"}`
-                    }
-                  >
+                  <Link to={item.link} key={index}>
                     <li>
                       <p>{item.title}</p>
                     </li>
-                  </NavLink>
+                  </Link>
                 ))}
             </ul>
           </div>
+
           <Link
             to="/payments"
             className="flex gap-2 items-center btn btn-ghost"
+            activeProps={{ className: "rounded-md bg-[#dda15e]/20" }}
           >
             <img src={navbarLogo} alt="navbar-logo" className="h-10" />
             <p className=" text-xl">Project Pay</p>
@@ -74,26 +69,20 @@ function Navbar() {
           <ul className="menu menu-horizontal px-1">
             {userType &&
               navItem.map((item, index) => (
-                <NavLink
+                <Link
                   to={item.link}
                   key={index}
-                  className={({ isActive }) =>
-                    `rounded-md ${isActive && "bg-[#dda15e]/20"}`
-                  }
+                  activeProps={{ className: "rounded-md bg-[#dda15e]/20" }}
                 >
                   <li>
                     <p>{item.title}</p>
                   </li>
-                </NavLink>
+                </Link>
               ))}
           </ul>
         </div>
         <div className="navbar-end flex items-center gap-2 ">
-          <LinkButton
-            title="Sign In | Sign Up"
-            to="/authentication/login"
-            classNames="btn"
-          />
+          <LinkButton title="Sign In | Sign Up" to="/login" classNames="btn" />
 
           <ThemeSwap />
         </div>

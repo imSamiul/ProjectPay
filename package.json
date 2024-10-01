@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
     "@tanstack/react-query-devtools": "^5.56.2",
+    "@tanstack/react-router": "^1.58.9",
     "@types/js-cookie": "^3.0.6",
     "add": "^2.0.6",
     "axios": "^1.7.7",
@@ -20,13 +21,13 @@
     "js-cookie": "^3.0.5",
     "phone": "^3.1.50",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router": "6",
-    "react-router-dom": "^6.26.2"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@tanstack/eslint-plugin-query": "^5.56.1",
+    "@tanstack/router-devtools": "^1.58.12",
+    "@tanstack/router-plugin": "^1.58.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -42,5 +43,5 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }

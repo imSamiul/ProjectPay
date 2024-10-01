@@ -1,6 +1,11 @@
-import Button from "../components/ui/Button";
-import LinkButton from "../components/ui/LinkButton";
-import { useSignUpForm } from "../hooks/useSignUpForm";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useSignUpForm } from "../../hooks/useSignUpForm";
+import Button from "../../components/ui/Button";
+import LinkButton from "../../components/ui/LinkButton";
+
+export const Route = createFileRoute("/_authentication/signUp")({
+  component: SignUp,
+});
 
 function SignUp() {
   const { formValues, error, handleFormValues, onSubmitHandler } =
@@ -86,15 +91,13 @@ function SignUp() {
         {error && <p className="text-red-500 w-56">{error}</p>}
       </form>
       <p className="font-medium">
-        Already have an account?{" "}
+        Already have an account?
         <LinkButton
           title="Login"
           classNames="text-[#606c38] "
-          to="/authentication/login"
+          to="/login"
         ></LinkButton>
       </p>
     </div>
   );
 }
-
-export default SignUp;

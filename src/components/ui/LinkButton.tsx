@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, LinkOptions, ToOptions } from "@tanstack/react-router";
 
 type LinkButtonProps = {
   title: string;
-  to: string;
+  to: LinkOptions["to"];
   classNames: string;
 };
 

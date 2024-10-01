@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createUser, loginUser } from "./apis";
 import { UserType } from "../types/userType";
-import { useNavigate } from "react-router";
+
 import { setAuthToken } from "../utils/auth";
+import { useNavigate } from "@tanstack/react-router";
 
 export function useCreateUser() {
   const queryClient = useQueryClient();
@@ -12,7 +13,7 @@ export function useCreateUser() {
     mutationFn: (userObj: UserType) => createUser(userObj),
     onSuccess: (data) => {
       setAuthToken(data.token);
-      navigate("/");
+      navigate({ to: "/appLayout" });
     },
     onError: (error) => {
       console.log(error);
@@ -31,7 +32,7 @@ export function useLoginUser() {
     mutationFn: (userLoginObj: UserType) => loginUser(userLoginObj),
     onSuccess: (data) => {
       setAuthToken(data.token);
-      navigate("/");
+      navigate({ to: "/appLayout" });
     },
     onError: (error) => {
       console.log(error);

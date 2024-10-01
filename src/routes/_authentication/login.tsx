@@ -1,6 +1,11 @@
-import Button from "../components/ui/Button";
-import LinkButton from "../components/ui/LinkButton";
-import { useLoginForm } from "../hooks/useLoginForm";
+import { createFileRoute } from "@tanstack/react-router";
+import { useLoginForm } from "../../hooks/useLoginForm";
+import Button from "../../components/ui/Button";
+import LinkButton from "../../components/ui/LinkButton";
+
+export const Route = createFileRoute("/_authentication/login")({
+  component: Login,
+});
 
 function Login() {
   const { formValues, error, handleFormValues, onSubmitHandler } =
@@ -46,11 +51,9 @@ function Login() {
         <LinkButton
           title="Sign Up"
           classNames="text-[#606c38] "
-          to="/authentication/signUp"
+          to="/signUp"
         ></LinkButton>
       </p>
     </div>
   );
 }
-
-export default Login;
