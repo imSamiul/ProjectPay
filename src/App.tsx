@@ -66,7 +66,7 @@ const queryClient = new QueryClient();
 const router = createRouter({
   routeTree,
   context: {
-    auth: undefined,
+    auth: undefined!,
     queryClient,
   },
   defaultPreload: "intent",
@@ -80,6 +80,8 @@ declare module "@tanstack/react-router" {
 }
 function App() {
   const auth = useAuth();
+  console.log(auth);
+
   return (
     <>
       <QueryClientProvider client={queryClient}>

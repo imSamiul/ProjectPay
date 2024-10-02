@@ -13,7 +13,7 @@ export function useCreateUser() {
     mutationFn: (userObj: UserType) => createUser(userObj),
     onSuccess: (data) => {
       setAuthToken(data.token);
-      navigate({ to: "/appLayout" });
+      navigate({ to: "/" });
     },
     onError: (error) => {
       console.log(error);
@@ -32,7 +32,7 @@ export function useLoginUser() {
     mutationFn: (userLoginObj: UserType) => loginUser(userLoginObj),
     onSuccess: (data) => {
       setAuthToken(data.token);
-      navigate({ to: "/appLayout" });
+      navigate({ to: "/" });
     },
     onError: (error) => {
       console.log(error);

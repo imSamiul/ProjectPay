@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSignUpForm } from "../../hooks/useSignUpForm";
 import Button from "../../components/ui/Button";
 import LinkButton from "../../components/ui/LinkButton";

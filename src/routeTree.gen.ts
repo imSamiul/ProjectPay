@@ -11,8 +11,8 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AuthenticateImport } from './routes/authenticate'
 import { Route as AuthenticationImport } from './routes/_authentication'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticationSignUpImport } from './routes/_authentication/signUp'
 import { Route as AuthenticationLoginImport } from './routes/_authentication/login'
@@ -22,13 +22,13 @@ import { Route as AuthenticatedIndex2Import } from './routes/_authenticated/inde
 
 // Create/Update Routes
 
-const AuthenticateRoute = AuthenticateImport.update({
-  path: '/authenticate',
+const AuthenticationRoute = AuthenticationImport.update({
+  id: '/_authentication',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthenticationRoute = AuthenticationImport.update({
-  id: '/_authentication',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -49,17 +49,17 @@ const AuthenticationLoginRoute = AuthenticationLoginImport.update({
 
 const AuthenticatedTest2Route = AuthenticatedTest2Import.update({
   path: '/test2',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedTestRoute = AuthenticatedTestImport.update({
   path: '/test',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 const AuthenticatedIndex2Route = AuthenticatedIndex2Import.update({
   path: '/index2',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -73,6 +73,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
     '/_authentication': {
       id: '/_authentication'
       path: ''
@@ -80,33 +87,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticationImport
       parentRoute: typeof rootRoute
     }
-    '/authenticate': {
-      id: '/authenticate'
-      path: '/authenticate'
-      fullPath: '/authenticate'
-      preLoaderRoute: typeof AuthenticateImport
-      parentRoute: typeof rootRoute
-    }
     '/_authenticated/index2': {
       id: '/_authenticated/index2'
       path: '/index2'
       fullPath: '/index2'
       preLoaderRoute: typeof AuthenticatedIndex2Import
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/test': {
       id: '/_authenticated/test'
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof AuthenticatedTestImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/test2': {
       id: '/_authenticated/test2'
       path: '/test2'
       fullPath: '/test2'
       preLoaderRoute: typeof AuthenticatedTest2Import
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authentication/login': {
       id: '/_authentication/login'
@@ -127,6 +127,22 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedIndex2Route: typeof AuthenticatedIndex2Route
+  AuthenticatedTestRoute: typeof AuthenticatedTestRoute
+  AuthenticatedTest2Route: typeof AuthenticatedTest2Route
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedIndex2Route: AuthenticatedIndex2Route,
+  AuthenticatedTestRoute: AuthenticatedTestRoute,
+  AuthenticatedTest2Route: AuthenticatedTest2Route,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 interface AuthenticationRouteChildren {
   AuthenticationLoginRoute: typeof AuthenticationLoginRoute
   AuthenticationSignUpRoute: typeof AuthenticationSignUpRoute
@@ -144,7 +160,6 @@ const AuthenticationRouteWithChildren = AuthenticationRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthenticationRouteWithChildren
-  '/authenticate': typeof AuthenticateRoute
   '/index2': typeof AuthenticatedIndex2Route
   '/test': typeof AuthenticatedTestRoute
   '/test2': typeof AuthenticatedTest2Route
@@ -155,7 +170,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthenticationRouteWithChildren
-  '/authenticate': typeof AuthenticateRoute
   '/index2': typeof AuthenticatedIndex2Route
   '/test': typeof AuthenticatedTestRoute
   '/test2': typeof AuthenticatedTest2Route
@@ -166,8 +180,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authentication': typeof AuthenticationRouteWithChildren
-  '/authenticate': typeof AuthenticateRoute
   '/_authenticated/index2': typeof AuthenticatedIndex2Route
   '/_authenticated/test': typeof AuthenticatedTestRoute
   '/_authenticated/test2': typeof AuthenticatedTest2Route
@@ -177,30 +191,14 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | ''
-    | '/authenticate'
-    | '/index2'
-    | '/test'
-    | '/test2'
-    | '/login'
-    | '/signUp'
+  fullPaths: '/' | '' | '/index2' | '/test' | '/test2' | '/login' | '/signUp'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | ''
-    | '/authenticate'
-    | '/index2'
-    | '/test'
-    | '/test2'
-    | '/login'
-    | '/signUp'
+  to: '/' | '' | '/index2' | '/test' | '/test2' | '/login' | '/signUp'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/_authentication'
-    | '/authenticate'
     | '/_authenticated/index2'
     | '/_authenticated/test'
     | '/_authenticated/test2'
@@ -211,20 +209,14 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthenticationRoute: typeof AuthenticationRouteWithChildren
-  AuthenticateRoute: typeof AuthenticateRoute
-  AuthenticatedIndex2Route: typeof AuthenticatedIndex2Route
-  AuthenticatedTestRoute: typeof AuthenticatedTestRoute
-  AuthenticatedTest2Route: typeof AuthenticatedTest2Route
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthenticationRoute: AuthenticationRouteWithChildren,
-  AuthenticateRoute: AuthenticateRoute,
-  AuthenticatedIndex2Route: AuthenticatedIndex2Route,
-  AuthenticatedTestRoute: AuthenticatedTestRoute,
-  AuthenticatedTest2Route: AuthenticatedTest2Route,
 }
 
 export const routeTree = rootRoute
@@ -240,15 +232,20 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_authentication",
-        "/authenticate",
-        "/_authenticated/index2",
-        "/_authenticated/test",
-        "/_authenticated/test2"
+        "/_authenticated",
+        "/_authentication"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
+      "children": [
+        "/_authenticated/index2",
+        "/_authenticated/test",
+        "/_authenticated/test2"
+      ]
     },
     "/_authentication": {
       "filePath": "_authentication.tsx",
@@ -257,17 +254,17 @@ export const routeTree = rootRoute
         "/_authentication/signUp"
       ]
     },
-    "/authenticate": {
-      "filePath": "authenticate.tsx"
-    },
     "/_authenticated/index2": {
-      "filePath": "_authenticated/index2.tsx"
+      "filePath": "_authenticated/index2.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/test": {
-      "filePath": "_authenticated/test.tsx"
+      "filePath": "_authenticated/test.tsx",
+      "parent": "/_authenticated"
     },
     "/_authenticated/test2": {
-      "filePath": "_authenticated/test2.tsx"
+      "filePath": "_authenticated/test2.tsx",
+      "parent": "/_authenticated"
     },
     "/_authentication/login": {
       "filePath": "_authentication/login.tsx",

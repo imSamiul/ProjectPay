@@ -22,7 +22,7 @@ export function useSignUpForm() {
   const handleFormValues = (
     event:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setError(null);
     setFormValues({
@@ -46,7 +46,7 @@ export function useSignUpForm() {
     const phoneNum = "+880" + formValues.phone;
     const isValidPhone = phone(phoneNum);
 
-    if (!isValidPhone.isValid && formValues.phone.length !== 10) {
+    if (!isValidPhone.isValid && formValues.phone?.length !== 10) {
       setError("Phone no must be valid");
       return false;
     }
@@ -62,7 +62,7 @@ export function useSignUpForm() {
       formValues.password.includes("password")
     ) {
       setError(
-        "Password must be at least 6 characters long and should not contain the word 'password'"
+        "Password must be at least 6 characters long and should not contain the word 'password'",
       );
       return false;
     }
