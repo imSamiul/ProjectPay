@@ -1,4 +1,4 @@
-import { Link, LinkOptions } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import LinkButton from "./LinkButton";
 import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";

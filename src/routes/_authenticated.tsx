@@ -6,7 +6,7 @@ export const Route = createFileRoute("/_authenticated")({
   beforeLoad: ({ context }) => {
     console.log(context.auth);
 
-    if (!context.auth.isLogged) {
+    if (!context.auth.isLogged()) {
       throw redirect({
         to: "/login",
       });
@@ -15,23 +15,9 @@ export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
 });
 function AuthenticatedLayout() {
-  const navItem = [
-    {
-      title: "Overview",
-      link: "/",
-    },
-    {
-      title: "Add Clients",
-      link: "/add-clients",
-    },
-    {
-      title: "Client List",
-      link: "/client-list",
-    },
-  ];
   return (
     <div>
-      <Navbar navItem={navItem} />
+      <Navbar />
       <Outlet />
     </div>
   );
