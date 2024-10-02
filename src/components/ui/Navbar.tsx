@@ -1,24 +1,30 @@
-import { Link } from "@tanstack/react-router";
+import { Link, LinkOptions } from "@tanstack/react-router";
 import LinkButton from "./LinkButton";
 import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
+import { useAuth } from "../../hooks/useAuth";
+
+const authenticatedNavItem = [
+  {
+    title: "Overview",
+    link: "/",
+  },
+  {
+    title: "Add Clients",
+    link: "/add-clients",
+  },
+  {
+    title: "Client List",
+    link: "/client-list",
+  },
+];
 
 function Navbar() {
   const userType = "client";
-  const navItem = [
-    {
-      title: "Overview",
-      link: "/",
-    },
-    {
-      title: "Add Clients",
-      link: "/add-clients",
-    },
-    {
-      title: "Client List",
-      link: "/client-list",
-    },
-  ];
+  const auth = useAuth();
+  console.log(auth.isLogged());
+  const isLogged = auth.isLogged();
+  const navItem = isLogged ? authenticatedNavItem : [];
 
   return (
     <div>
@@ -56,11 +62,7 @@ function Navbar() {
             </ul>
           </div>
 
-          <Link
-            to="/payments"
-            className="flex gap-2 items-center btn btn-ghost"
-            activeProps={{ className: "rounded-md bg-[#dda15e]/20" }}
-          >
+          <Link to="/" className="flex gap-2 items-center btn btn-ghost">
             <img src={navbarLogo} alt="navbar-logo" className="h-10" />
             <p className=" text-xl">Project Pay</p>
           </Link>

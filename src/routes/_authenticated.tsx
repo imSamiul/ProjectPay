@@ -15,9 +15,23 @@ export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
 });
 function AuthenticatedLayout() {
+  const navItem = [
+    {
+      title: "Overview",
+      link: "/",
+    },
+    {
+      title: "Add Clients",
+      link: "/add-clients",
+    },
+    {
+      title: "Client List",
+      link: "/client-list",
+    },
+  ];
   return (
     <div>
-      <Navbar />
+      <Navbar navItem={navItem} />
       <Outlet />
     </div>
   );
