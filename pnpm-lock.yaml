@@ -43,10 +43,10 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@eslint/js':
-        specifier: ^9.9.0
+        specifier: ^9.11.1
         version: 9.11.1
       '@tanstack/eslint-plugin-query':
-        specifier: ^5.56.1
+        specifier: ^5.58.1
         version: 5.58.1(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2)
       '@tanstack/router-devtools':
         specifier: ^1.58.12
@@ -54,6 +54,9 @@ importers:
       '@tanstack/router-plugin':
         specifier: ^1.58.4
         version: 1.58.12(vite@5.4.8)
+      '@types/eslint__js':
+        specifier: ^8.42.3
+        version: 8.42.3
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.10
@@ -70,7 +73,7 @@ importers:
         specifier: ^4.12.10
         version: 4.12.10(postcss@8.4.47)
       eslint:
-        specifier: ^9.9.0
+        specifier: ^9.11.1
         version: 9.11.1(jiti@1.21.6)
       eslint-plugin-react-hooks:
         specifier: ^5.1.0-rc.0
@@ -88,10 +91,10 @@ importers:
         specifier: ^3.4.11
         version: 3.4.13
       typescript:
-        specifier: ^5.5.3
+        specifier: ^5.6.2
         version: 5.6.2
       typescript-eslint:
-        specifier: ^8.0.1
+        specifier: ^8.7.0
         version: 8.7.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2)
       vite:
         specifier: ^5.4.1
@@ -736,6 +739,12 @@ packages:
 
   '@types/babel__traverse@7.20.6':
     resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
+
+  '@types/eslint@9.6.1':
+    resolution: {integrity: sha512-FXx2pKgId/WyYo2jXw63kk7/+TY7u7AziEJxJAnSFzHlqTAS3Ync6SvgYAN/k4/PQpnnVuzoMuVnByKK2qp0ag==}
+
+  '@types/eslint__js@8.42.3':
+    resolution: {integrity: sha512-alfG737uhmPdnvkrLdZLcEKJ/B8s9Y4hrZ+YAdzUeoArBlSUERA2E87ROfOaS4jd/C45fzOoZzidLc1IPwLqOw==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -2287,6 +2296,15 @@ snapshots:
   '@types/babel__traverse@7.20.6':
     dependencies:
       '@babel/types': 7.25.6
+
+  '@types/eslint@9.6.1':
+    dependencies:
+      '@types/estree': 1.0.6
+      '@types/json-schema': 7.0.15
+
+  '@types/eslint__js@8.42.3':
+    dependencies:
+      '@types/eslint': 9.6.1
 
   '@types/estree@1.0.6': {}
 

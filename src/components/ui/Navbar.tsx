@@ -3,6 +3,7 @@ import LinkButton from "./LinkButton";
 import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
 import { useAuth } from "../../hooks/useAuth";
+import Modal from "./Modal";
 
 const authenticatedNavItem = [
   {
@@ -20,9 +21,7 @@ const authenticatedNavItem = [
 ];
 
 function Navbar() {
-  const userType = "client";
   const auth = useAuth();
-  console.log(auth.isLogged());
   const isLogged = auth.isLogged();
   const navItem = isLogged ? authenticatedNavItem : [];
 
@@ -51,14 +50,13 @@ function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              {userType &&
-                navItem.map((item, index) => (
-                  <Link to={item.link} key={index}>
-                    <li>
-                      <p>{item.title}</p>
-                    </li>
-                  </Link>
-                ))}
+              {navItem.map((item, index) => (
+                <Link to={item.link} key={index}>
+                  <li>
+                    <p>{item.title}</p>
+                  </li>
+                </Link>
+              ))}
             </ul>
           </div>
 
@@ -69,23 +67,36 @@ function Navbar() {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            {userType &&
-              navItem.map((item, index) => (
-                <Link
-                  to={item.link}
-                  key={index}
-                  activeProps={{ className: "rounded-md bg-[#dda15e]/20" }}
-                >
-                  <li>
-                    <p>{item.title}</p>
-                  </li>
-                </Link>
-              ))}
+            {navItem.map((item, index) => (
+              <Link
+                to={item.link}
+                key={index}
+                activeProps={{ className: "rounded-md bg-[#dda15e]/20" }}
+              >
+                <li>
+                  <p>{item.title}</p>
+                </li>
+              </Link>
+            ))}
           </ul>
         </div>
         <div className="navbar-end flex items-center gap-2 ">
-          <LinkButton title="Sign In | Sign Up" to="/login" classNames="btn" />
-
+          {isLogged ? (
+            <Modal
+              id="logout"
+              title="Logout"
+              content="Are you sure you want to logout?"
+              openButtonLabel="Logout"
+              closeButtonLabel="Cancel"
+              confirmButtonLabel="Logout"
+            />
+          ) : (
+            <LinkButton
+              title="Sign In | Sign Up"
+              to="/login"
+              classNames="btn"
+            />
+          )}
           <ThemeSwap />
         </div>
       </div>
