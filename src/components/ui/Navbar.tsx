@@ -4,6 +4,7 @@ import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "./Modal";
+import { useLogOutUser } from "../../services/userMutations";
 
 const authenticatedNavItem = [
   {
@@ -23,7 +24,14 @@ const authenticatedNavItem = [
 function Navbar() {
   const auth = useAuth();
   const isLogged = auth.isLogged();
+  console.log(isLogged);
+
   const navItem = isLogged ? authenticatedNavItem : [];
+  const logOutUserMutation = useLogOutUser();
+
+  function handleLogout() {
+    logOutUserMutation.mutate();
+  }
 
   return (
     <div>
@@ -89,6 +97,7 @@ function Navbar() {
               openButtonLabel="Logout"
               closeButtonLabel="Cancel"
               confirmButtonLabel="Logout"
+              btnConfirmAction={handleLogout}
             />
           ) : (
             <LinkButton

@@ -5,6 +5,7 @@ type ModalProps = {
   openButtonLabel?: string; // Optional prop with a default value
   closeButtonLabel?: string; // Optional prop with a default value
   confirmButtonLabel?: string; // Optional prop with a default value
+  btnConfirmAction: () => void;
 };
 
 function Modal({
@@ -14,10 +15,17 @@ function Modal({
   openButtonLabel = "Open Modal",
   closeButtonLabel = "Close",
   confirmButtonLabel = "Confirm",
+  btnConfirmAction,
 }: ModalProps) {
   const openModal = (modalId: string) => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
     modal?.showModal();
+  };
+
+  const handleSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const modal = document.getElementById(id) as HTMLDialogElement;
+    modal?.close();
   };
 
   return (
@@ -29,15 +37,17 @@ function Modal({
 
       {/* Combined Modal with modal-bottom sm:modal-middle */}
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">{title}</h3>
-          <p className="py-4">{content}</p>
+        <div className="modal-box bg-current">
+          <h3 className="font-bold text-lg text-black">{title}</h3>
+          <p className="py-4 text-black">{content}</p>
           <div className="modal-action">
-            <form method="dialog ">
+            <form method="dialog " onSubmit={handleSubmitHandler}>
               {/* Close button inside the modal */}
               <div className="flex gap-3">
                 <button className="btn">{closeButtonLabel}</button>
-                <button className="btn">{confirmButtonLabel}</button>
+                <button className="btn" onClick={btnConfirmAction}>
+                  {confirmButtonLabel}
+                </button>
               </div>
             </form>
           </div>

@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 export type AuthContext = {
   login: (token: string) => void;
   isLogged: () => boolean;
+  getAuthToken: () => string | null;
 };
 
 export const AuthContext = React.createContext<AuthContext | null>(null);
@@ -31,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ login, isLogged }}>
+    <AuthContext.Provider value={{ login, isLogged, getAuthToken }}>
       {children}
     </AuthContext.Provider>
   );

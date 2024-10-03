@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
-import { createUser, loginUser } from "./apis";
+import { createUser, loginUser, logOutUser } from "./apis";
 import { UserType } from "../types/userType";
 
 import { setAuthToken } from "../utils/auth";
@@ -40,6 +41,20 @@ export function useLoginUser() {
     onSettled: async (data, error) => {
       console.log(data, error);
       await queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+}
+// logout user
+export function useLogOutUser() {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: logOutUser,
+    onSuccess: () => {
+      Cookies.remove("token");
+      navigate({ to: "/" });
+    },
+    onError: (error) => {
+      console.log(error);
     },
   });
 }
