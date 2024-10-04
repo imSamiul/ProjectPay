@@ -9,7 +9,7 @@ const initialValues: UserType = {
   email: "",
   phone: "",
   password: "",
-  userType: "Client",
+  userType: "client",
 };
 
 export function useSignUpForm() {

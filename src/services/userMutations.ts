@@ -46,6 +46,7 @@ export function useLoginUser() {
 }
 // logout user
 export function useLogOutUser() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: logOutUser,
@@ -55,6 +56,9 @@ export function useLogOutUser() {
     },
     onError: (error) => {
       console.log(error);
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
 }

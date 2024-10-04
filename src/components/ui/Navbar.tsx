@@ -6,7 +6,11 @@ import { useAuth } from "../../hooks/useAuth";
 import Modal from "./Modal";
 import { useLogOutUser } from "../../services/userMutations";
 
-const authenticatedNavItem = [
+type NavItem = {
+  title: string;
+  link: string;
+};
+const projectManagerNavItem = [
   {
     title: "Overview",
     link: "/",
@@ -20,13 +24,29 @@ const authenticatedNavItem = [
     link: "/client-list",
   },
 ];
+const clientNavItem = [
+  {
+    title: "Overview",
+    link: "/",
+  },
+];
 
 function Navbar() {
   const auth = useAuth();
-  const isLogged = auth.isLogged();
-
-  const navItem = isLogged ? authenticatedNavItem : [];
   const logOutUserMutation = useLogOutUser();
+
+  const isLogged = auth.isLogged();
+  const userType = auth.user?.userType;
+
+  let navItem: NavItem[] = [];
+
+  if (isLogged) {
+    if (userType === "project-manager") {
+      navItem = projectManagerNavItem;
+    } else if (userType === "client") {
+      navItem = clientNavItem;
+    }
+  }
 
   function handleLogout() {
     logOutUserMutation.mutate();

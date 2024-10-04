@@ -6,9 +6,7 @@ export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     if (context.auth.isLogged()) {
       const data = await fetchUserDetails();
-      context.auth.setUserDetails(data);
-      console.log(data.user);
-
+      context.auth.setUserDetails(data.user);
       return data.user;
     }
   },
