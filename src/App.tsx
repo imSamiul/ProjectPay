@@ -80,7 +80,6 @@ declare module "@tanstack/react-router" {
 }
 function App() {
   const auth = useAuth();
-  console.log(auth);
 
   return (
     <>

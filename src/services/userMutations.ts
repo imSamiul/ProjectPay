@@ -3,17 +3,17 @@ import Cookies from "js-cookie";
 
 import { createUser, loginUser, logOutUser } from "./apis";
 import { UserType } from "../types/userType";
-
-import { setAuthToken } from "../utils/auth";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "../hooks/useAuth";
 
 export function useCreateUser() {
   const queryClient = useQueryClient();
+  const auth = useAuth();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: (userObj: UserType) => createUser(userObj),
     onSuccess: (data) => {
-      setAuthToken(data.token);
+      auth.login(data.token, data.user);
       navigate({ to: "/" });
     },
     onError: (error) => {
@@ -28,18 +28,18 @@ export function useCreateUser() {
 
 export function useLoginUser() {
   const queryClient = useQueryClient();
+  const auth = useAuth();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: (userLoginObj: UserType) => loginUser(userLoginObj),
     onSuccess: (data) => {
-      setAuthToken(data.token);
+      auth.login(data.token, data.user);
       navigate({ to: "/" });
     },
     onError: (error) => {
       console.log(error);
     },
-    onSettled: async (data, error) => {
-      console.log(data, error);
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });

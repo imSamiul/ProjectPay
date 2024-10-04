@@ -14,6 +14,29 @@ export async function getClientList() {
   return (await axios.get(`${MONGOOSE_URL}/client`)).data;
 }
 
+export async function fetchUserDetails() {
+  console.log("fetchUserDetails");
+  try {
+    const TOKEN = Cookies.get("token") || "";
+    const response = await axios.get(`${MONGOOSE_URL}/user/me`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    // Check if the error is an AxiosError
+    if (axios.isAxiosError(error) && error.response) {
+      console.log(error.response.data); // Access the response property safely
+      return error.response;
+    }
+
+    // Handle unknown errors
+    console.error("An unexpected error occurred:", error);
+    throw new Error("Failed to fetch user details");
+  }
+}
+
 // POST:
 export async function createUser(userSignUpObj: UserType) {
   return (await axios.post(`${MONGOOSE_URL}/user/signUp`, userSignUpObj)).data;

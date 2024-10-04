@@ -1,19 +1,24 @@
 import * as React from "react";
-import { setAuthToken } from "../utils/auth";
 import Cookies from "js-cookie";
+import { UserType } from "../types/userType";
 
 export type AuthContext = {
-  login: (token: string) => void;
+  login: (token: string, user: UserType) => void;
   isLogged: () => boolean;
   getAuthToken: () => string | null;
+  user: UserType | null;
+  setUserDetails: (user: UserType) => void;
 };
 
 export const AuthContext = React.createContext<AuthContext | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  function login(token: string) {
-    setAuthToken(token);
-    // setUser(username);
+  const [user, setUser] = React.useState<UserType | null>(null);
+
+  function login(token: string, user: UserType) {
+    Cookies.set("token", token, { expires: 7 });
+
+    setUser(user);
   }
   function getAuthToken() {
     const token = Cookies.get("token");
@@ -30,9 +35,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     return false;
   }
+  function setUserDetails(user: UserType) {
+    setUser(user);
+  }
 
   return (
-    <AuthContext.Provider value={{ login, isLogged, getAuthToken }}>
+    <AuthContext.Provider
+      value={{ user, setUserDetails, login, isLogged, getAuthToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

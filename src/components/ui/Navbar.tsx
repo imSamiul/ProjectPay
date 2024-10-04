@@ -24,7 +24,6 @@ const authenticatedNavItem = [
 function Navbar() {
   const auth = useAuth();
   const isLogged = auth.isLogged();
-  console.log(isLogged);
 
   const navItem = isLogged ? authenticatedNavItem : [];
   const logOutUserMutation = useLogOutUser();
