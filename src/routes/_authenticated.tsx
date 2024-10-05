@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_authenticated")({
       });
     }
     const data = await fetchUserDetails();
-    return (context.auth.user = data.user);
+    context.auth.user = data.user;
   },
 
   component: AuthenticatedLayout,
