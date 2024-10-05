@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, LinkOptions } from "@tanstack/react-router";
 import LinkButton from "./LinkButton";
 import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
@@ -8,23 +8,27 @@ import { useLogOutUser } from "../../services/userMutations";
 
 type NavItem = {
   title: string;
-  link: string;
+  link: LinkOptions["to"];
 };
-const projectManagerNavItem = [
+const projectManagerNavItem: NavItem[] = [
   {
     title: "Overview",
     link: "/",
   },
   {
     title: "Add Clients",
-    link: "/add-clients",
+    link: "/projectManager/addClient",
   },
+  // {
+  //   title: "Client List",
+  //   link: "/projectManager/clientList",
+  // },
   {
-    title: "Client List",
-    link: "/client-list",
+    title: "Add Project",
+    link: "/projectManager/addProject",
   },
 ];
-const clientNavItem = [
+const clientNavItem: NavItem[] = [
   {
     title: "Overview",
     link: "/",
