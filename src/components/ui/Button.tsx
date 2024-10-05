@@ -1,10 +1,12 @@
-type ButtonProps = {
-  title: string;
-  classNames: string;
-};
+import { HTMLProps } from "react";
 
-function Button({ title, classNames }: ButtonProps) {
-  return <button className={`btn ${classNames}`}>{title}</button>;
+interface ButtonProps {
+  title: string;
+  className?: HTMLProps<HTMLElement>["className"];
+}
+
+function Button({ title, className }: ButtonProps) {
+  return <button className={`btn ${className}`}>{title}</button>;
 }
 
 export default Button;
