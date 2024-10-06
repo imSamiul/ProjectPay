@@ -43,7 +43,7 @@ function Login() {
             className="input input-bordered w-full max-w-xs"
           />
         </label>
-        <Button title="Login" className="mt-5 bg-[#283618] text-white" />
+        <Button className="mt-5 bg-[#283618] text-white">Login</Button>
         {error && <p className="text-red-500 w-56">{error}</p>}
       </form>
       <p className="font-medium">

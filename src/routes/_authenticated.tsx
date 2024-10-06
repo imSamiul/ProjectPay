@@ -18,9 +18,9 @@ export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
 });
 function AuthenticatedLayout() {
-  const auth = useAuth();
+  // const auth = useAuth();
 
-  console.log(auth);
+  // console.log(auth);
 
   return (
     <div>

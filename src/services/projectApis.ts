@@ -33,7 +33,14 @@ export async function createNewProject(projectObject: ProjectType) {
 }
 
 // GET:Project
-// export async function getProjectOverview() {
-//   const response = await fetch(`${BASE_URL}/projects`);
-//   return response.json();
-// }
+export async function getAllProjects({ pageParam }: { pageParam: number }) {
+  try {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/todos?_page=${pageParam}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error loading all projects", error);
+    throw error;
+  }
+}

@@ -13,11 +13,14 @@ export const Route = createFileRoute("/_authenticated/projectManager")({
     }
   },
   loader: ({ context }) => {
-    console.log(context.auth.user);
+    // console.log(context.auth.user);
     return context.auth.user;
   },
   component: ProjectManagerLayout,
-  errorComponent: () => <div>Unauthorized</div>,
+  errorComponent: (error) => {
+    console.log(error.error.message);
+    return <div>There is an error </div>;
+  },
   onError: (error) => {
     console.error(error);
   },
