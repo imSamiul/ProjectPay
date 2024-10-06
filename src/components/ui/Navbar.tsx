@@ -15,14 +15,7 @@ const projectManagerNavItem: NavItem[] = [
     title: "Overview",
     link: "/",
   },
-  {
-    title: "Add Clients",
-    link: "/projectManager/addClient",
-  },
-  // {
-  //   title: "Client List",
-  //   link: "/projectManager/clientList",
-  // },
+
   {
     title: "Add Project",
     link: "/projectManager/addProject",
@@ -58,7 +51,7 @@ function Navbar() {
 
   return (
     <div>
-      <div className="navbar bg-[#606C38] text-white font-lexend">
+      <div className="navbar bg-mallard-900 text-white font-lexend ">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -102,7 +95,7 @@ function Navbar() {
               <Link
                 to={item.link}
                 key={index}
-                activeProps={{ className: "rounded-md bg-[#dda15e]/20" }}
+                activeProps={{ className: "rounded-md bg-mallard-800" }}
               >
                 <li>
                   <p>{item.title}</p>

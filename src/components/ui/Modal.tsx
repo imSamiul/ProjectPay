@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 type ModalProps = {
   id: string;
   title: string;
@@ -31,9 +33,9 @@ function Modal({
   return (
     <div>
       {/* Button to open the modal */}
-      <button className="btn" onClick={() => openModal(id)}>
+      <Button className="btn  bg-mallard-500" onClick={() => openModal(id)}>
         {openButtonLabel}
-      </button>
+      </Button>
 
       {/* Combined Modal with modal-bottom sm:modal-middle */}
       <dialog id={id} className="modal modal-bottom sm:modal-middle">

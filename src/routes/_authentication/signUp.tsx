@@ -87,7 +87,7 @@ function SignUp() {
             <option>Client</option>
           </select>
         </label>
-        <Button title="Sign Up" className="mt-5 bg-[#283618] text-white" />
+        <Button className="mt-5">Sign Up</Button>
         {error && <p className="text-red-500 w-56">{error}</p>}
       </form>
       <p className="font-medium">
