@@ -2,20 +2,11 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 import { UserType } from "../types/userType";
-import { ProjectType } from "../types/projectType";
-import { getAuthToken } from "../utils/auth";
 
 const MONGOOSE_URL = "http://localhost:4000";
 
-// GET:
-// export async function getProjectOverview() {
-//   const response = await fetch(`${BASE_URL}/projects`);
-//   return response.json();
-// }
-export async function getClientList() {
-  return (await axios.get(`${MONGOOSE_URL}/client`)).data;
-}
-
+// GET:User
+// get user details
 export async function fetchUserDetails() {
   console.log("fetchUserDetails");
   try {
@@ -39,8 +30,7 @@ export async function fetchUserDetails() {
   }
 }
 
-// POST:
-// user
+// POST:user
 // create new user
 export async function createUser(userSignUpObj: UserType) {
   return (await axios.post(`${MONGOOSE_URL}/user/signUp`, userSignUpObj)).data;
@@ -59,22 +49,6 @@ export async function logOutUser() {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
-  });
-  return response.data;
-}
-
-// project
-// create new project
-export async function createNewProject(projectObject: ProjectType) {
-  const TOKEN = getAuthToken();
-  const response = await axios({
-    method: "POST",
-    baseURL: MONGOOSE_URL,
-    url: "/projects/create",
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-    data: projectObject,
   });
   return response.data;
 }
