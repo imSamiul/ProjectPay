@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UserType } from "../types/userType";
-import { useLoginUser } from "../services/userMutations";
+import { useLoginUser } from "../services/mutations/userMutations";
 import * as EmailValidator from "email-validator";
 
 const initialValues: UserType = {

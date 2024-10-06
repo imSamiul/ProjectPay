@@ -40,7 +40,7 @@ function AddProject() {
               className="input input-bordered"
               type="number"
               name="budget"
-              value={project.budget}
+              value={project.budget ?? ""}
               placeholder="Project Total Budget"
               onChange={handleInputChange}
             />
@@ -51,7 +51,7 @@ function AddProject() {
               className="input input-bordered"
               type="number"
               name="advance"
-              value={project.advance}
+              value={project.advance ?? ""}
               placeholder="Advance Payment"
               onChange={handleInputChange}
             />

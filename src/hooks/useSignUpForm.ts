@@ -2,7 +2,7 @@ import { useState } from "react";
 import { phone } from "phone";
 import * as EmailValidator from "email-validator";
 import { UserType } from "../types/userType";
-import { useCreateUser } from "../services/userMutations";
+import { useCreateUser } from "../services/mutations/userMutations";
 
 const initialValues: UserType = {
   name: "",
@@ -14,9 +14,9 @@ const initialValues: UserType = {
 
 export function useSignUpForm() {
   const [formValues, setFormValues] = useState<UserType>(initialValues);
-  const createUserMutation = useCreateUser();
-
   const [error, setError] = useState<string | null>(null);
+
+  const createUserMutation = useCreateUser();
 
   // Handle form changes
   const handleFormValues = (

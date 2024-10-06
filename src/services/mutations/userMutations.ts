@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-import { createUser, loginUser, logOutUser } from "./apis";
-import { UserType } from "../types/userType";
+import { createUser, loginUser, logOutUser } from "../apis";
+import { UserType } from "../../types/userType";
 import { useNavigate } from "@tanstack/react-router";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
+// create user
 export function useCreateUser() {
   const queryClient = useQueryClient();
   const auth = useAuth();
@@ -25,7 +26,7 @@ export function useCreateUser() {
     },
   });
 }
-
+// login user
 export function useLoginUser() {
   const queryClient = useQueryClient();
   const auth = useAuth();

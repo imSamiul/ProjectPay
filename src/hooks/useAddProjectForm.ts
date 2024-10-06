@@ -2,23 +2,27 @@ import { useState } from "react";
 import { ProjectType } from "../types/projectType";
 import phone from "phone";
 import * as EmailValidator from "email-validator";
+import { useCreateNewProject } from "../services/mutations/projectMutation";
 
 const initialProject: ProjectType = {
   name: "",
-  budget: "",
-  advance: "",
-  due: "",
+  budget: undefined,
+  advance: undefined,
+  due: undefined,
   client: "",
   clientPhone: "",
   clientEmail: "",
   description: "",
   startDate: new Date().toISOString().split("T")[0],
   endDate: "",
+  status: false,
 };
 
 export function useProjectForm() {
   const [project, setProject] = useState<ProjectType>(initialProject);
   const [error, setError] = useState<string | null>(null);
+
+  const createNewProjectMutation = useCreateNewProject();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -31,8 +35,8 @@ export function useProjectForm() {
   const validateForm = (): boolean => {
     if (
       project.name === "" ||
-      project.budget === "" ||
-      project.advance === "" ||
+      project.budget === undefined ||
+      project.advance === undefined ||
       project.client === "" ||
       project.clientPhone === "" ||
       project.clientEmail === "" ||
@@ -79,8 +83,9 @@ export function useProjectForm() {
 
     const updatedProject = {
       ...project,
-      due: (Number(project.budget) - Number(project.advance)).toString(),
+      due: Number(project.budget) - Number(project.advance),
     };
+    createNewProjectMutation.mutate(updatedProject);
 
     // Add logic to handle form submission (e.g., mutation, API call, etc.)
     console.log("Form submitted successfully!", updatedProject);

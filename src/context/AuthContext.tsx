@@ -1,6 +1,6 @@
 import * as React from "react";
-import Cookies from "js-cookie";
 import { UserType } from "../types/userType";
+import { getAuthToken, setAuthToken } from "../utils/auth";
 
 export type AuthContext = {
   login: (token: string, user: UserType) => void;
@@ -17,18 +17,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<UserType>({} as UserType);
 
   function login(token: string, user: UserType) {
-    Cookies.set("token", token, { expires: 7 });
-
+    setAuthToken(token);
     setUser(user);
   }
-  function getAuthToken() {
-    const token = Cookies.get("token");
-    if (!token) {
-      console.log("No token found");
-      return null;
-    }
-    return token;
-  }
+
   function isLogged() {
     const token = getAuthToken();
     if (token) {

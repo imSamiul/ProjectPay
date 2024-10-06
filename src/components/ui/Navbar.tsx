@@ -4,7 +4,7 @@ import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "./Modal";
-import { useLogOutUser } from "../../services/userMutations";
+import { useLogOutUser } from "../../services/mutations/userMutations";
 
 type NavItem = {
   title: string;
