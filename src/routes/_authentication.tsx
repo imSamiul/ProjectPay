@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_authentication")({
 
 function AuthenticationLayout() {
   return (
-    <div className="flex">
+    <div className="flex flex-col-reverse md:flex-row">
       <div className="flex-1 flex flex-col items-center justify-center">
         <Outlet />
       </div>
