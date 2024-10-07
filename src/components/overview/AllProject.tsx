@@ -36,7 +36,7 @@ function AllProject({
         .map((project: ProjectType) => {
           return (
             <div
-              key={project.id}
+              key={project._id}
               className={`${
                 project.status === false ? "bg-[#fefae0]" : "bg-[#fefae0]/40"
               } min-h-60   p-5 shadow-md rounded-md`}

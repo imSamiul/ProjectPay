@@ -1,14 +1,15 @@
 import { Link, LinkOptions } from "@tanstack/react-router";
+import { HTMLProps } from "react";
 
 type LinkButtonProps = {
   title: string;
   to: LinkOptions["to"];
-  classNames: string;
+  className?: HTMLProps<HTMLElement>["className"];
 };
 
-function LinkButton({ title, to, classNames }: LinkButtonProps) {
+function LinkButton({ title, to, className }: LinkButtonProps) {
   return (
-    <Link to={to} className={classNames}>
+    <Link to={to} className={className}>
       {title}
     </Link>
   );
