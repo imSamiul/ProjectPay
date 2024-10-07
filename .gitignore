@@ -29,3 +29,5 @@ dist-ssr
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+/ProjectPay-server/config/dev.env

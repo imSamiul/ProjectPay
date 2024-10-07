@@ -52,7 +52,7 @@ function Navbar() {
   return (
     <div>
       <div className="navbar bg-mallard-900 text-white font-lexend flex">
-        <div className="navbar-start flex-[2]">
+        <div className="navbar-start flex-[2] md:flex-1">
           {isLogged && (
             <div className="dropdown">
               <div
@@ -77,12 +77,12 @@ function Navbar() {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow "
               >
                 {navItem.map((item, index) => (
-                  <Link to={item.link} key={index}>
+                  <Link to={item.link} key={index} className="">
                     <li>
-                      <p>{item.title}</p>
+                      <p className="text-black">{item.title}</p>
                     </li>
                   </Link>
                 ))}

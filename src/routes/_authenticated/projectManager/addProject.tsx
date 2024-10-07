@@ -19,10 +19,12 @@ function AddProject() {
 
   return (
     <div className="p-4">
-      <h1 className="font-lexend text-3xl font-medium">Add Your Project</h1>
+      <h1 className="font-lexend text-xl md:text-3xl font-medium">
+        Add Your Project
+      </h1>
       <div className="divider "></div>
-      <form className="space-y-4 py-2" onSubmit={onSubmitHandler}>
-        <div className="grid grid-cols-3 gap-5 ">
+      <form className="space-y-4 md:py-2" onSubmit={onSubmitHandler}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 ">
           <div className="flex flex-col gap-2">
             <label className="text-lg font-semibold">Project Name:</label>
             <input
@@ -73,7 +75,7 @@ function AddProject() {
             <div className="flex items-center gap-2">
               <p>(+880)</p>
               <input
-                className="input input-bordered w-full"
+                className="input input-bordered "
                 type="tel"
                 name="clientPhone"
                 placeholder="Client Phone Number (eg. 17XXXXXXXX)"
@@ -113,7 +115,7 @@ function AddProject() {
               onChange={handleInputChange}
             />
           </div>
-          <div className="flex flex-col gap-2 col-span-3">
+          <div className="flex flex-col gap-2 md:col-span-3">
             <label className="text-lg font-semibold">Description:</label>
             <textarea
               className="textarea textarea-bordered"
