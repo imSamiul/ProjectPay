@@ -50,7 +50,7 @@ function Login() {
           </label>
 
           <Button className="mt-5 bg-[#283618] text-white">Login</Button>
-          {error && <p className="text-red-500 w-56">{error}</p>}
+          {error && <p className="text-red-500 w-56 text-center">{error}</p>}
         </form>
       </div>
       <p className="font-medium text-center">
