@@ -1,10 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import AllProject from "../../../components/overview/AllProject";
 import { useGetAllProjects } from "../../../services/queries/projectQueries";
-import {
-  useSuspenseInfiniteQuery,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 export const Route = createFileRoute("/_authenticated/projectManager/overview")(

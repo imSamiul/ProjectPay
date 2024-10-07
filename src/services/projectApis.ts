@@ -36,7 +36,7 @@ export async function createNewProject(projectObject: ProjectType) {
 export async function getAllProjects({ pageParam }: { pageParam: number }) {
   try {
     const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/todos?_page=${pageParam}`,
+      `https://jsonplaceholder.typicode.com/todos?_page=${pageParam}&_limit=5`,
     );
     return response.data;
   } catch (error) {

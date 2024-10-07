@@ -1,4 +1,4 @@
-import { infiniteQueryOptions, useInfiniteQuery } from "@tanstack/react-query";
+import { infiniteQueryOptions } from "@tanstack/react-query";
 import { getAllProjects } from "../projectApis";
 
 // export function useGetAllProjects() {
@@ -15,6 +15,7 @@ export const useGetAllProjects = infiniteQueryOptions({
   queryKey: ["projects"],
   queryFn: getAllProjects,
   initialPageParam: 0,
+
   getNextPageParam: (lastPage, allPages) => {
     return lastPage.length === 0 ? undefined : allPages.length + 1;
   },
