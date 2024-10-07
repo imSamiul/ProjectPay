@@ -22,7 +22,7 @@ function AllProject({
   }, [inView, fetchNextPage]);
 
   return (
-    <div className="grid grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
       {projects
         ?.sort((a: ProjectType, b: ProjectType) => {
           if (a.status === false && b.status === true) {
@@ -41,8 +41,8 @@ function AllProject({
                 project.status === false ? "bg-[#fefae0]" : "bg-[#fefae0]/40"
               } min-h-60   p-5 shadow-md rounded-md`}
             >
-              <div className="flex  justify-between text-xl mb-0">
-                <h3 className="font-lexend font-bold text-black">
+              <div className="flex  justify-between text-lg md:text-xl mb-0">
+                <h3 className="font-lexend font-bold text-black ">
                   {project.name}
                 </h3>
                 <div
