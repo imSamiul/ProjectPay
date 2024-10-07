@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import AllProject from "../../../components/overview/AllProject";
-import { useGetAllProjects } from "../../../services/queries/projectQueries";
+
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { useGetManagerProjects } from "../../../services/queries/managerQueries";
 
 export const Route = createFileRoute("/_authenticated/projectManager/overview")(
   {
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/_authenticated/projectManager/overview")(
       const { queryClient } = context;
       const data =
         queryClient.getQueryData(["project"]) ??
-        (await queryClient.fetchInfiniteQuery(useGetAllProjects));
+        (await queryClient.fetchInfiniteQuery(useGetManagerProjects));
       return data;
     },
     component: Overview,
@@ -24,7 +25,7 @@ function Overview() {
     fetchNextPage,
 
     hasNextPage,
-  } = useSuspenseInfiniteQuery(useGetAllProjects);
+  } = useSuspenseInfiniteQuery(useGetManagerProjects);
   console.log(data.pages);
 
   const toDos = useMemo(() => {

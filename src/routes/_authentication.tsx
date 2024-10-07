@@ -1,9 +1,16 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
-import authenticationPageImage from '../assets/authentication-page-image.jpg'
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import authenticationPageImage from "../assets/authentication-page-image.jpg";
 
-export const Route = createFileRoute('/_authentication')({
+export const Route = createFileRoute("/_authentication")({
   component: AuthenticationLayout,
-})
+  beforeLoad: async ({ context }) => {
+    if (context.auth.isLogged()) {
+      throw redirect({
+        to: "/",
+      });
+    }
+  },
+});
 
 function AuthenticationLayout() {
   return (
@@ -19,5 +26,5 @@ function AuthenticationLayout() {
         />
       </div>
     </div>
-  )
+  );
 }

@@ -1,6 +1,3 @@
-import { infiniteQueryOptions } from "@tanstack/react-query";
-import { getAllProjects } from "../projectApis";
-
 // export function useGetAllProjects() {
 //   return useInfiniteQuery({
 //     queryKey: ["projects"],
@@ -11,12 +8,12 @@ import { getAllProjects } from "../projectApis";
 //   });
 // }
 
-export const useGetAllProjects = infiniteQueryOptions({
-  queryKey: ["projects"],
-  queryFn: getAllProjects,
-  initialPageParam: 0,
+// export const useGetAllProjects = infiniteQueryOptions({
+//   queryKey: ["projects"],
+//   queryFn: getAllProjects,
+//   initialPageParam: 0,
 
-  getNextPageParam: (lastPage, allPages) => {
-    return lastPage.length === 0 ? undefined : allPages.length + 1;
-  },
-});
+//   getNextPageParam: (lastPage, allPages) => {
+//     return lastPage.length === 0 ? undefined : allPages.length + 1;
+//   },
+// });
