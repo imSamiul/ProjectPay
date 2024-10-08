@@ -61,7 +61,13 @@ function AllProject({
                 </div>
               </div>
 
-              <div className="divider mt-0"></div>
+              <div className="divider my-0"></div>
+              <p className="text-lg text-black">
+                <span className="font-bold text-martinique-950">
+                  Project ID:{" "}
+                </span>
+                {project.projectId}
+              </p>
               <p className="text-lg text-black">
                 <span className="font-bold text-martinique-950">
                   Client Name:{" "}
