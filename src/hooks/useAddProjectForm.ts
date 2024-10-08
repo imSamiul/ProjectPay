@@ -8,7 +8,6 @@ const initialProject: ProjectType = {
   name: "",
   budget: undefined,
   advance: undefined,
-
   client: "",
   clientPhone: "",
   clientEmail: "",
@@ -82,17 +81,11 @@ export function useProjectForm() {
     if (!validateForm()) {
       return;
     }
-    const due = Number(project.budget) - Number(project.advance);
-    console.log(due);
 
-    const updatedProject = {
-      ...project,
-      due: Number(project.budget) - Number(project.advance),
-    };
-    createNewProjectMutation.mutate(updatedProject);
+    createNewProjectMutation.mutate(project);
 
     // Add logic to handle form submission (e.g., mutation, API call, etc.)
-    console.log("Form submitted successfully!", updatedProject);
+    console.log("Form submitted successfully!", project);
     setProject(initialProject); // Reset form after successful submission
   };
 

@@ -32,7 +32,7 @@ function AddProject() {
               type="text"
               name="name"
               value={project.name}
-              placeholder="Project Name"
+              placeholder="Project Name (required)"
               onChange={handleInputChange}
             />
           </div>
@@ -43,7 +43,7 @@ function AddProject() {
               type="number"
               name="budget"
               value={project.budget ?? ""}
-              placeholder="Project Total Budget"
+              placeholder="Project Total Budget (required)"
               onChange={handleInputChange}
             />
           </div>
@@ -54,7 +54,7 @@ function AddProject() {
               type="number"
               name="advance"
               value={project.advance ?? ""}
-              placeholder="Advance Payment"
+              placeholder="Advance Payment (required)"
               onChange={handleInputChange}
             />
           </div>
@@ -66,7 +66,7 @@ function AddProject() {
               type="text"
               name="client"
               value={project.client}
-              placeholder="Client Name"
+              placeholder="Client Name (required)"
               onChange={handleInputChange}
             />
           </div>
@@ -78,7 +78,7 @@ function AddProject() {
                 className="input input-bordered w-full"
                 type="tel"
                 name="clientPhone"
-                placeholder="Client Phone Number (eg. 17XXXXXXXX)"
+                placeholder="Client Phone Number (eg. 17XXXXXXXX) (required)"
                 value={project.clientPhone}
                 onChange={handleInputChange}
               />
@@ -90,7 +90,7 @@ function AddProject() {
               className="input input-bordered"
               type="email"
               name="clientEmail"
-              placeholder="Client Email Address"
+              placeholder="Client Email Address (required)"
               value={project.clientEmail}
               onChange={handleInputChange}
             />
@@ -128,7 +128,9 @@ function AddProject() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold">End Date:</label>
+            <label className="text-lg font-semibold">
+              End Date: (required)
+            </label>
             <input
               className="input input-bordered"
               type="date"
