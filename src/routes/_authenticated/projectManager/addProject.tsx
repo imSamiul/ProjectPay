@@ -75,7 +75,7 @@ function AddProject() {
             <div className="flex items-center gap-2">
               <p>(+880)</p>
               <input
-                className="input input-bordered "
+                className="input input-bordered w-full"
                 type="tel"
                 name="clientPhone"
                 placeholder="Client Phone Number (eg. 17XXXXXXXX)"
@@ -96,6 +96,28 @@ function AddProject() {
             />
           </div>
           <div className="flex flex-col gap-2">
+            <label className="text-lg font-semibold">Client Address:</label>
+            <input
+              className="input input-bordered"
+              type="text"
+              name="clientAddress"
+              placeholder="Client Address"
+              value={project.clientAddress}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-lg font-semibold">Client Details:</label>
+            <input
+              className="input input-bordered"
+              type="text"
+              name="clientDetails"
+              placeholder="Client Details"
+              value={project.clientDetails}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
             <label className="text-lg font-semibold">Start Date:</label>
             <input
               className="input input-bordered"
@@ -112,6 +134,28 @@ function AddProject() {
               type="date"
               name="endDate"
               value={project.endDate}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-lg font-semibold">Demo Link:</label>
+            <input
+              className="input input-bordered"
+              type="text"
+              name="demoLink"
+              value={project.demoLink}
+              placeholder="Demo Link"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-lg font-semibold">Type of web:</label>
+            <input
+              className="input input-bordered"
+              type="text"
+              name="typeOfWeb"
+              value={project.typeOfWeb}
+              placeholder="Type of Web (eg. E-commerce)"
               onChange={handleInputChange}
             />
           </div>

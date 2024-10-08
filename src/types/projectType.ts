@@ -1,6 +1,6 @@
 export type ProjectType = {
   _id?: string;
-  projectId: string;
+  projectId?: string;
   name: string;
   budget: number | undefined;
   advance: number | undefined;

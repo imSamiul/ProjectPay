@@ -8,13 +8,17 @@ const initialProject: ProjectType = {
   name: "",
   budget: undefined,
   advance: undefined,
-  due: undefined,
+
   client: "",
   clientPhone: "",
   clientEmail: "",
-  description: "",
+  clientAddress: "",
+  clientDetails: "",
   startDate: new Date().toISOString().split("T")[0],
   endDate: "",
+  demoLink: "",
+  typeOfWeb: "",
+  description: "",
   status: false,
 };
 
