@@ -51,7 +51,7 @@ function Navbar() {
 
   return (
     <div>
-      <div className="navbar bg-mallard-900 text-white font-lexend flex">
+      <div className="navbar bg-martinique-900 text-white font-lexend flex">
         <div className="navbar-start flex-[2] md:flex-1">
           {isLogged && (
             <div className="dropdown">
@@ -101,7 +101,7 @@ function Navbar() {
               <Link
                 to={item.link}
                 key={index}
-                activeProps={{ className: "rounded-md bg-mallard-800" }}
+                activeProps={{ className: "rounded-md bg-martinique-800" }}
               >
                 <li>
                   <p>{item.title}</p>

@@ -9,7 +9,7 @@ interface ButtonProps {
 function Button({ className, children }: ButtonProps) {
   return (
     <button
-      className={`btn bg-mallard-500 outline-none border-none hover:bg-mallard-600 dark:text-black  ${className}`}
+      className={`btn bg-martinique-500 outline-none border-none hover:bg-martinique-600   ${className}`}
     >
       {children}
     </button>

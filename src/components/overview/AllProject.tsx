@@ -8,6 +8,9 @@ type AllProjectPropsType = {
   fetchNextPage: () => void;
 };
 
+// true => Done
+// false => Not Done
+
 function AllProject({
   projects,
   hasNextPage,
@@ -22,7 +25,7 @@ function AllProject({
   }, [inView, fetchNextPage]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 font-notoSans">
       {projects
         ?.sort((a: ProjectType, b: ProjectType) => {
           if (a.status === false && b.status === true) {
@@ -38,7 +41,9 @@ function AllProject({
             <div
               key={project._id}
               className={`${
-                project.status === false ? "bg-[#fefae0]" : "bg-[#fefae0]/40"
+                project.status === false
+                  ? "bg-martinique-50"
+                  : "bg-martinique-200"
               } min-h-60   p-5 shadow-md rounded-md`}
             >
               <div className="flex  justify-between text-lg md:text-xl mb-0">
@@ -48,7 +53,7 @@ function AllProject({
                 <div
                   className={
                     project.status === true
-                      ? "bg-[#283618] text-white py-1 px-2 rounded"
+                      ? "bg-martinique-700 text-white py-1 px-2 rounded"
                       : ""
                   }
                 >
@@ -58,27 +63,33 @@ function AllProject({
 
               <div className="divider mt-0"></div>
               <p className="text-lg text-black">
-                <span className="font-bold text-[#bc6c25]">Client Name: </span>
+                <span className="font-bold text-martinique-950">
+                  Client Name:{" "}
+                </span>
                 {project.client}
               </p>
               <p className="text-lg text-black">
-                <span className="font-bold text-[#bc6c25]">Client Phone: </span>
+                <span className="font-bold text-martinique-950">
+                  Client Phone:{" "}
+                </span>
                 {project.clientPhone}
               </p>
               <p className="text-lg text-black">
-                <span className="font-bold text-[#bc6c25]">Budget: </span>
+                <span className="font-bold text-martinique-950">Budget: </span>
                 {project.budget}
               </p>
               <p className="text-lg text-black">
-                <span className="font-bold text-[#bc6c25]">Advance: </span>
+                <span className="font-bold text-martinique-950">Advance: </span>
                 {project.advance}
               </p>
               <p className="text-lg text-black">
-                <span className="font-bold text-[#bc6c25]">Due: </span>
+                <span className="font-bold text-martinique-950">Due: </span>
                 {project.due}
               </p>
               <p className="text-lg text-black">
-                <span className="font-bold text-[#bc6c25]">Deadline: </span>
+                <span className="font-bold text-martinique-950">
+                  Deadline:{" "}
+                </span>
                 {project.endDate}
               </p>
             </div>

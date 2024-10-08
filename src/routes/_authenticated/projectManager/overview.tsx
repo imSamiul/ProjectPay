@@ -28,7 +28,7 @@ function Overview() {
   } = useSuspenseInfiniteQuery(useGetManagerProjects);
   console.log(data.pages);
 
-  const toDos = useMemo(() => {
+  const projects = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
     }, []);
@@ -40,7 +40,7 @@ function Overview() {
         <h1 className="text-xl md:text-3xl font-bold">Overview</h1>
         <div className="divider"></div>
         <AllProject
-          projects={toDos}
+          projects={projects}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage}
         />

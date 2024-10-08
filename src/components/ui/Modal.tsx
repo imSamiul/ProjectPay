@@ -32,7 +32,7 @@ function Modal({
     <div>
       {/* Button to open the modal */}
       <button
-        className="btn bg-mallard-500 outline-none border-none hover:bg-mallard-600 dark:text-black "
+        className="btn bg-martinique-500 outline-none border-none hover:bg-martinique-600 text-white  "
         onClick={() => openModal(id)}
       >
         {openButtonLabel}
