@@ -4,6 +4,7 @@ import AllProject from "../../../components/overview/AllProject";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useGetManagerProjects } from "../../../services/queries/managerQueries";
+import SearchBox from "../../../components/overview/SearchBox";
 
 export const Route = createFileRoute("/_authenticated/projectManager/overview")(
   {
@@ -39,11 +40,14 @@ function Overview() {
       <div className="container mx-auto my-5 flex flex-col px-10">
         <h1 className="text-xl md:text-3xl font-bold">Overview</h1>
         <div className="divider"></div>
-        <AllProject
-          projects={projects}
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage}
-        />
+        <div className="flex flex-col gap-4">
+          <SearchBox />
+          <AllProject
+            projects={projects}
+            fetchNextPage={fetchNextPage}
+            hasNextPage={hasNextPage}
+          />
+        </div>
       </div>
     </div>
   );
