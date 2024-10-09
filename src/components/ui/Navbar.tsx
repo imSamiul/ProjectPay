@@ -13,7 +13,7 @@ type NavItem = {
 const projectManagerNavItem: NavItem[] = [
   {
     title: "Overview",
-    link: "/projectManager/overview",
+    link: "/projectManager/managerOverview",
   },
 
   {
