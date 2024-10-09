@@ -1,10 +1,16 @@
 import { useState } from "react";
 
-function SearchBox() {
+type SearchBoxPropsType = {
+  onSearchTextChange: (searchText: string) => void;
+};
+
+function SearchBox({ onSearchTextChange }: SearchBoxPropsType) {
   const [searchText, setSearchText] = useState("");
 
   function searchTextChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchText(event.target.value);
+    const searchText = event.target.value;
+    setSearchText(searchText);
+    onSearchTextChange(searchText);
   }
   return (
     <div>
@@ -14,7 +20,7 @@ function SearchBox() {
         value={searchText}
         onChange={searchTextChangeHandler}
         placeholder="Type to search project by Name or ID"
-        className="input bg-martinique-100 w-full "
+        className="input bg-martinique-100 w-full text-black"
       />
     </div>
   );

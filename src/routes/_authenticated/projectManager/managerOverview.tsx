@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useGetManagerProjects } from "../../../services/queries/managerQueries";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import SearchBox from "../../../components/overview/SearchBox";
 import AllProject from "../../../components/overview/AllProject";
+import { useSearchProject } from "../../../services/queries/projectQueries";
 
 export const Route = createFileRoute(
   "/_authenticated/projectManager/managerOverview",
@@ -20,19 +21,29 @@ export const Route = createFileRoute(
 });
 
 function ManagerOverview() {
+  const [searchText, setSearchText] = useState("");
   const {
-    data,
+    data: allProjectsData,
     fetchNextPage,
-
     hasNextPage,
   } = useSuspenseInfiniteQuery(useGetManagerProjects);
-  console.log(data.pages);
 
+  // Fetch searched projects if search text exists
+  const { data: searchResults } = useSearchProject(searchText);
+
+  // Memoize the projects to display
   const projects = useMemo(() => {
-    return data?.pages.reduce((acc, page) => {
-      return [...acc, ...page];
-    }, []);
-  }, [data]);
+    if (searchText) {
+      return searchResults || []; // If searching, return search results
+    } else {
+      return allProjectsData?.pages.reduce(
+        (acc, page) => [...acc, ...page],
+        [],
+      ); // Otherwise, return all projects
+    }
+  }, [searchText, searchResults, allProjectsData]);
+
+  const isSearching = !!searchText;
 
   return (
     <div>
@@ -40,11 +51,12 @@ function ManagerOverview() {
         <h1 className="text-xl md:text-3xl font-bold">Overview</h1>
         <div className="divider"></div>
         <div className="flex flex-col gap-4">
-          <SearchBox />
+          <SearchBox onSearchTextChange={setSearchText} />
           <AllProject
             projects={projects}
             fetchNextPage={fetchNextPage}
             hasNextPage={hasNextPage}
+            isSearching={isSearching}
           />
         </div>
       </div>

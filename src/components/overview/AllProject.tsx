@@ -6,6 +6,7 @@ type AllProjectPropsType = {
   projects: ProjectType[];
   hasNextPage: boolean;
   fetchNextPage: () => void;
+  isSearching: boolean;
 };
 
 // true => Done
@@ -15,6 +16,7 @@ function AllProject({
   projects,
   hasNextPage,
   fetchNextPage,
+  isSearching,
 }: AllProjectPropsType) {
   const { ref, inView } = useInView();
 
@@ -23,6 +25,12 @@ function AllProject({
       fetchNextPage();
     }
   }, [inView, fetchNextPage]);
+
+  console.log(hasNextPage);
+
+  if (projects.length === 0) {
+    return <div>No Projects Found</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 font-notoSans">
@@ -102,7 +110,7 @@ function AllProject({
           );
         })}
 
-      {hasNextPage && <div ref={ref}>Loading...</div>}
+      {hasNextPage && !isSearching && <div ref={ref}>Loading...</div>}
     </div>
   );
 }

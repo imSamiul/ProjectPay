@@ -8,6 +8,9 @@
 //   });
 // }
 
+import { useQuery } from "@tanstack/react-query";
+import { searchProject } from "../projectApis";
+
 // export const useGetAllProjects = infiniteQueryOptions({
 //   queryKey: ["projects"],
 //   queryFn: getAllProjects,
@@ -17,3 +20,11 @@
 //     return lastPage.length === 0 ? undefined : allPages.length + 1;
 //   },
 // });
+
+export function useSearchProject(searchString: string) {
+  return useQuery({
+    queryKey: ["projects", searchString],
+    queryFn: () => searchProject(searchString),
+    enabled: !!searchString,
+  });
+}
