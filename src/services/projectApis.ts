@@ -33,6 +33,21 @@ instance.interceptors.request.use((config) => {
 //   }
 // }
 
+// search project
+export async function searchProject(searchString: string) {
+  try {
+    const response = await instance.get("/search", {
+      params: {
+        q: searchString,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error searching project:", error);
+    throw error;
+  }
+}
+
 // POST:project
 // create new project
 export async function createNewProject(projectObject: ProjectType) {
