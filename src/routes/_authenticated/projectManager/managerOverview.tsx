@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import SearchBox from "../../../components/overview/SearchBox";
 import AllProject from "../../../components/overview/AllProject";
 import { useSearchProject } from "../../../services/queries/projectQueries";
+import { useDebounce } from "@uidotdev/usehooks";
 
 export const Route = createFileRoute(
   "/_authenticated/projectManager/managerOverview",
@@ -22,6 +23,7 @@ export const Route = createFileRoute(
 
 function ManagerOverview() {
   const [searchText, setSearchText] = useState("");
+  const debouncedSearchText = useDebounce(searchText, 1000); // 1 second debounce
   const {
     data: allProjectsData,
     fetchNextPage,
@@ -29,11 +31,12 @@ function ManagerOverview() {
   } = useSuspenseInfiniteQuery(useGetManagerProjects);
 
   // Fetch searched projects if search text exists
-  const { data: searchResults } = useSearchProject(searchText);
+  const { data: searchResults, isLoading } =
+    useSearchProject(debouncedSearchText);
 
   // Memoize the projects to display
   const projects = useMemo(() => {
-    if (searchText) {
+    if (debouncedSearchText) {
       return searchResults || []; // If searching, return search results
     } else {
       return allProjectsData?.pages.reduce(
@@ -41,9 +44,9 @@ function ManagerOverview() {
         [],
       ); // Otherwise, return all projects
     }
-  }, [searchText, searchResults, allProjectsData]);
+  }, [debouncedSearchText, searchResults, allProjectsData]);
 
-  const isSearching = !!searchText;
+  const isSearching = !!debouncedSearchText;
 
   return (
     <div>
@@ -54,6 +57,7 @@ function ManagerOverview() {
           <SearchBox onSearchTextChange={setSearchText} />
           <AllProject
             projects={projects}
+            isLoading={isLoading}
             fetchNextPage={fetchNextPage}
             hasNextPage={hasNextPage}
             isSearching={isSearching}

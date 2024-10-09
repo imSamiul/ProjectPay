@@ -7,6 +7,7 @@ type AllProjectPropsType = {
   hasNextPage: boolean;
   fetchNextPage: () => void;
   isSearching: boolean;
+  isLoading?: boolean;
 };
 
 // true => Done
@@ -17,6 +18,7 @@ function AllProject({
   hasNextPage,
   fetchNextPage,
   isSearching,
+  isLoading,
 }: AllProjectPropsType) {
   const { ref, inView } = useInView();
 
@@ -27,6 +29,10 @@ function AllProject({
   }, [inView, fetchNextPage]);
 
   console.log(hasNextPage);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (projects.length === 0) {
     return <div>No Projects Found</div>;
