@@ -6,6 +6,7 @@ import SearchBox from "../../../components/overview/SearchBox";
 import AllProject from "../../../components/overview/AllProject";
 import { useSearchProject } from "../../../services/queries/projectQueries";
 import { useDebounce } from "@uidotdev/usehooks";
+import { ProjectType } from "../../../types/projectType";
 
 export const Route = createFileRoute(
   "/_authenticated/projectManager/managerOverview",
@@ -47,6 +48,17 @@ function ManagerOverview() {
   }, [debouncedSearchText, searchResults, allProjectsData]);
 
   const isSearching = !!debouncedSearchText;
+  const sortedProjects = isSearching
+    ? projects // If searching, do not sort
+    : projects?.sort((a: ProjectType, b: ProjectType) => {
+        if (a.status === false && b.status === true) {
+          return -1;
+        } else if (a.status === true && b.status === false) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
 
   return (
     <div>
@@ -56,7 +68,7 @@ function ManagerOverview() {
         <div className="flex flex-col gap-4">
           <SearchBox onSearchTextChange={setSearchText} />
           <AllProject
-            projects={projects}
+            projects={sortedProjects}
             isLoading={isLoading}
             fetchNextPage={fetchNextPage}
             hasNextPage={hasNextPage}
