@@ -1,6 +1,7 @@
 import { useInView } from "react-intersection-observer";
 import { ProjectType } from "../../types/projectType";
 import { useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 
 type AllProjectPropsType = {
   projects: ProjectType[];
@@ -42,13 +43,14 @@ function AllProject({
     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 font-notoSans">
       {projects.map((project: ProjectType) => {
         return (
-          <div
+          <Link
             key={project._id}
             className={`${
               project.status === false
                 ? "bg-martinique-50"
                 : "bg-martinique-200"
             } min-h-60   p-5 shadow-md rounded-md`}
+            to={`/project/${project._id}`}
           >
             <div className="flex  justify-between text-lg md:text-xl mb-0">
               <h3 className="font-lexend font-bold text-black ">
@@ -68,9 +70,9 @@ function AllProject({
             <div className="divider my-0"></div>
             <p className="text-lg text-black">
               <span className="font-bold text-martinique-950">
-                Project ID:{" "}
+                Project Code:{" "}
               </span>
-              {project.projectId}
+              {project.projectCode}
             </p>
             <p className="text-lg text-black">
               <span className="font-bold text-martinique-950">
@@ -100,7 +102,7 @@ function AllProject({
               <span className="font-bold text-martinique-950">Deadline: </span>
               {project.endDate}
             </p>
-          </div>
+          </Link>
         );
       })}
 

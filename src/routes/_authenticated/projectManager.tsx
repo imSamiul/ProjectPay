@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { ErrorComponentProps } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/projectManager")({
   beforeLoad: async ({ context }) => {
@@ -12,15 +13,9 @@ export const Route = createFileRoute("/_authenticated/projectManager")({
       throw new Error("You are not authorized to access this page");
     }
   },
-  loader: ({ context }) => {
-    // console.log(context.auth.user);
-    return context.auth.user;
-  },
+
   component: ProjectManagerLayout,
-  errorComponent: (error) => {
-    console.log(error.error.message);
-    return <div>There is an error </div>;
-  },
+  errorComponent: ErrorComponent,
   onError: (error) => {
     console.error(error);
   },
@@ -32,4 +27,8 @@ function ProjectManagerLayout() {
       <Outlet />
     </div>
   );
+}
+
+function ErrorComponent({ error }: ErrorComponentProps) {
+  return <div>{error.message}</div>;
 }
