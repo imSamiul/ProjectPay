@@ -21,17 +21,18 @@ instance.interceptors.request.use((config) => {
 });
 
 // GET:Project
-// export async function getAllProjects({ pageParam }: { pageParam: number }) {
-//   try {
-//     const response = await axios.get(
-//       `https://jsonplaceholder.typicode.com/todos?_page=${pageParam}&_limit=5`,
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.log("Error loading all projects", error);
-//     throw error;
-//   }
-// }
+// get project details
+export async function getProjectDetails(projectCode: string) {
+  try {
+    const response = await instance.get(`/details/${projectCode}`);
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching project details:", error);
+    throw error;
+  }
+}
 
 // search project
 export async function searchProject(searchString: string) {
