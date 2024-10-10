@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_authenticated/projectManager")({
       throw new Error("User not available in context");
     }
 
-    if (user.userType !== "project-manager") {
+    if (user.userType !== "projectManager") {
       throw new Error("You are not authorized to access this page");
     }
   },

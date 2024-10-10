@@ -50,7 +50,8 @@ function AllProject({
                 ? "bg-martinique-50"
                 : "bg-martinique-200"
             } min-h-60   p-5 shadow-md rounded-md`}
-            to={`/project/${project._id}`}
+            to={`/project/$projectCode`}
+            params={{ projectCode: project.projectCode }}
           >
             <div className="flex  justify-between text-lg md:text-xl mb-0">
               <h3 className="font-lexend font-bold text-black ">

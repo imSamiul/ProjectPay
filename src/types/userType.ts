@@ -4,5 +4,5 @@ export type UserType = {
   email: string;
   phone?: string;
   password: string;
-  userType?: "client" | "admin" | "project-manager";
+  userType?: "client" | "admin" | "projectManager";
 };
