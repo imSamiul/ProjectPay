@@ -1,3 +1,5 @@
+import { ManagerType } from "./managerType";
+
 export type ProjectType = {
   _id?: string;
   projectCode: string;
@@ -16,5 +18,6 @@ export type ProjectType = {
   typeOfWeb: string;
   description: string;
   status: boolean;
+  projectManager: ManagerType;
   verifiedClientList?: string[];
 };

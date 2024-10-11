@@ -33,6 +33,8 @@ function Navbar() {
   const logOutUserMutation = useLogOutUser();
 
   const isLogged = auth.isLogged();
+  console.log(isLogged);
+
   const userType = auth.user?.userType;
 
   let navItem: NavItem[] = [];
@@ -82,7 +84,9 @@ function Navbar() {
                 {navItem.map((item, index) => (
                   <Link to={item.link} key={index} className="">
                     <li>
-                      <p className="text-white">{item.title}</p>
+                      <p className="text-black dark:text-white ">
+                        {item.title}
+                      </p>
                     </li>
                   </Link>
                 ))}
