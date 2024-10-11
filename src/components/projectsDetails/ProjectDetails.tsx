@@ -86,7 +86,7 @@ type ProjectDetailsPropsType = {
 
 function ProjectDetails({ details }: ProjectDetailsPropsType) {
   return (
-    <div className="container mx-auto p-4  ">
+    <div className="mb-5">
       <div className="flex flex-col md:flex-row md:justify-between items-center">
         <h1 className="text-2xl font-bold md:text-3xl font-lexend mb-4">
           {details.name}
@@ -115,7 +115,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
         <div className="card-body">
           <h3 className="text-lg md:text-xl font-semibold">Project Section</h3>
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
-          <div className="grid grid-cols-1 md:grid-cols-3 mb-4 gap-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 mb-4 gap-1">
             {ProjectSection.map((projectDetail) => {
               const value = details[projectDetail.value];
               return (
@@ -133,7 +133,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
 
           <h3 className="text-lg md:text-xl font-semibold">Client Section</h3>
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-1 mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 mb-4">
             {ClientSection.map((clientDetail) => {
               const value = details[clientDetail.value];
               return (
@@ -150,7 +150,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           </div>
           <h3 className="text-lg md:text-xl font-semibold">Manager Section</h3>
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
             {ProjectManager.map((managerDetail) => {
               const value = details.projectManager[managerDetail.value];
               return (

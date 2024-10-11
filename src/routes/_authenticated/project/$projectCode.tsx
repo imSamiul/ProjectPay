@@ -1,6 +1,7 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useGetProjectDetails } from "../../../services/queries/projectQueries";
 import ProjectDetails from "../../../components/projectsDetails/ProjectDetails";
+import PaymentList from "../../../components/projectsDetails/PaymentList";
 
 export const Route = createFileRoute("/_authenticated/project/$projectCode")({
   component: Project,
@@ -22,8 +23,9 @@ function Project() {
   }
 
   return (
-    <div>
+    <div className="container mx-auto p-4 ">
       <ProjectDetails details={data} />
+      <PaymentList />
     </div>
   );
 }
