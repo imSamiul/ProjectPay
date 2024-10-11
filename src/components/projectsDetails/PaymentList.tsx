@@ -1,5 +1,5 @@
 import Button from "../ui/Button";
-import InputModal from "../ui/InputModal";
+import PaymentModal from "../ui/PaymentModal";
 
 function PaymentList() {
   return (
@@ -46,7 +46,7 @@ function PaymentList() {
         </div>
       </div>
       <Button>Edit</Button>
-      <InputModal
+      <PaymentModal
         id="paymentModal"
         title="Add Payment"
         content="Edit Payment"

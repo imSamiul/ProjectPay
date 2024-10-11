@@ -1,7 +1,7 @@
+import Button from "./Button";
 import CustomDatePicker from "./CustomDatePicker";
-import CustomDateInput from "./CustomDatePicker";
 
-type InputModalProps = {
+type PaymentModalPropsType = {
   id: string;
   title: string;
   content: string;
@@ -11,7 +11,7 @@ type InputModalProps = {
   btnConfirmAction: () => void;
 };
 
-function InputModal({
+function PaymentModal({
   id,
   title,
   content,
@@ -19,7 +19,7 @@ function InputModal({
   closeButtonLabel = "Close",
   confirmButtonLabel = "Confirm",
   btnConfirmAction,
-}: InputModalProps) {
+}: PaymentModalPropsType) {
   const openModal = (modalId: string) => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
     modal?.showModal();
@@ -55,25 +55,25 @@ function InputModal({
                 placeholder="Amount (required)"
               />
             </div>
-            <div className="flex flex-col gap-2">
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="text-base label-text">
-                    Pick a payment method
-                  </span>
-                </div>
-                <select className="select select-bordered">
-                  <option disabled selected>
-                    Pick one
-                  </option>
-                  <option>Cash</option>
-                  <option>Bkash</option>
-                  <option>Nagad</option>
-                  <option>Rocket</option>
-                  <option>Bank</option>
-                </select>
-              </label>
-            </div>
+
+            <label className="form-control w-full gap-2">
+              <div className="label p-0">
+                <span className="text-base md:st label-text">
+                  Pick a payment method
+                </span>
+              </div>
+              <select className="select select-bordered">
+                <option disabled selected>
+                  Pick one
+                </option>
+                <option>Cash</option>
+                <option>Bkash</option>
+                <option>Nagad</option>
+                <option>Rocket</option>
+                <option>Bank</option>
+              </select>
+            </label>
+
             <div className="flex flex-col gap-2">
               <label className="text-base">Transaction Id:</label>
               <input
@@ -88,10 +88,10 @@ function InputModal({
           <div className="modal-action">
             <form method="dialog " onSubmit={handleSubmitHandler}>
               <div className="flex gap-3">
-                <button className="btn">{closeButtonLabel}</button>
-                <button className="btn" onClick={btnConfirmAction}>
+                <Button className="btn">{closeButtonLabel}</Button>
+                <Button className="btn" onClick={btnConfirmAction}>
                   {confirmButtonLabel}
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -104,4 +104,4 @@ function InputModal({
   );
 }
 
-export default InputModal;
+export default PaymentModal;
