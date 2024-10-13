@@ -50,7 +50,6 @@ function PaymentList() {
         id="paymentModal"
         title="Add Payment"
         content="Edit Payment"
-        btnConfirmAction={console.log("Edit Payment")}
       />
     </div>
   );

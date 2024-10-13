@@ -152,7 +152,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
             {ProjectManager.map((managerDetail) => {
-              const value = details.projectManager[managerDetail.value];
+              const value = details.projectManager?.[managerDetail.value];
               return (
                 <p key={managerDetail.value} className="text-base md:text-xl">
                   <span className="text-martinique-900 font-medium">

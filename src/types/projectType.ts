@@ -2,7 +2,7 @@ import { ManagerType } from "./managerType";
 
 export type ProjectType = {
   _id?: string;
-  projectCode: string;
+  projectCode?: string;
   name: string;
   budget: number | undefined;
   advance: number | undefined;
@@ -18,6 +18,6 @@ export type ProjectType = {
   typeOfWeb: string;
   description: string;
   status: boolean;
-  projectManager: ManagerType;
+  projectManager?: ManagerType;
   verifiedClientList?: string[];
 };

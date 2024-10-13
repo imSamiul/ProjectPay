@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Button from "./Button";
 import CustomDatePicker from "./CustomDatePicker";
+import { PaymentType } from "../../types/paymentType";
 
 type PaymentModalPropsType = {
   id: string;
@@ -8,28 +10,63 @@ type PaymentModalPropsType = {
   openButtonLabel?: string; // Optional prop with a default value
   closeButtonLabel?: string; // Optional prop with a default value
   confirmButtonLabel?: string; // Optional prop with a default value
-  btnConfirmAction: () => void;
+};
+
+const INITIAL_VALUES: PaymentType = {
+  projectId: "",
+  paymentDate: new Date(),
+  paymentAmount: 0,
+  paymentMethod: "",
+  transactionId: "",
 };
 
 function PaymentModal({
   id,
   title,
-  content,
+  // content,
   openButtonLabel = "Open Modal",
   closeButtonLabel = "Close",
   confirmButtonLabel = "Confirm",
-  btnConfirmAction,
 }: PaymentModalPropsType) {
+  const [paymentModalFormValues, setPaymentModalFormValues] =
+    useState<PaymentType>(INITIAL_VALUES);
+
   const openModal = (modalId: string) => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
     modal?.showModal();
   };
+
+  function handleInputChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) {
+    const { name, value } = e.target;
+    setPaymentModalFormValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  function handleDateChange(date: Date | null) {
+    if (date) {
+      setPaymentModalFormValues((prev) => ({
+        ...prev,
+        paymentDate: date,
+      }));
+    }
+  }
 
   const handleSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const modal = document.getElementById(id) as HTMLDialogElement;
     modal?.close();
   };
+
+  function btnConfirmAction() {
+    console.log("called");
+
+    console.log("Payment Modal Form Values: ", paymentModalFormValues);
+  }
+
   return (
     <div>
       {/* Button to open the modal */}
@@ -51,7 +88,9 @@ function PaymentModal({
               <input
                 className="input input-bordered input-md"
                 type="number"
-                name="amount"
+                name="paymentAmount"
+                value={paymentModalFormValues.paymentAmount}
+                onChange={handleInputChange}
                 placeholder="Amount (required)"
               />
             </div>
@@ -62,7 +101,11 @@ function PaymentModal({
                   Pick a payment method
                 </span>
               </div>
-              <select className="select select-bordered">
+              <select
+                className="select select-bordered"
+                name="paymentMethod"
+                onChange={handleInputChange}
+              >
                 <option disabled selected>
                   Pick one
                 </option>
@@ -80,18 +123,23 @@ function PaymentModal({
                 className="input input-bordered"
                 type="text"
                 name="transactionId"
+                onChange={handleInputChange}
                 placeholder="TrxId"
               />
             </div>
-            <CustomDatePicker label="Payment Date: " />
+            <CustomDatePicker
+              label="Payment Date: "
+              paymentDate={paymentModalFormValues.paymentDate}
+              onSelectDate={handleDateChange}
+            />
           </div>
           <div className="modal-action">
             <form method="dialog " onSubmit={handleSubmitHandler}>
               <div className="flex gap-3">
-                <Button className="btn">{closeButtonLabel}</Button>
-                <Button className="btn" onClick={btnConfirmAction}>
+                <button className="btn">{closeButtonLabel}</button>
+                <button className="btn" onClick={btnConfirmAction}>
                   {confirmButtonLabel}
-                </Button>
+                </button>
               </div>
             </form>
           </div>
