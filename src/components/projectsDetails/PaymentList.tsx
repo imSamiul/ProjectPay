@@ -1,3 +1,4 @@
+import { PaymentType } from "../../types/paymentType";
 import Button from "../ui/Button";
 import PaymentModal from "../ui/PaymentModal";
 
@@ -5,13 +6,24 @@ type PaymentListPropsType = {
   projectName: string;
   due: number;
   projectId: string;
+  paymentList: PaymentType[];
 };
 
-function PaymentList({ projectName, due, projectId }: PaymentListPropsType) {
+function PaymentList({
+  projectName,
+  due,
+  projectId,
+  paymentList,
+}: PaymentListPropsType) {
+  console.log(paymentList);
+
   return (
     <div>
-      <h1>Payments</h1>
-      <div className="card">
+      <h1 className="text-2xl font-bold md:text-3xl font-lexend mb-4">
+        Payments
+      </h1>
+      <div className="divider my-0"></div>
+      <div className="dark:bg-martinique-200 card text-black shadow-xl border">
         <div className="card-body">
           <div className="overflow-x-auto">
             <table className="table">
@@ -19,45 +31,36 @@ function PaymentList({ projectName, due, projectId }: PaymentListPropsType) {
               <thead>
                 <tr>
                   <th></th>
-                  <th>Name</th>
-                  <th>Job</th>
-                  <th>Favorite Color</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Payment Method</th>
+                  <th>Transaction Id</th>
                 </tr>
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr>
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>Purple</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>Red</td>
-                </tr>
+                {paymentList.map((payment, index) => (
+                  <tr key={payment._id}>
+                    <th>{index + 1}</th>
+                    <td>{payment.paymentAmount}</td>
+                    <td>{payment.paymentMethod}</td>
+                    <td>{payment.transactionId}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
+        <div className="flex justify-end my-2 p-2 gap-2">
+          <Button>Edit</Button>
+          <PaymentModal
+            id="paymentModal"
+            projectName={projectName}
+            due={due}
+            projectId={projectId}
+          />
+        </div>
       </div>
-      <Button>Edit</Button>
-      <PaymentModal
-        id="paymentModal"
-        projectName={projectName}
-        due={due}
-        projectId={projectId}
-      />
     </div>
   );
 }

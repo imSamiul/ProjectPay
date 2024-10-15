@@ -28,6 +28,7 @@ function Project() {
         projectName={data.name}
         due={data.due}
         projectId={data._id}
+        paymentList={data.paymentList}
       />
     </div>
   );
