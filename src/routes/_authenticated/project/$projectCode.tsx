@@ -11,7 +11,6 @@ function Project() {
   const { projectCode } = useParams({
     from: "/_authenticated/project/$projectCode",
   });
-  console.log(projectCode);
 
   const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
 
@@ -25,7 +24,11 @@ function Project() {
   return (
     <div className="container mx-auto p-4 ">
       <ProjectDetails details={data} />
-      <PaymentList />
+      <PaymentList
+        projectName={data.name}
+        due={data.due}
+        projectId={data._id}
+      />
     </div>
   );
 }

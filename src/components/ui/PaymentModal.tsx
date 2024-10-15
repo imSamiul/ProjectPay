@@ -5,11 +5,9 @@ import { PaymentType } from "../../types/paymentType";
 
 type PaymentModalPropsType = {
   id: string;
-  title: string;
-  content: string;
-  openButtonLabel?: string; // Optional prop with a default value
-  closeButtonLabel?: string; // Optional prop with a default value
-  confirmButtonLabel?: string; // Optional prop with a default value
+  projectName: string;
+  due: number;
+  projectId: string;
 };
 
 const INITIAL_VALUES: PaymentType = {
@@ -22,14 +20,15 @@ const INITIAL_VALUES: PaymentType = {
 
 function PaymentModal({
   id,
-  title,
-  // content,
-  openButtonLabel = "Open Modal",
-  closeButtonLabel = "Close",
-  confirmButtonLabel = "Confirm",
+
+  projectName,
+  due,
+  projectId,
 }: PaymentModalPropsType) {
   const [paymentModalFormValues, setPaymentModalFormValues] =
     useState<PaymentType>(INITIAL_VALUES);
+
+  const [error, setError] = useState<string | null>(null);
 
   const openModal = (modalId: string) => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
@@ -39,6 +38,8 @@ function PaymentModal({
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) {
+    setError(null);
+
     const { name, value } = e.target;
     setPaymentModalFormValues((prev) => ({
       ...prev,
@@ -57,15 +58,26 @@ function PaymentModal({
 
   const handleSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (
+      paymentModalFormValues.paymentAmount <= 0 ||
+      !paymentModalFormValues.paymentMethod ||
+      !paymentModalFormValues.transactionId
+    ) {
+      setError("All fields must be filled correctly.");
+      return;
+    }
+    if (paymentModalFormValues.paymentAmount > due) {
+      setError("Payment amount cannot exceed due amount.");
+      return;
+    }
+    setError(null);
     const modal = document.getElementById(id) as HTMLDialogElement;
     modal?.close();
+    console.log("Payment Modal Form Values: ", {
+      ...paymentModalFormValues,
+      projectId,
+    });
   };
-
-  function btnConfirmAction() {
-    console.log("called");
-
-    console.log("Payment Modal Form Values: ", paymentModalFormValues);
-  }
 
   return (
     <div>
@@ -74,14 +86,19 @@ function PaymentModal({
         className="btn bg-martinique-500 outline-none border-none hover:bg-martinique-600 text-white  "
         onClick={() => openModal(id)}
       >
-        {openButtonLabel}
+        Add Payment
       </button>
 
       {/* Combined Modal with modal-bottom sm:modal-middle */}
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box md:w-11/12 md:max-w-3xl md:overflow-visible">
           {/* Adjust the width here */}
-          <h3 className="font-bold text-base md:text-xl text-black">{title}</h3>
+          <div className="flex items-center justify-between flex-col md:flex-row">
+            <h3 className="font-bold text-base md:text-xl text-black">
+              Add Payment for {projectName}
+            </h3>
+            {error && <p className="text-red-500">{error}</p>}
+          </div>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 ">
             <div className="flex flex-col gap-2">
               <label className="text-base">Amount:</label>
@@ -137,16 +154,14 @@ function PaymentModal({
           <div className="modal-action">
             <form method="dialog " onSubmit={handleSubmitHandler}>
               <div className="flex gap-3">
-                <button className="btn btn-warning">{closeButtonLabel}</button>
-                <button className="btn  btn-success" onClick={btnConfirmAction}>
-                  {confirmButtonLabel}
-                </button>
+                <button className="btn btn-warning">Close</button>
+                <button className="btn  btn-success">Confirm</button>
               </div>
             </form>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
-          <button>{closeButtonLabel}</button>
+          <button>Close</button>
         </form>
       </dialog>
     </div>

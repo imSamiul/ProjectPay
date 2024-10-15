@@ -1,7 +1,13 @@
 import Button from "../ui/Button";
 import PaymentModal from "../ui/PaymentModal";
 
-function PaymentList() {
+type PaymentListPropsType = {
+  projectName: string;
+  due: number;
+  projectId: string;
+};
+
+function PaymentList({ projectName, due, projectId }: PaymentListPropsType) {
   return (
     <div>
       <h1>Payments</h1>
@@ -48,8 +54,9 @@ function PaymentList() {
       <Button>Edit</Button>
       <PaymentModal
         id="paymentModal"
-        title="Add Payment"
-        content="Edit Payment"
+        projectName={projectName}
+        due={due}
+        projectId={projectId}
       />
     </div>
   );
