@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "./Button";
+
 import CustomDatePicker from "./CustomDatePicker";
 import { PaymentType } from "../../types/paymentType";
 
@@ -105,15 +105,16 @@ function PaymentModal({
                 className="select select-bordered"
                 name="paymentMethod"
                 onChange={handleInputChange}
+                value={paymentModalFormValues.paymentMethod}
               >
-                <option disabled selected>
+                <option disabled value="">
                   Pick one
                 </option>
-                <option>Cash</option>
-                <option>Bkash</option>
-                <option>Nagad</option>
-                <option>Rocket</option>
-                <option>Bank</option>
+                <option value="cash">Cash</option>
+                <option value="bkash">Bkash</option>
+                <option value="nagad">Nagad</option>
+                <option value="rocket">Rocket</option>
+                <option value="bank">Bank</option>
               </select>
             </label>
 
@@ -136,8 +137,8 @@ function PaymentModal({
           <div className="modal-action">
             <form method="dialog " onSubmit={handleSubmitHandler}>
               <div className="flex gap-3">
-                <button className="btn">{closeButtonLabel}</button>
-                <button className="btn" onClick={btnConfirmAction}>
+                <button className="btn btn-warning">{closeButtonLabel}</button>
+                <button className="btn  btn-success" onClick={btnConfirmAction}>
                   {confirmButtonLabel}
                 </button>
               </div>
