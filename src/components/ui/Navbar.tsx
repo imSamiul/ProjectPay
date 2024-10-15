@@ -33,7 +33,6 @@ function Navbar() {
   const logOutUserMutation = useLogOutUser();
 
   const isLogged = auth.isLogged();
-  console.log(isLogged);
 
   const userType = auth.user?.userType;
 

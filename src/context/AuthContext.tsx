@@ -22,8 +22,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   function isLogged() {
-    console.log(user);
-
     const token = getAuthToken();
     if (token) {
       return true;

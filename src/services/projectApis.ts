@@ -25,7 +25,6 @@ instance.interceptors.request.use((config) => {
 export async function getProjectDetails(projectCode: string) {
   try {
     const response = await instance.get(`/details/${projectCode}`);
-    console.log(response.data);
 
     return response.data;
   } catch (error) {

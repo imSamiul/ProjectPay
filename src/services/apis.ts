@@ -8,7 +8,6 @@ const MONGOOSE_URL = "http://localhost:4000";
 // GET:User
 // get user details
 export async function fetchUserDetails() {
-  console.log("fetchUserDetails");
   try {
     const TOKEN = Cookies.get("token") || "";
     const response = await axios.get(`${MONGOOSE_URL}/user/me`, {

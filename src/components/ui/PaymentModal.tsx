@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import CustomDatePicker from "./CustomDatePicker";
 import { PaymentType } from "../../types/paymentType";
+import { useAddPayment } from "../../services/mutations/paymentMutation";
 
 type PaymentModalPropsType = {
   id: string;
@@ -29,6 +30,8 @@ function PaymentModal({
     useState<PaymentType>(INITIAL_VALUES);
 
   const [error, setError] = useState<string | null>(null);
+
+  const addProjectPayment = useAddPayment();
 
   const openModal = (modalId: string) => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
@@ -73,10 +76,9 @@ function PaymentModal({
     setError(null);
     const modal = document.getElementById(id) as HTMLDialogElement;
     modal?.close();
-    console.log("Payment Modal Form Values: ", {
-      ...paymentModalFormValues,
-      projectId,
-    });
+    const paymentObj = { ...paymentModalFormValues, projectId };
+    addProjectPayment.mutate(paymentObj);
+    setPaymentModalFormValues(INITIAL_VALUES);
   };
 
   return (
@@ -143,6 +145,7 @@ function PaymentModal({
                 name="transactionId"
                 onChange={handleInputChange}
                 placeholder="TrxId"
+                value={paymentModalFormValues.transactionId}
               />
             </div>
             <CustomDatePicker
