@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import CustomDatePicker from "./CustomDatePicker";
 import { PaymentType } from "../../types/paymentType";
 import { useAddPayment } from "../../services/mutations/paymentMutation";
@@ -21,91 +20,90 @@ const INITIAL_VALUES: PaymentType = {
 
 function PaymentModal({
   id,
-
   projectName,
   due,
   projectId,
 }: PaymentModalPropsType) {
   const [paymentModalFormValues, setPaymentModalFormValues] =
     useState<PaymentType>(INITIAL_VALUES);
-
   const [error, setError] = useState<string | null>(null);
 
   const addProjectPayment = useAddPayment();
 
-  const openModal = (modalId: string) => {
+  const toggleModal = (modalId: string, action: "open" | "close") => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
-    modal?.showModal();
+    if (action === "open") modal?.showModal();
+    if (action === "close") modal?.close();
   };
 
-  function handleInputChange(
+  const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) {
+  ) => {
     setError(null);
-
     const { name, value } = e.target;
-    setPaymentModalFormValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
+    setPaymentModalFormValues((prev) => ({ ...prev, [name]: value }));
+  };
 
-  function handleDateChange(date: Date | null) {
+  const handleDateChange = (date: Date | null) => {
     if (date) {
-      setPaymentModalFormValues((prev) => ({
-        ...prev,
-        paymentDate: date,
-      }));
+      setPaymentModalFormValues((prev) => ({ ...prev, paymentDate: date }));
     }
-  }
+  };
 
-  const handleSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (
-      paymentModalFormValues.paymentAmount <= 0 ||
-      !paymentModalFormValues.paymentMethod ||
-      !paymentModalFormValues.transactionId
-    ) {
+  const validateForm = () => {
+    const { paymentAmount, paymentMethod, transactionId } =
+      paymentModalFormValues;
+    if (paymentAmount <= 0 || !paymentMethod || !transactionId) {
       setError("All fields must be filled correctly.");
-      return;
+      return false;
     }
-    if (paymentModalFormValues.paymentAmount > due) {
+    if (paymentAmount > due) {
       setError("Payment amount cannot exceed due amount.");
-      return;
+      return false;
     }
     setError(null);
-    const modal = document.getElementById(id) as HTMLDialogElement;
-    modal?.close();
+    return true;
+  };
+
+  const addPaymentHandler = () => {
+    if (!validateForm()) return;
+
     const paymentObj = { ...paymentModalFormValues, projectId };
-    addProjectPayment.mutate(paymentObj);
-    setPaymentModalFormValues(INITIAL_VALUES);
+    addProjectPayment.mutate(paymentObj, {
+      onSuccess: () => {
+        setPaymentModalFormValues(INITIAL_VALUES);
+        toggleModal(id, "close");
+      },
+      onError: () => {
+        setError("An error occurred while processing the payment.");
+      },
+    });
   };
 
   return (
     <div>
       {/* Button to open the modal */}
       <button
-        className="btn bg-martinique-500 outline-none border-none hover:bg-martinique-600 text-white  "
-        onClick={() => openModal(id)}
+        className="btn bg-martinique-500 hover:bg-martinique-600 text-white"
+        onClick={() => toggleModal(id, "open")}
       >
         Add Payment
       </button>
 
-      {/* Combined Modal with modal-bottom sm:modal-middle */}
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box md:w-11/12 md:max-w-3xl md:overflow-visible">
-          {/* Adjust the width here */}
-          <div className="flex items-center justify-between flex-col md:flex-row">
-            <h3 className="font-bold text-base md:text-xl text-black">
+        <div className="modal-box md:w-11/12 md:max-w-3xl">
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-xl text-black">
               Add Payment for {projectName}
             </h3>
             {error && <p className="text-red-500">{error}</p>}
           </div>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 ">
-            <div className="flex flex-col gap-2">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+            <div className="flex flex-col">
               <label className="text-base">Amount:</label>
               <input
-                className="input input-bordered input-md"
+                className="input input-bordered"
                 type="number"
                 name="paymentAmount"
                 value={paymentModalFormValues.paymentAmount}
@@ -114,17 +112,13 @@ function PaymentModal({
               />
             </div>
 
-            <label className="form-control w-full gap-2">
-              <div className="label p-0">
-                <span className="text-base md:st label-text">
-                  Pick a payment method
-                </span>
-              </div>
+            <div className="flex flex-col">
+              <label className="text-base">Payment Method:</label>
               <select
                 className="select select-bordered"
                 name="paymentMethod"
-                onChange={handleInputChange}
                 value={paymentModalFormValues.paymentMethod}
+                onChange={handleInputChange}
               >
                 <option disabled value="">
                   Pick one
@@ -135,37 +129,44 @@ function PaymentModal({
                 <option value="rocket">Rocket</option>
                 <option value="bank">Bank</option>
               </select>
-            </label>
+            </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               <label className="text-base">Transaction Id:</label>
               <input
                 className="input input-bordered"
                 type="text"
                 name="transactionId"
+                value={paymentModalFormValues.transactionId}
                 onChange={handleInputChange}
                 placeholder="TrxId"
-                value={paymentModalFormValues.transactionId}
               />
             </div>
+
             <CustomDatePicker
-              label="Payment Date: "
+              label="Payment Date:"
               paymentDate={paymentModalFormValues.paymentDate}
               onSelectDate={handleDateChange}
             />
           </div>
+
           <div className="modal-action">
-            <form method="dialog " onSubmit={handleSubmitHandler}>
-              <div className="flex gap-3">
-                <button className="btn btn-warning">Close</button>
-                <button className="btn  btn-success">Confirm</button>
-              </div>
-            </form>
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={() => toggleModal(id, "close")}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={addPaymentHandler}
+            >
+              Confirm
+            </button>
           </div>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>Close</button>
-        </form>
       </dialog>
     </div>
   );

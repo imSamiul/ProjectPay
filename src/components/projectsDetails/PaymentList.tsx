@@ -1,4 +1,5 @@
 import { PaymentType } from "../../types/paymentType";
+import PaymentListTable from "../table/paymentListTable";
 import Button from "../ui/Button";
 import PaymentModal from "../ui/PaymentModal";
 
@@ -15,8 +16,6 @@ function PaymentList({
   projectId,
   paymentList,
 }: PaymentListPropsType) {
-  console.log(paymentList);
-
   return (
     <div>
       <h1 className="text-2xl font-bold md:text-3xl font-lexend mb-4">
@@ -26,8 +25,8 @@ function PaymentList({
       <div className="dark:bg-martinique-200 card text-black shadow-xl border">
         <div className="card-body">
           <div className="overflow-x-auto">
-            <table className="table">
-              {/* head */}
+            {/* <table className="table">
+       
               <thead>
                 <tr>
                   <th></th>
@@ -38,7 +37,7 @@ function PaymentList({
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
+          
                 {paymentList.map((payment, index) => (
                   <tr key={payment._id}>
                     <th>{index + 1}</th>
@@ -53,7 +52,8 @@ function PaymentList({
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table> */}
+            <PaymentListTable data={paymentList} />
           </div>
         </div>
         <div className="flex justify-end my-2 p-2 gap-2">
