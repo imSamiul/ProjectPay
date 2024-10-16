@@ -42,6 +42,11 @@ function PaymentList({
                 {paymentList.map((payment, index) => (
                   <tr key={payment._id}>
                     <th>{index + 1}</th>
+                    <td>
+                      {new Date(payment.paymentDate).toLocaleDateString(
+                        "en-GB",
+                      )}
+                    </td>
                     <td>{payment.paymentAmount}</td>
                     <td>{payment.paymentMethod}</td>
                     <td>{payment.transactionId}</td>
