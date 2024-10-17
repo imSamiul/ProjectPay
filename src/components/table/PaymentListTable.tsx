@@ -3,6 +3,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -10,9 +11,15 @@ import {
 import { PaymentType } from "../../types/paymentType";
 import { useState } from "react";
 import { LuArrowDownUp } from "react-icons/lu";
+import Pagination from "../ui/Pagination";
 
 const columnHelper = createColumnHelper<PaymentType>();
 const columns = [
+  columnHelper.display({
+    id: "index",
+    header: "#",
+    cell: (info) => info.row.index + 1,
+  }),
   columnHelper.accessor("paymentDate", {
     header: "Payment Date",
     cell: (info) => new Date(info.getValue()).toLocaleDateString("en-GB"),
@@ -28,11 +35,7 @@ const columns = [
   columnHelper.accessor("transactionId", {
     id: "transactionId",
     header: "Transaction ID",
-    cell: (info) => (
-      <span className="font-medium text-martinique-300">
-        {info.getValue().toUpperCase()}
-      </span>
-    ),
+    cell: (info) => info.getValue(),
   }),
 ];
 
@@ -46,13 +49,19 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
       sorting,
       globalFilter,
     },
+    initialState: {
+      pagination: {
+        pageSize: 2,
+      },
+    },
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
-  //   console.log(table.getRowModel());
+  console.log(table.getPageCount());
 
   return (
     <div>
@@ -64,7 +73,6 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           className="input input-bordered"
         />
       </div>
-
       <table className="table">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -83,7 +91,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
                       header.column.columnDef.header,
                       header.getContext(),
                     )}
-                    <LuArrowDownUp />
+                    {header.column.getCanSort() && <LuArrowDownUp />}
                   </div>
                 </th>
               ))}
@@ -102,6 +110,37 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-between items-center mt-3">
+        <div className="flex gap-2 items-center">
+          <span className="">Items per page</span>
+          <select
+            className="border focus:border-indigo-500 p-2"
+            value={table.getState().pagination.pageSize}
+            onChange={(e) => table.setPageSize(Number(e.target.value))}
+          >
+            {[2, 4, 6, 8].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <div className="join grid grid-cols-2">
+            <Pagination
+              totalPages={table.getPageCount()}
+              goToFirstPage={() => table.firstPage()}
+              goToLastPage={() => table.lastPage()}
+              goToNextPage={() => table.nextPage()}
+              goToPreviousPage={() => table.previousPage()}
+              goToPage={(page) => table.setPageIndex(page)}
+              getCanPreviousPageDisabled={!table.getCanPreviousPage()}
+              getCanNextPageDisabled={!table.getCanNextPage()}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
