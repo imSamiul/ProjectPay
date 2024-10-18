@@ -116,11 +116,11 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
         />
         <Pagination
           totalPages={table.getPageCount()}
-          goToFirstPage={() => table.firstPage()}
-          goToLastPage={() => table.lastPage()}
-          goToNextPage={() => table.nextPage()}
-          goToPreviousPage={() => table.previousPage()}
-          goToPage={(page) => table.setPageIndex(page)}
+          goToFirstPage={table.firstPage}
+          goToLastPage={table.lastPage}
+          goToNextPage={table.nextPage}
+          goToPreviousPage={table.previousPage}
+          goToPage={table.setPageIndex}
           getCanPreviousPageDisabled={!table.getCanPreviousPage()}
           getCanNextPageDisabled={!table.getCanNextPage()}
         />
