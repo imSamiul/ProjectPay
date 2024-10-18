@@ -1,4 +1,7 @@
-interface PaginationProps {
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { MdFirstPage, MdOutlineLastPage } from "react-icons/md";
+
+type PaginationPropsType = {
   totalPages: number;
   goToFirstPage?: () => void;
   goToLastPage?: () => void;
@@ -7,9 +10,10 @@ interface PaginationProps {
   goToPage?: (page: number) => void;
   getCanPreviousPageDisabled?: boolean;
   getCanNextPageDisabled?: boolean;
-}
+  currentPage?: number;
+};
 
-const Pagination: React.FC<PaginationProps> = ({
+function Pagination({
   totalPages,
   goToFirstPage,
   goToLastPage,
@@ -18,52 +22,57 @@ const Pagination: React.FC<PaginationProps> = ({
   goToPage,
   getCanPreviousPageDisabled,
   getCanNextPageDisabled,
-}) => {
+  currentPage,
+}: PaginationPropsType) {
   return (
     <div className="join">
       {/* First page button */}
       <button
-        className="join-item btn btn-outline"
+        className="join-item btn btn-sm md:btn-md"
         onClick={goToFirstPage}
         disabled={getCanPreviousPageDisabled}
       >
-        First Page
+        <MdFirstPage size={20} />
       </button>
 
       {/* Previous page button */}
       <button
-        className="join-item btn btn-outline"
+        className="join-item btn btn-sm md:btn-md"
         onClick={goToPreviousPage}
         disabled={getCanPreviousPageDisabled}
       >
-        Previous Page
+        <GrFormPrevious size={20} />
       </button>
 
       {/* Page numbers */}
       {Array.from({ length: totalPages }, (_, i) => (
-        <button className="btn" onClick={() => goToPage && goToPage(i)}>
+        <button
+          key={i}
+          className={`join-item btn btn-sm md:btn-md ${currentPage === i ? "btn-active" : ""}`}
+          onClick={() => goToPage && goToPage(i)}
+        >
           {i + 1}
         </button>
       ))}
       {/* Next button */}
       <button
-        className="join-item btn btn-outline"
+        className="join-item btn btn-sm md:btn-md"
         onClick={goToNextPage}
         disabled={getCanNextPageDisabled}
       >
-        Next Page
+        <GrFormNext size={20} />
       </button>
 
       {/* Last page button */}
       <button
-        className="join-item btn btn-outline"
+        className="join-item btn btn-sm md:btn-md"
         onClick={goToLastPage}
         disabled={getCanNextPageDisabled}
       >
-        Last Page
+        <MdOutlineLastPage size={20} />
       </button>
     </div>
   );
-};
+}
 
 export default Pagination;

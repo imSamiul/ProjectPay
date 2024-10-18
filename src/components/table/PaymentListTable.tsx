@@ -112,7 +112,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
         </table>
       </div>
 
-      <div className="flex justify-between items-center mt-3">
+      <div className="flex flex-col-reverse  md:flex-row justify-between items-center mt-3">
         <ItemsPerPage
           pageSize={table.getState().pagination.pageSize}
           setPageSize={table.setPageSize}
@@ -126,6 +126,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           goToPage={table.setPageIndex}
           getCanPreviousPageDisabled={!table.getCanPreviousPage()}
           getCanNextPageDisabled={!table.getCanNextPage()}
+          currentPage={table.getState().pagination.pageIndex}
         />
       </div>
     </div>
