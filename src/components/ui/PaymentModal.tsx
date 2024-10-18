@@ -84,7 +84,7 @@ function PaymentModal({
     <div>
       {/* Button to open the modal */}
       <button
-        className="btn bg-martinique-500 hover:bg-martinique-600 text-white"
+        className="btn bg-martinique-500 hover:bg-martinique-600 text-white btn-sm md:btn-md"
         onClick={() => toggleModal(id, "open")}
       >
         Add Payment

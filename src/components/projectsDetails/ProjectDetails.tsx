@@ -87,8 +87,8 @@ type ProjectDetailsPropsType = {
 function ProjectDetails({ details }: ProjectDetailsPropsType) {
   return (
     <div className="mb-5">
-      <div className="flex flex-col md:flex-row md:justify-between items-center">
-        <h1 className="text-2xl font-bold md:text-3xl font-lexend mb-4">
+      <div className="flex flex-col md:flex-row md:justify-between items-center py-2 gap-3">
+        <h1 className="text-2xl font-bold md:text-3xl font-lexend ">
           {details.name}
         </h1>
         <div className="flex gap-2 ">
@@ -110,10 +110,10 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           )}
         </div>
       </div>
-      <div className="divider my-0"></div>
+      <div className="divider m-0 mb-2"></div>
       <div className="dark:bg-martinique-200 card text-black shadow-xl border">
         <div className="card-body">
-          <h3 className="text-lg md:text-xl font-semibold">Project Section</h3>
+          <h4 className="text-lg md:text-xl font-semibold">Project Section</h4>
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 mb-4 gap-1">
             {ProjectSection.map((projectDetail) => {
@@ -131,7 +131,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             })}
           </div>
 
-          <h3 className="text-lg md:text-xl font-semibold">Client Section</h3>
+          <h4 className="text-lg md:text-xl font-semibold">Client Section</h4>
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 mb-4">
             {ClientSection.map((clientDetail) => {
@@ -148,7 +148,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
               );
             })}
           </div>
-          <h3 className="text-lg md:text-xl font-semibold">Manager Section</h3>
+          <h4 className="text-lg md:text-xl font-semibold">Manager Section</h4>
           <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
             {ProjectManager.map((managerDetail) => {
