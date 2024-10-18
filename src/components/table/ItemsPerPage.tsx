@@ -7,7 +7,7 @@ function ItemsPerPage({ pageSize, setPageSize }: ItemsPerPagePropsType) {
     <div className="flex gap-2 items-center">
       <span className="">Items per page</span>
       <select
-        className="border focus:border-indigo-500 p-2"
+        className="select select-border  w-full"
         value={pageSize}
         onChange={(e) => setPageSize(Number(e.target.value))}
       >

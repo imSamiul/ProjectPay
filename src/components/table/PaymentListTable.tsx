@@ -63,7 +63,6 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  console.log(table.getPageCount());
 
   return (
     <div>
@@ -71,43 +70,47 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
         globalFilter={globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <table className="table">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.index}>
-                  <div
-                    className={`flex items-center gap-2 ${
-                      header.column.getCanSort()
-                        ? `cursor-pointer select-none flex items-center`
-                        : ""
-                    }`}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                    {header.column.getCanSort() && <LuArrowDownUp />}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto my-2">
+        <table className="table table-zebra">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.index}>
+                    <div
+                      className={`flex items-center gap-2 text-base text-martinique-900 font-medium ${
+                        header.column.getCanSort()
+                          ? `cursor-pointer select-none flex items-center`
+                          : ""
+                      }`}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                      {header.column.getCanSort() && (
+                        <LuArrowDownUp size={15} />
+                      )}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} className="hover">
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="text-base">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <div className="flex justify-between items-center mt-3">
         <ItemsPerPage

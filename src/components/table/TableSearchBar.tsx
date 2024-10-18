@@ -8,12 +8,14 @@ function TableSearchBar({
   setGlobalFilter,
 }: TableSearchBarPropsType) {
   return (
-    <input
-      value={globalFilter ?? ""}
-      onChange={(e) => setGlobalFilter(e.target.value)}
-      placeholder="Search ... "
-      className="input input-bordered"
-    />
+    <div className="p-2">
+      <input
+        value={globalFilter ?? ""}
+        onChange={(e) => setGlobalFilter(e.target.value)}
+        placeholder="Search using any field.... (e.g. date, amount, method, trxId) "
+        className="input input-bordered input-md w-full   "
+      />
+    </div>
   );
 }
 
