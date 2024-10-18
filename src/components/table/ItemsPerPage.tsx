@@ -4,7 +4,7 @@ type ItemsPerPagePropsType = {
 };
 function ItemsPerPage({ pageSize, setPageSize }: ItemsPerPagePropsType) {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex gap-2 items-center w-full">
       <span className="">Items per page</span>
       <select
         className="select select-border  w-full"
