@@ -100,7 +100,10 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover dark:hover:text-white">
+              <tr
+                key={row.id}
+                className=" hover:bg-martinique-100 dark:hover:bg-martinique-300 "
+              >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="text-base">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
