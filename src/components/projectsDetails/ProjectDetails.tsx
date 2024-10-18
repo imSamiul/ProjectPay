@@ -119,7 +119,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             {ProjectSection.map((projectDetail) => {
               const value = details[projectDetail.value];
               return (
-                <p key={projectDetail.value} className="text-base md:text-xl">
+                <p key={projectDetail.value} className="text-base md:text-lg">
                   <span className="text-martinique-900 font-medium">
                     {projectDetail.name}:{" "}
                   </span>
@@ -137,7 +137,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             {ClientSection.map((clientDetail) => {
               const value = details[clientDetail.value];
               return (
-                <p key={clientDetail.value} className="text-base md:text-xl">
+                <p key={clientDetail.value} className="text-base md:text-lg">
                   <span className="text-martinique-900 font-medium">
                     {clientDetail.name}:{" "}
                   </span>
@@ -154,7 +154,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             {ProjectManager.map((managerDetail) => {
               const value = details.projectManager?.[managerDetail.value];
               return (
-                <p key={managerDetail.value} className="text-base md:text-xl">
+                <p key={managerDetail.value} className="text-base md:text-lg">
                   <span className="text-martinique-900 font-medium">
                     {managerDetail.name}:{" "}
                   </span>
