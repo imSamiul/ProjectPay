@@ -71,7 +71,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
         setGlobalFilter={setGlobalFilter}
       />
       <div className="overflow-x-auto my-2">
-        <table className="table table-zebra">
+        <table className="table  ">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -100,7 +100,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover">
+              <tr key={row.id} className="hover dark:hover:text-white">
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="text-base">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
