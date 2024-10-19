@@ -32,7 +32,7 @@ function Modal({
     <div>
       {/* Button to open the modal */}
       <button
-        className="btn bg-martinique-500 outline-none border-none hover:bg-martinique-600 text-white  "
+        className="btn bg-error outline-none border-none hover:bg-error/60 text-error-content  "
         onClick={() => openModal(id)}
       >
         {openButtonLabel}
@@ -40,15 +40,15 @@ function Modal({
 
       {/* Combined Modal with modal-bottom sm:modal-middle */}
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box bg-current">
-          <h3 className="font-bold text-lg text-black">{title}</h3>
-          <p className="py-4 text-black">{content}</p>
+        <div className="modal-box ">
+          <h3 className="font-bold text-lg ">{title}</h3>
+          <p className="py-4 ">{content}</p>
           <div className="modal-action">
             <form method="dialog " onSubmit={handleSubmitHandler}>
               {/* Close button inside the modal */}
               <div className="flex gap-3">
-                <button className="btn">{closeButtonLabel}</button>
-                <button className="btn" onClick={btnConfirmAction}>
+                <button className="btn btn-error">{closeButtonLabel}</button>
+                <button className="btn btn-warning" onClick={btnConfirmAction}>
                   {confirmButtonLabel}
                 </button>
               </div>

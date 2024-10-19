@@ -20,7 +20,7 @@ function SearchBox({ onSearchTextChange }: SearchBoxPropsType) {
         value={searchText}
         onChange={searchTextChangeHandler}
         placeholder="Type to search project by Name or ID"
-        className="input bg-martinique-100 w-full text-black"
+        className="input input-bordered input-accent w-full text-black"
       />
     </div>
   );

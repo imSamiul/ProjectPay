@@ -92,18 +92,18 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           {details.name}
         </h1>
         <div className="flex gap-2 ">
-          <Button>
+          <Button className="btn-info">
             <MdEditDocument size={20} />
             Edit
           </Button>
 
           {details.status === true ? (
-            <Button className="bg-martinique-900">
+            <Button className="btn-success">
               <TiTick size={20} />
               Done
             </Button>
           ) : (
-            <Button>
+            <Button className="btn-warning">
               <TiTick size={20} />
               Make Complete
             </Button>
@@ -111,16 +111,16 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
         </div>
       </div>
       <div className="divider m-0 mb-2"></div>
-      <div className="dark:bg-martinique-200 card text-black shadow-xl border">
+      <div className="bg-base-200 card  shadow-lg border">
         <div className="card-body">
           <h4 className="text-lg md:text-xl font-semibold">Project Section</h4>
-          <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
+          <div className="divider   my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 mb-4 gap-1">
             {ProjectSection.map((projectDetail) => {
               const value = details[projectDetail.value];
               return (
-                <p key={projectDetail.value} className="text-base md:text-lg">
-                  <span className="text-martinique-900 font-medium">
+                <p key={projectDetail.value} className=" md:text-lg">
+                  <span className="text-secondary font-medium">
                     {projectDetail.name}:{" "}
                   </span>
                   {typeof value === "object" && value !== null
@@ -132,13 +132,13 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           </div>
 
           <h4 className="text-lg md:text-xl font-semibold">Client Section</h4>
-          <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
+          <div className="divider my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 mb-4">
             {ClientSection.map((clientDetail) => {
               const value = details[clientDetail.value];
               return (
                 <p key={clientDetail.value} className="text-base md:text-lg">
-                  <span className="text-martinique-900 font-medium">
+                  <span className="text-secondary font-medium">
                     {clientDetail.name}:{" "}
                   </span>
                   {typeof value === "object" && value !== null
@@ -149,13 +149,13 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             })}
           </div>
           <h4 className="text-lg md:text-xl font-semibold">Manager Section</h4>
-          <div className="divider  before:bg-martinique-300 after:bg-martinique-300 my-0"></div>
+          <div className="divider  my-0"></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
             {ProjectManager.map((managerDetail) => {
               const value = details.projectManager?.[managerDetail.value];
               return (
                 <p key={managerDetail.value} className="text-base md:text-lg">
-                  <span className="text-martinique-900 font-medium">
+                  <span className="text-secondary font-medium">
                     {managerDetail.name}:{" "}
                   </span>
                   {typeof value === "object" && value !== null

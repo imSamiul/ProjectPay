@@ -13,7 +13,7 @@ function TableSearchBar({
         value={globalFilter ?? ""}
         onChange={(e) => setGlobalFilter(e.target.value)}
         placeholder="Search using any field.... (e.g. date, amount, method, trxId) "
-        className="input input-md w-full bg-martinique-50  "
+        className="input input-bordered input-accent input-md  w-full "
       />
     </div>
   );

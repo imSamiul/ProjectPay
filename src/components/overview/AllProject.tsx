@@ -46,22 +46,18 @@ function AllProject({
           <Link
             key={project._id}
             className={`${
-              project.status === false
-                ? "bg-martinique-50"
-                : "bg-martinique-200"
+              project.status === false ? "bg-base-200" : "bg-accent"
             } min-h-60   p-5 shadow-md rounded-md`}
             to={`/project/$projectCode`}
-            params={{ projectCode: project.projectCode }}
+            params={{
+              projectCode: project.projectCode ? project.projectCode : "",
+            }}
           >
             <div className="flex  justify-between text-lg md:text-xl mb-0">
-              <h3 className="font-lexend font-bold text-black ">
-                {project.name}
-              </h3>
+              <h3 className="font-lexend font-bold ">{project.name}</h3>
               <div
                 className={
-                  project.status === true
-                    ? "bg-martinique-700 text-white py-1 px-2 rounded"
-                    : ""
+                  project.status === true ? "bg-success  py-1 px-2 rounded" : ""
                 }
               >
                 {project.status === true ? "Done" : ""}
@@ -69,38 +65,36 @@ function AllProject({
             </div>
 
             <div className="divider my-0"></div>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">
                 Project Code:{" "}
               </span>
               {project.projectCode}
             </p>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">
-                Client Name:{" "}
-              </span>
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">Client Name: </span>
               {project.client}
             </p>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">
                 Client Phone:{" "}
               </span>
               {project.clientPhone}
             </p>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">Budget: </span>
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">Budget: </span>
               {project.budget}
             </p>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">Advance: </span>
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">Advance: </span>
               {project.advance}
             </p>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">Due: </span>
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">Due: </span>
               {project.due}
             </p>
-            <p className="text-lg text-black">
-              <span className="font-bold text-martinique-950">Deadline: </span>
+            <p className="text-lg ">
+              <span className="font-bold text-base-content">Deadline: </span>
               {project.endDate}
             </p>
           </Link>

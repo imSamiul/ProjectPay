@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <div>
-      <div className="navbar bg-martinique-900 text-white font-lexend flex">
+      <div className="navbar bg-secondary  font-lexend flex">
         <div className="navbar-start flex-[2] md:flex-1">
           {isLogged && (
             <div className="dropdown">
@@ -83,9 +83,7 @@ function Navbar() {
                 {navItem.map((item, index) => (
                   <Link to={item.link} key={index} className="">
                     <li>
-                      <p className="text-black dark:text-white ">
-                        {item.title}
-                      </p>
+                      <p className=" ">{item.title}</p>
                     </li>
                   </Link>
                 ))}
@@ -93,18 +91,23 @@ function Navbar() {
             </div>
           )}
 
-          <Link to="/" className="flex gap-2 justify-start items-center ">
+          <Link
+            to="/"
+            className="flex gap-2 justify-start items-center text-secondary-content "
+          >
             <img src={navbarLogo} alt="navbar-logo" className="h-10" />
             <p className="text-xl md:text-2xl font-semibold">Project Pay</p>
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+        <div className="navbar-center hidden lg:flex text-secondary-content">
+          <ul className="menu menu-horizontal px-1 ">
             {navItem.map((item, index) => (
               <Link
                 to={item.link}
                 key={index}
-                activeProps={{ className: "rounded-md bg-martinique-800" }}
+                activeProps={{
+                  className: "rounded-md bg-neutral/15 font-medium",
+                }}
               >
                 <li>
                   <p>{item.title}</p>

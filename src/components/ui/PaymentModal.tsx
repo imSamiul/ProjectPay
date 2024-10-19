@@ -84,7 +84,7 @@ function PaymentModal({
     <div>
       {/* Button to open the modal */}
       <button
-        className="btn bg-martinique-500 hover:bg-martinique-600 text-white btn-sm md:btn-md outline-none border-none"
+        className="btn btn-warning btn-sm md:btn-md outline-none border-none"
         onClick={() => toggleModal(id, "open")}
       >
         Add Payment
@@ -153,14 +153,14 @@ function PaymentModal({
           <div className="modal-action">
             <button
               type="button"
-              className="btn btn-warning"
+              className="btn btn-error"
               onClick={() => toggleModal(id, "close")}
             >
               Close
             </button>
             <button
               type="button"
-              className="btn btn-success"
+              className="btn btn-warning"
               onClick={addPaymentHandler}
             >
               Confirm

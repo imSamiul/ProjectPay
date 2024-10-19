@@ -71,14 +71,14 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
         setGlobalFilter={setGlobalFilter}
       />
       <div className="overflow-x-auto my-2">
-        <table className="table  ">
+        <table className="table table-zebra ">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th key={header.index}>
                     <div
-                      className={`flex items-center gap-2 text-base text-martinique-900 font-medium ${
+                      className={`flex items-center gap-2 text-base text-secondary font-medium ${
                         header.column.getCanSort()
                           ? `cursor-pointer select-none flex items-center`
                           : ""
@@ -100,10 +100,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className=" hover:bg-martinique-100 dark:hover:bg-martinique-300 "
-              >
+              <tr key={row.id} className="hover  ">
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="text-base">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

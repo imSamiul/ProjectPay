@@ -173,7 +173,7 @@ function AddProject() {
           </div>
         </div>
         <div className="text-red-500">{error}</div>
-        <Button className="w-auto text-white">Submit</Button>
+        <Button className="w-auto btn-warning">Submit</Button>
       </form>
     </div>
   );

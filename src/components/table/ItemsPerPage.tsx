@@ -10,7 +10,7 @@ function ItemsPerPage({ pageSize, setPageSize }: ItemsPerPagePropsType) {
       </div>
       <div>
         <select
-          className="select select-bordered dark:bg-martinique-300 select-sm md:select-md"
+          className="select select-bordered  select-sm md:select-md"
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
         >

@@ -28,7 +28,7 @@ function Pagination({
     <div className="join">
       {/* First page button */}
       <button
-        className="join-item btn btn-sm md:btn-md border-none dark:text-black dark:bg-martinique-300 dark:disabled:bg-martinique-200"
+        className="join-item btn btn-sm md:btn-md border-none "
         onClick={goToFirstPage}
         disabled={getCanPreviousPageDisabled}
       >
@@ -37,7 +37,7 @@ function Pagination({
 
       {/* Previous page button */}
       <button
-        className="join-item btn btn-sm border-none md:btn-md dark:text-black dark:bg-martinique-300 dark:disabled:bg-martinique-200"
+        className="join-item btn btn-sm border-none md:btn-md  "
         onClick={goToPreviousPage}
         disabled={getCanPreviousPageDisabled}
       >
@@ -48,7 +48,7 @@ function Pagination({
       {Array.from({ length: totalPages }, (_, i) => (
         <button
           key={i}
-          className={`join-item btn btn-sm md:btn-md dark:text-black dark:bg-martinique-300 border-none ${currentPage === i ? "btn-active dark:bg-martinique-400" : ""}`}
+          className={`join-item btn  btn-sm md:btn-md   border-none ${currentPage === i ? "btn-active" : ""}`}
           onClick={() => goToPage && goToPage(i)}
         >
           {i + 1}
@@ -56,7 +56,7 @@ function Pagination({
       ))}
       {/* Next button */}
       <button
-        className="join-item btn btn-sm md:btn-md border-none dark:text-black dark:disabled:bg-martinique-200 dark:bg-martinique-300"
+        className="join-item btn btn-sm md:btn-md border-none "
         onClick={goToNextPage}
         disabled={getCanNextPageDisabled}
       >
@@ -65,7 +65,7 @@ function Pagination({
 
       {/* Last page button */}
       <button
-        className="join-item btn btn-sm md:btn-md dark:text-black dark:disabled:bg-martinique-200 dark:bg-martinique-300 border-none"
+        className="join-item btn btn-sm md:btn-md dark:text-black  border-none"
         onClick={goToLastPage}
         disabled={getCanNextPageDisabled}
       >
