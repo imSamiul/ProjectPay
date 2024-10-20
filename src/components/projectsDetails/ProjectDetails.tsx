@@ -85,6 +85,11 @@ type ProjectDetailsPropsType = {
 };
 
 function ProjectDetails({ details }: ProjectDetailsPropsType) {
+  function completeProject() {
+    // complete
+    const status = !details.status;
+    console.log(status);
+  }
   return (
     <div className="mb-5">
       <div className="flex flex-col md:flex-row md:justify-between items-center py-2 gap-3">
@@ -98,12 +103,12 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           </Button>
 
           {details.status === true ? (
-            <Button className="btn-success">
+            <Button className="btn-success" onClick={completeProject}>
               <TiTick size={20} />
               Done
             </Button>
           ) : (
-            <Button className="btn-warning">
+            <Button className="btn-warning" onClick={completeProject}>
               <TiTick size={20} />
               Make Complete
             </Button>

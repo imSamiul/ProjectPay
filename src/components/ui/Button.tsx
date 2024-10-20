@@ -6,10 +6,11 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-function Button({ className, children }: ButtonProps) {
+function Button({ className, children, onClick }: ButtonProps) {
   return (
     <button
       className={`btn outline-none border-none   ${className}  btn-sm md:btn-md`}
+      onClick={onClick}
     >
       {children}
     </button>

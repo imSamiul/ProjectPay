@@ -57,7 +57,9 @@ function AllProject({
               <h3 className="font-lexend font-bold ">{project.name}</h3>
               <div
                 className={
-                  project.status === true ? "bg-success  py-1 px-2 rounded" : ""
+                  project.status === true
+                    ? "bg-success text-success-content  py-1 px-2 rounded"
+                    : ""
                 }
               >
                 {project.status === true ? "Done" : ""}

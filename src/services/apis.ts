@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 import { UserType } from "../types/userType";
 
-const MONGOOSE_URL = "http://localhost:4000";
+const MONGOOSE_URL = "http://192.168.31.207:4000";
 
 // GET:User
 // get user details

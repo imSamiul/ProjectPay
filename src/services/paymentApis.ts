@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAuthToken } from "../utils/auth";
 import { PaymentType } from "../types/paymentType";
 
-const MONGOOSE_URL = "http://localhost:4000/payment";
+const MONGOOSE_URL = "http://192.168.31.207:4000/payment";
 const defaultOptions = {
   baseURL: MONGOOSE_URL,
   headers: {

@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <div>
-      <div className="navbar bg-secondary  font-lexend flex">
+      <div className="navbar bg-secondary  font-lexend flex px-4">
         <div className="navbar-start flex-[2] md:flex-1">
           {isLogged && (
             <div className="dropdown">

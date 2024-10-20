@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAuthToken } from "../utils/auth";
 
-const MONGOOSE_URL = "http://localhost:4000/manager";
+const MONGOOSE_URL = "http://192.168.31.207:4000/manager";
 const defaultOptions = {
   baseURL: MONGOOSE_URL,
   headers: {

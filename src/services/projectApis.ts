@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAuthToken } from "../utils/auth";
 import { ProjectType } from "../types/projectType";
 
-const MONGOOSE_URL = "http://localhost:4000/projects";
+const MONGOOSE_URL = "http://192.168.31.207:4000/projects";
 const defaultOptions = {
   baseURL: MONGOOSE_URL,
   headers: {

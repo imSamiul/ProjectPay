@@ -65,7 +65,7 @@ function Pagination({
 
       {/* Last page button */}
       <button
-        className="join-item btn btn-sm md:btn-md dark:text-black  border-none"
+        className="join-item btn btn-sm md:btn-md   border-none"
         onClick={goToLastPage}
         disabled={getCanNextPageDisabled}
       >
