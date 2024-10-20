@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import { TiTick } from "react-icons/ti";
 import { MdEditDocument } from "react-icons/md";
 import { useUpdateProjectStatus } from "../../services/mutations/projectMutation";
+import { Link } from "@tanstack/react-router";
 
 type ClientSectionKeys = keyof ProjectType;
 type ProjectSectionKeys = keyof ProjectType;
@@ -101,10 +102,16 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           {details.name}
         </h1>
         <div className="flex gap-2 ">
-          <Button className="btn-info">
+          <Link
+            to="/project/edit/$projectCode"
+            params={{
+              projectCode: details.projectCode ? details.projectCode : "",
+            }}
+            className="btn btn-info"
+          >
             <MdEditDocument size={20} />
             Edit
-          </Button>
+          </Link>
 
           {details.status === true ? (
             <Button className="btn-success" onClick={handleProjectStatus}>
