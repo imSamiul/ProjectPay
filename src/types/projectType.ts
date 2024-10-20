@@ -21,3 +21,8 @@ export type ProjectType = {
   projectManager?: ManagerType;
   verifiedClientList?: string[];
 };
+
+export type updateProjectStatusType = {
+  projectCode: string;
+  status: boolean;
+};

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAuthToken } from "../utils/auth";
-import { ProjectType } from "../types/projectType";
+import { ProjectType, updateProjectStatusType } from "../types/projectType";
 
 const MONGOOSE_URL = "http://192.168.31.207:4000/projects";
 const defaultOptions = {
@@ -61,5 +61,23 @@ export async function createNewProject(projectObject: ProjectType) {
 }
 
 // PATCH:project
+// update project status
+export async function updateProjectStatus(
+  updatedStatusObj: updateProjectStatusType,
+) {
+  try {
+    const response = await instance.patch(
+      `/updateProjectStatus/${updatedStatusObj.projectCode}`,
+      {
+        status: updatedStatusObj.status,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating project status:", error);
+    throw error;
+  }
+}
 
 // DELETE:project

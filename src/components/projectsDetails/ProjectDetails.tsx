@@ -3,6 +3,7 @@ import { ProjectType } from "../../types/projectType";
 import Button from "../ui/Button";
 import { TiTick } from "react-icons/ti";
 import { MdEditDocument } from "react-icons/md";
+import { useUpdateProjectStatus } from "../../services/mutations/projectMutation";
 
 type ClientSectionKeys = keyof ProjectType;
 type ProjectSectionKeys = keyof ProjectType;
@@ -85,10 +86,13 @@ type ProjectDetailsPropsType = {
 };
 
 function ProjectDetails({ details }: ProjectDetailsPropsType) {
-  function completeProject() {
+  const updateProjectStatus = useUpdateProjectStatus();
+
+  function handleProjectStatus() {
     // complete
     const status = !details.status;
-    console.log(status);
+
+    updateProjectStatus.mutate({ projectCode: details.projectCode!, status });
   }
   return (
     <div className="mb-5">
@@ -103,12 +107,12 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           </Button>
 
           {details.status === true ? (
-            <Button className="btn-success" onClick={completeProject}>
+            <Button className="btn-success" onClick={handleProjectStatus}>
               <TiTick size={20} />
               Done
             </Button>
           ) : (
-            <Button className="btn-warning" onClick={completeProject}>
+            <Button className="btn-warning" onClick={handleProjectStatus}>
               <TiTick size={20} />
               Make Complete
             </Button>
