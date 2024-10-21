@@ -7,6 +7,7 @@ export type ProjectType = {
   budget: number;
   advance: number;
   due?: number;
+  totalPaid?: number;
   clientName: string;
   clientPhone: string;
   clientEmail: string;

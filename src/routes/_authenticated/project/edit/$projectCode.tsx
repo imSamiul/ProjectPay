@@ -4,6 +4,7 @@ import { useGetProjectDetails } from "../../../../services/queries/projectQuerie
 import { useEffect, useState } from "react";
 import { ProjectType } from "../../../../types/projectType";
 import InputField from "../../../../components/ui/InputField";
+import { useEditProjectForm } from "../../../../hooks/useEditProjectForm";
 
 export const Route = createFileRoute(
   "/_authenticated/project/edit/$projectCode",
@@ -11,67 +12,25 @@ export const Route = createFileRoute(
   component: EditProject,
 });
 
-const INITIAL_VALUES = {
-  name: "",
-  budget: 0,
-  advance: 0,
-  clientName: "",
-  clientEmail: "",
-  clientAddress: "",
-  clientDetails: "",
-  clientPhone: "",
-  demoLink: "",
-  endDate: "",
-  typeOfWeb: "",
-  description: "",
-  startDate: "",
-  status: false,
-};
-
 function EditProject() {
   const { projectCode } = Route.useParams();
 
-  const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
-
-  const [editProjectValues, setEditProjectValues] =
-    useState<ProjectType>(INITIAL_VALUES);
-
-  useEffect(() => {
-    if (data) {
-      setEditProjectValues((prevValues) => ({
-        ...prevValues,
-        ...data,
-      }));
-    }
-  }, [data]);
+  const {
+    editProjectValues,
+    isError,
+    isLoading,
+    error,
+    handleInputChange,
+    handleDateChange,
+  } = useEditProjectForm(projectCode);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (isError) {
-    return <div>{error.message}</div>;
+    return <div>{error?.message}</div>;
   }
-
-  function handleInputChange(
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-  ) {
-    const { name, value } = e.target;
-    setEditProjectValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      setEditProjectValues((prev) => ({
-        ...prev,
-        endDate: date.toISOString().split("T")[0],
-      }));
-    }
-  };
 
   return (
     <div className="container mx-auto  p-4">

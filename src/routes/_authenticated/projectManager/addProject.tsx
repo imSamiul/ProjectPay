@@ -14,9 +14,6 @@ function AddProject() {
   const { project, error, handleInputChange, onSubmitHandler } =
     useProjectForm();
 
-  // const data = useLoaderData({ from: "/_authenticated" });
-  // console.log(data);
-
   return (
     <div className="p-4">
       <h1 className="font-lexend text-xl md:text-3xl font-medium">
