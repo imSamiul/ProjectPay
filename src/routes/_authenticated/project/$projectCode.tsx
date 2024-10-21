@@ -1,4 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useGetProjectDetails } from "../../../services/queries/projectQueries";
 import ProjectDetails from "../../../components/projectsDetails/ProjectDetails";
 import PaymentList from "../../../components/projectsDetails/PaymentList";
@@ -8,9 +8,7 @@ export const Route = createFileRoute("/_authenticated/project/$projectCode")({
 });
 
 function Project() {
-  const { projectCode } = useParams({
-    from: "/_authenticated/project/$projectCode",
-  });
+  const { projectCode } = Route.useParams();
 
   const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
 

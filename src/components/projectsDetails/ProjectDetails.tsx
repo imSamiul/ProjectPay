@@ -12,7 +12,7 @@ type ManagerSectionKeys = keyof ManagerType;
 const ClientSection: { name: string; value: ClientSectionKeys }[] = [
   {
     name: "Client Name",
-    value: "client",
+    value: "clientName",
   },
   {
     name: "Client Email",

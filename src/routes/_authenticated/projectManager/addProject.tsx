@@ -64,8 +64,8 @@ function AddProject() {
             <input
               className="input input-bordered"
               type="text"
-              name="client"
-              value={project.client}
+              name="clientName"
+              value={project.clientName}
               placeholder="Client Name (required)"
               onChange={handleInputChange}
             />

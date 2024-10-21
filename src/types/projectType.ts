@@ -7,7 +7,7 @@ export type ProjectType = {
   budget: number | undefined;
   advance: number | undefined;
   due?: number | undefined;
-  client: string;
+  clientName: string;
   clientPhone: string;
   clientEmail: string;
   clientAddress: string;

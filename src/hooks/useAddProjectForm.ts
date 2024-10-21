@@ -8,7 +8,7 @@ const initialProject: ProjectType = {
   name: "",
   budget: undefined,
   advance: undefined,
-  client: "",
+  clientName: "",
   clientPhone: "",
   clientEmail: "",
   clientAddress: "",
@@ -40,7 +40,7 @@ export function useProjectForm() {
       project.name === "" ||
       project.budget === undefined ||
       project.advance === undefined ||
-      project.client === "" ||
+      project.clientName === "" ||
       project.clientPhone === "" ||
       project.clientEmail === "" ||
       project.startDate === "" ||

@@ -1,5 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import CustomDatePicker from "../../../../components/ui/CustomDatePicker";
+import { useGetProjectDetails } from "../../../../services/queries/projectQueries";
+import { useState } from "react";
+import { ProjectType } from "../../../../types/projectType";
 
 export const Route = createFileRoute(
   "/_authenticated/project/edit/$projectCode",
@@ -8,6 +11,34 @@ export const Route = createFileRoute(
 });
 
 function EditProject() {
+  const { projectCode } = Route.useParams();
+
+  const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
+  console.log(data);
+
+  const [editProjectValues, setEditProjectValues] = useState<ProjectType>({
+    name: data.name,
+    budget: data.budget,
+    advance: data.advance,
+    clientName: data.clientName,
+    clientEmail: data.clientEmail,
+    clientAddress: data.clientAddress,
+    clientDetails: data.clientDetails,
+    clientPhone: data.clientPhone,
+    demoLink: data.demoLink,
+    endDate: data.endDate,
+    typeOfWeb: data.typeOfWeb,
+    description: data.description,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <div className="container mx-auto  p-4">
       <h1 className="font-lexend text-xl md:text-3xl font-medium">
