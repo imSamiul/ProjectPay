@@ -100,8 +100,8 @@ function PaymentModal({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
-            <div className="flex flex-col">
-              <label className="text-base">Amount:</label>
+            <div className="form-control">
+              <label className="label md:text-lg font-medium">Amount:</label>
               <input
                 className="input input-bordered"
                 type="number"
@@ -112,8 +112,10 @@ function PaymentModal({
               />
             </div>
 
-            <div className="flex flex-col">
-              <label className="text-base">Payment Method:</label>
+            <div className="form-control">
+              <label className="label md:text-lg font-medium">
+                Payment Method:
+              </label>
               <select
                 className="select select-bordered"
                 name="paymentMethod"
@@ -131,8 +133,10 @@ function PaymentModal({
               </select>
             </div>
 
-            <div className="flex flex-col">
-              <label className="text-base">Transaction Id:</label>
+            <div className="form-control">
+              <label className="label md:text-lg font-medium">
+                Transaction Id:
+              </label>
               <input
                 className="input input-bordered"
                 type="text"
@@ -145,7 +149,7 @@ function PaymentModal({
 
             <CustomDatePicker
               label="Payment Date:"
-              paymentDate={paymentModalFormValues.paymentDate}
+              selectedDate={paymentModalFormValues.paymentDate}
               onSelectDate={handleDateChange}
             />
           </div>

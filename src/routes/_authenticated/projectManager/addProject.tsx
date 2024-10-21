@@ -24,7 +24,7 @@ function AddProject() {
       </h1>
       <div className="divider "></div>
       <form className="space-y-4 md:py-2" onSubmit={onSubmitHandler}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-5 ">
           <div className="flex flex-col gap-2">
             <label className="text-lg font-semibold">Project Name:</label>
             <input
@@ -60,7 +60,7 @@ function AddProject() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold">Client:</label>
+            <label className="text-lg font-semibold">Client Name:</label>
             <input
               className="input input-bordered"
               type="text"
