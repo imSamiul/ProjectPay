@@ -6,8 +6,8 @@ import { useCreateNewProject } from "../services/mutations/projectMutation";
 
 const initialProject: ProjectType = {
   name: "",
-  budget: undefined,
-  advance: undefined,
+  budget: 0,
+  advance: 0,
   clientName: "",
   clientPhone: "",
   clientEmail: "",

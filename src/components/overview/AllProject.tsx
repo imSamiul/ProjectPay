@@ -29,8 +29,6 @@ function AllProject({
     }
   }, [inView, fetchNextPage]);
 
-  console.log(hasNextPage);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -75,7 +73,7 @@ function AllProject({
             </p>
             <p className="text-lg ">
               <span className="font-bold text-base-content">Client Name: </span>
-              {project.client}
+              {project.clientName}
             </p>
             <p className="text-lg ">
               <span className="font-bold text-base-content">
