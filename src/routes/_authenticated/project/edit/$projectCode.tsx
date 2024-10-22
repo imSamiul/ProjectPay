@@ -22,6 +22,8 @@ function EditProject() {
     error,
     handleInputChange,
     handleDateChange,
+    onSubmitHandler,
+    formError,
   } = useEditProjectForm(projectCode);
 
   if (isLoading) {
@@ -38,7 +40,7 @@ function EditProject() {
         Edit Project: {editProjectValues?.name} ({projectCode})
       </h1>
       <div className="divider my-2"></div>
-      <form className="">
+      <form className="" onSubmit={onSubmitHandler}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-5 mb-3">
           <InputField
             label="Project Name: "
@@ -49,7 +51,7 @@ function EditProject() {
             type="text"
           />
           <InputField
-            label="Budget:"
+            label={`Budget: (${editProjectValues.totalPaid} Paid)`}
             placeholder="Total Budget (required)"
             value={editProjectValues.budget}
             onChange={handleInputChange}
@@ -57,7 +59,7 @@ function EditProject() {
             type="number"
           />
           <InputField
-            label="Advance:"
+            label={`Advance: (0 to ${editProjectValues.budget - (editProjectValues.totalPaid ?? 0)})`}
             placeholder="Total Advance (required)"
             value={editProjectValues.advance}
             onChange={handleInputChange}
@@ -79,7 +81,7 @@ function EditProject() {
             value={editProjectValues.clientPhone}
             onChange={handleInputChange}
             name="clientPhone"
-            type=""
+            type="text"
           />
 
           <InputField
@@ -144,7 +146,10 @@ function EditProject() {
             ></textarea>
           </div>
         </div>
-        <button className="btn btn-primary">Update</button>
+        <div className="flex gap-5 items-center">
+          <button className="btn btn-primary">Update</button>
+          {formError && <div className="text-red-500">{formError}</div>}
+        </div>
       </form>
     </div>
   );

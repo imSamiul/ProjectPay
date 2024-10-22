@@ -38,7 +38,7 @@ export function useEditProjectForm(projectCode: string) {
     }
   }, [data]);
 
-  console.log(data);
+  const totalPaid = data?.totalPaid || 0;
 
   function handleInputChange(
     e:
@@ -80,15 +80,40 @@ export function useEditProjectForm(projectCode: string) {
     }
     // check if phone number is valid
     const phoneNum = "+880" + editProjectValues.clientPhone;
-    const isValidPhone = phone(phoneNum);
+    const isValidPhone = phone(phoneNum); // phone() returns an array
+
     if (!isValidPhone) {
       setFormError("Invalid phone number.");
+      return false;
+    }
+    // check if phone number is 10 digits long
+    if (editProjectValues.clientPhone.length !== 11) {
+      setFormError("Phone number must be 11 digits long.");
       return false;
     }
     // check if email is valid
     const isValidEmail = EmailValidator.validate(editProjectValues.clientEmail);
     if (!isValidEmail) {
       setFormError("Invalid email.");
+      return false;
+    }
+    // check if totalPaid is greater than budget
+    if (totalPaid > editProjectValues.budget) {
+      setFormError("Total paid amount cannot exceed the total budget.");
+      return false;
+    }
+    // ensure total paid does not exceed remaining amount after advance
+    if (totalPaid > editProjectValues.budget - editProjectValues.advance) {
+      setFormError(
+        "The total paid amount cannot be more than the remaining budget after subtracting the advance payment.",
+      );
+      return false;
+    }
+    // Ensure due is valid: budget - advance - totalPaid
+    const calculatedDue =
+      editProjectValues.budget - editProjectValues.advance - totalPaid;
+    if (calculatedDue < 0) {
+      setFormError("Due amount cannot be negative.");
       return false;
     }
 
