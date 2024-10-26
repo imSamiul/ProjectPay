@@ -50,6 +50,10 @@ const ProjectSection: { name: string; value: ProjectSectionKeys }[] = [
     value: "due",
   },
   {
+    name: "Total Paid",
+    value: "totalPaid",
+  },
+  {
     name: "Start Date",
     value: "startDate",
   },

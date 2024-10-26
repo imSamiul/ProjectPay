@@ -68,7 +68,12 @@ function PaymentModal({
   const addPaymentHandler = () => {
     if (!validateForm()) return;
 
-    const paymentObj = { ...paymentModalFormValues, projectId };
+    const paymentObj = {
+      ...paymentModalFormValues,
+      projectId,
+      paymentAmount: Number(paymentModalFormValues.paymentAmount),
+    };
+
     addProjectPayment.mutate(paymentObj, {
       onSuccess: () => {
         setPaymentModalFormValues(INITIAL_VALUES);
