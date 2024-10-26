@@ -6,3 +6,15 @@ export type PaymentType = {
   paymentMethod: string;
   transactionId: string;
 };
+
+export type EditPaymentModalPropsType = {
+  paymentId: string;
+  modalId: string;
+  paymentAmount: number;
+  paymentDate: Date;
+  paymentMethod: string;
+  transactionId: string;
+  projectId: string;
+  due: number;
+  projectName: string;
+};

@@ -14,10 +14,26 @@ import { LuArrowDownUp } from "react-icons/lu";
 import Pagination from "./Pagination";
 import ItemsPerPage from "./ItemsPerPage";
 import TableSearchBar from "./TableSearchBar";
+import EditPaymentModal from "../modals/EditPaymentModal";
 
-function PaymentListTable({ data }: { data: PaymentType[] }) {
+type PaymentListTablePropsType = {
+  data: PaymentType[];
+  projectName: string;
+  due: number;
+};
+
+function PaymentListTable({
+  data,
+  projectName,
+  due,
+}: PaymentListTablePropsType) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [selectedPayment, setSelectedPayment] = useState<PaymentType | null>(
+    null,
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const columnHelper = createColumnHelper<PaymentType>();
   const columns = [
     columnHelper.display({
@@ -46,10 +62,13 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
       id: "actions",
       header: "Actions",
       cell: (info) => (
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <button
             className="btn btn-sm btn-primary"
-            onClick={() => handleEdit(info.row.original)}
+            onClick={() => {
+              setSelectedPayment(info.row.original);
+              setIsModalOpen(true);
+            }}
           >
             Edit
           </button>
@@ -82,11 +101,6 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  const handleEdit = (payment: PaymentType) => {
-    // Implement edit logic here
-    console.log("Edit payment:", payment);
-  };
 
   const handleDelete = (payment: PaymentType) => {
     // Implement delete logic here
@@ -158,6 +172,22 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
           currentPage={table.getState().pagination.pageIndex}
         />
       </div>
+
+      {selectedPayment && (
+        <EditPaymentModal
+          modalId="editPaymentModal"
+          projectName={projectName}
+          due={due}
+          projectId={selectedPayment.projectId || ""}
+          paymentAmount={selectedPayment.paymentAmount}
+          paymentDate={new Date(selectedPayment.paymentDate)}
+          paymentMethod={selectedPayment.paymentMethod}
+          transactionId={selectedPayment.transactionId}
+          paymentId={selectedPayment._id || ""}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

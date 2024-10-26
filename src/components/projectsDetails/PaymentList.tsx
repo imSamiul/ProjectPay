@@ -38,7 +38,11 @@ function PaymentList({
             {paymentList.length === 0 ? (
               <div className="text-center">No payment found</div>
             ) : (
-              <PaymentListTable data={paymentList} />
+              <PaymentListTable
+                data={paymentList}
+                projectName={projectName}
+                due={due}
+              />
             )}
           </div>
         </div>

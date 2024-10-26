@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAuthToken } from "../utils/auth";
-import { PaymentType } from "../types/paymentType";
+import { EditPaymentModalPropsType, PaymentType } from "../types/paymentType";
 
 const MONGOOSE_URL = "http://192.168.31.207:4000/payment";
 const defaultOptions = {
@@ -22,8 +22,8 @@ instance.interceptors.request.use((config) => {
 
 // GET:
 
-// POST:
-// add payment for specific project and decrease the due amount
+// POST: add payment for specific project and decrease the due amount
+
 export async function addPayment(paymentObject: PaymentType) {
   try {
     const response = await instance.post("/add", paymentObject);
@@ -34,6 +34,18 @@ export async function addPayment(paymentObject: PaymentType) {
   }
 }
 
-// PATCH:
+// PATCH: update payment details
+export async function updatePayment(paymentObject: EditPaymentModalPropsType) {
+  try {
+    const response = await instance.patch(
+      `/update/${paymentObject.paymentId}`,
+      paymentObject,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating payment:", error);
+    throw error;
+  }
+}
 
 // DELETE:
