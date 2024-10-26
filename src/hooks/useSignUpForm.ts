@@ -66,6 +66,13 @@ export function useSignUpForm() {
       );
       return false;
     }
+    if (
+      formValues.userType?.toLowerCase() !== "client" &&
+      formValues.userType?.toLowerCase() !== "project manager"
+    ) {
+      setError("User type must be either client or project manager");
+      return false;
+    }
 
     return true;
   };

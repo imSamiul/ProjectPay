@@ -4,6 +4,6 @@ export type ManagerType = {
   email: string;
   phone: string;
   password: string;
-  userType: "projectManager";
+  userType: "project manager";
   managerProjects?: string[];
 };

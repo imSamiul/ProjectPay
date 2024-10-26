@@ -15,7 +15,11 @@ export function useCreateUser() {
     mutationFn: (userObj: UserType) => createUser(userObj),
     onSuccess: (data) => {
       auth.login(data.token, data.user);
-      navigate({ to: "/" });
+      if (data.user.userType === "project manager") {
+        navigate({ to: "/projectManager/managerOverview" });
+      } else {
+        navigate({ to: "/" });
+      }
     },
     onError: (error) => {
       console.log(error);
@@ -35,7 +39,11 @@ export function useLoginUser() {
     mutationFn: (userLoginObj: UserType) => loginUser(userLoginObj),
     onSuccess: (data) => {
       auth.login(data.token, data.user);
-      navigate({ to: "/" });
+      if (data.user.userType === "project manager") {
+        navigate({ to: "/projectManager/managerOverview" });
+      } else {
+        navigate({ to: "/" });
+      }
     },
     onError: (error) => {
       console.log(error);

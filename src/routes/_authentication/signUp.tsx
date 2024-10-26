@@ -87,8 +87,8 @@ function SignUp() {
               name="userType"
               onChange={handleFormValues}
             >
-              <option>Project Manager</option>
-              <option>Client</option>
+              <option>project manager</option>
+              <option>client</option>
             </select>
           </label>
           <Button className="mt-5">Sign Up</Button>

@@ -43,7 +43,7 @@ function Navbar() {
   let navItem: NavItem[] = [];
 
   if (isLogged) {
-    if (userType === "projectManager") {
+    if (userType === "project manager") {
       navItem = projectManagerNavItem;
     } else if (userType === "client") {
       navItem = clientNavItem;

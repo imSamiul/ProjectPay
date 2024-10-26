@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   function isProjectManager() {
     console.log(user?.userType);
 
-    if (user?.userType === "projectManager") {
+    if (user?.userType === "project manager") {
       return true;
     }
     return false;
