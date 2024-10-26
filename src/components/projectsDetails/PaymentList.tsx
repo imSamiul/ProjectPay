@@ -1,7 +1,6 @@
 import { PaymentType } from "../../types/paymentType";
 import PaymentListTable from "../table/PaymentListTable";
 
-import Button from "../ui/Button";
 import PaymentModal from "../modals/PaymentModal";
 
 type PaymentListPropsType = {
@@ -24,7 +23,6 @@ function PaymentList({
           <div className="flex  gap-2 justify-between items-center">
             <h4 className="text-lg md:text-xl font-semibold ">Payments</h4>
             <div className="flex gap-2">
-              <Button className="btn-info">Edit</Button>
               <PaymentModal
                 id="paymentModal"
                 projectName={projectName}
