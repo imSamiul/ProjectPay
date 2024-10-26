@@ -1,8 +1,12 @@
 import axios from "axios";
 import { getAuthToken } from "../utils/auth";
-import { ProjectType, updateProjectStatusType } from "../types/projectType";
+import {
+  ProjectType,
+  UpdateProjectStatusType,
+  UpdateProjectType,
+} from "../types/projectType";
 
-const MONGOOSE_URL = "http://192.168.31.207:4000/projects";
+const MONGOOSE_URL = "http://localhost:4000/projects";
 const defaultOptions = {
   baseURL: MONGOOSE_URL,
   headers: {
@@ -48,8 +52,7 @@ export async function searchProject(searchString: string) {
   }
 }
 
-// POST:project
-// create new project
+// POST:create new project
 export async function createNewProject(projectObject: ProjectType) {
   try {
     const response = await instance.post("/create", projectObject);
@@ -60,10 +63,9 @@ export async function createNewProject(projectObject: ProjectType) {
   }
 }
 
-// PATCH:project
-// update project status
+// PATCH:update project status
 export async function updateProjectStatus(
-  updatedStatusObj: updateProjectStatusType,
+  updatedStatusObj: UpdateProjectStatusType,
 ) {
   try {
     const response = await instance.patch(
@@ -76,6 +78,21 @@ export async function updateProjectStatus(
     return response.data;
   } catch (error) {
     console.error("Error updating project status:", error);
+    throw error;
+  }
+}
+// PATCH: update project
+export async function apiUpdateProjectDetails(
+  projectObject: UpdateProjectType,
+) {
+  try {
+    const response = await instance.patch(
+      `/updateProjectDetails/${projectObject.projectCode}`,
+      projectObject,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating project:", error);
     throw error;
   }
 }

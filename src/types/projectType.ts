@@ -23,7 +23,23 @@ export type ProjectType = {
   verifiedClientList?: string[];
 };
 
-export type updateProjectStatusType = {
+export type UpdateProjectStatusType = {
   projectCode: string;
   status: boolean;
+};
+
+export type UpdateProjectType = {
+  projectCode: string;
+  name: string;
+  budget: number;
+  advance: number;
+  clientName: string;
+  clientPhone: string;
+  clientEmail: string;
+  clientAddress: string;
+  clientDetails: string;
+  endDate: string;
+  demoLink: string;
+  typeOfWeb: string;
+  description: string;
 };

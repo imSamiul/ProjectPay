@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { ProjectType } from "../types/projectType";
+import { ProjectType, UpdateProjectType } from "../types/projectType";
 import { useGetProjectDetails } from "../services/queries/projectQueries";
 import phone from "phone";
 import * as EmailValidator from "email-validator";
+import { useUpdateProjectDetails } from "../services/mutations/projectMutation";
 
 // custom hook for validate and submit form
 
 const INITIAL_VALUES = {
+  projectCode: "",
   name: "",
   budget: 0,
   advance: 0,
@@ -22,11 +24,12 @@ const INITIAL_VALUES = {
   startDate: "",
   status: false,
 };
-
+type CombinedProjectType = ProjectType & UpdateProjectType;
 export function useEditProjectForm(projectCode: string) {
   const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
+  const editProjectDetailsMutation = useUpdateProjectDetails();
   const [editProjectValues, setEditProjectValues] =
-    useState<ProjectType>(INITIAL_VALUES);
+    useState<CombinedProjectType>(INITIAL_VALUES);
   const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -129,7 +132,7 @@ export function useEditProjectForm(projectCode: string) {
     }
 
     // Add logic to handle form submission (e.g., mutation, API call, etc.)
-    console.log("Form submitted successfully!", editProjectValues);
+    editProjectDetailsMutation.mutate(editProjectValues);
     // Reset form after successful submission
   };
 

@@ -1,8 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import CustomDatePicker from "../../../../components/ui/CustomDatePicker";
-import { useGetProjectDetails } from "../../../../services/queries/projectQueries";
-import { useEffect, useState } from "react";
-import { ProjectType } from "../../../../types/projectType";
 import InputField from "../../../../components/ui/InputField";
 import { useEditProjectForm } from "../../../../hooks/useEditProjectForm";
 
