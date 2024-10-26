@@ -35,7 +35,11 @@ function PaymentList({
           </div>
           <div className="divider my-0"></div>
           <div className="overflow-x-auto">
-            <PaymentListTable data={paymentList} />
+            {paymentList.length === 0 ? (
+              <div className="text-center">No payment found</div>
+            ) : (
+              <PaymentListTable data={paymentList} />
+            )}
           </div>
         </div>
       </div>

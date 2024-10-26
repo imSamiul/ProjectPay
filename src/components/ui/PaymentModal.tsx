@@ -91,7 +91,7 @@ function PaymentModal({
       </button>
 
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box md:w-11/12 md:max-w-3xl">
+        <div className="modal-box md:w-11/12 md:max-w-3xl overflow-visible">
           <div className="flex items-center justify-between">
             <h3 className="font-bold text-xl text-black">
               Add Payment for {projectName}
