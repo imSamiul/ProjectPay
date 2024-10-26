@@ -3,7 +3,7 @@ import LinkButton from "./LinkButton";
 import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
 import { useAuth } from "../../hooks/useAuth";
-import Modal from "./Modal";
+import Modal from "../modals/Modal";
 import { useLogOutUser } from "../../services/mutations/userMutations";
 
 type NavItem = {
@@ -19,6 +19,10 @@ const projectManagerNavItem: NavItem[] = [
   {
     title: "Add Project",
     link: "/projectManager/addProject",
+  },
+  {
+    title: "All Projects",
+    link: "/projectManager/allProjects",
   },
 ];
 const clientNavItem: NavItem[] = [

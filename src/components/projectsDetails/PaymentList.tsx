@@ -2,7 +2,7 @@ import { PaymentType } from "../../types/paymentType";
 import PaymentListTable from "../table/PaymentListTable";
 
 import Button from "../ui/Button";
-import PaymentModal from "../ui/PaymentModal";
+import PaymentModal from "../modals/PaymentModal";
 
 type PaymentListPropsType = {
   projectName: string;

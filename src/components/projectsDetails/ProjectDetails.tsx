@@ -111,7 +111,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             params={{
               projectCode: details.projectCode ? details.projectCode : "",
             }}
-            className="btn btn-info btn-sm md:btn-md"
+            className="btn btn-primary btn-sm md:btn-md"
           >
             <MdEditDocument size={20} />
             Edit

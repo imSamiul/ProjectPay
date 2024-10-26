@@ -15,35 +15,54 @@ import Pagination from "./Pagination";
 import ItemsPerPage from "./ItemsPerPage";
 import TableSearchBar from "./TableSearchBar";
 
-const columnHelper = createColumnHelper<PaymentType>();
-const columns = [
-  columnHelper.display({
-    id: "index",
-    header: "#",
-    cell: (info) => info.row.index + 1,
-  }),
-  columnHelper.accessor("paymentDate", {
-    header: "Payment Date",
-    cell: (info) => new Date(info.getValue()).toLocaleDateString("en-GB"),
-  }),
-  columnHelper.accessor("paymentAmount", {
-    header: "Payment Amount",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("paymentMethod", {
-    header: "Payment Method",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("transactionId", {
-    id: "transactionId",
-    header: "Transaction ID",
-    cell: (info) => info.getValue(),
-  }),
-];
-
 function PaymentListTable({ data }: { data: PaymentType[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const columnHelper = createColumnHelper<PaymentType>();
+  const columns = [
+    columnHelper.display({
+      id: "index",
+      header: "#",
+      cell: (info) => info.row.index + 1,
+    }),
+    columnHelper.accessor("paymentDate", {
+      header: "Payment Date",
+      cell: (info) => new Date(info.getValue()).toLocaleDateString("en-GB"),
+    }),
+    columnHelper.accessor("paymentAmount", {
+      header: "Payment Amount",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("paymentMethod", {
+      header: "Payment Method",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("transactionId", {
+      id: "transactionId",
+      header: "Transaction ID",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.display({
+      id: "actions",
+      header: "Actions",
+      cell: (info) => (
+        <div className="flex gap-2">
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={() => handleEdit(info.row.original)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-sm btn-error"
+            onClick={() => handleDelete(info.row.original)}
+          >
+            Delete
+          </button>
+        </div>
+      ),
+    }),
+  ];
   const table = useReactTable({
     data,
     columns,
@@ -63,6 +82,16 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  const handleEdit = (payment: PaymentType) => {
+    // Implement edit logic here
+    console.log("Edit payment:", payment);
+  };
+
+  const handleDelete = (payment: PaymentType) => {
+    // Implement delete logic here
+    console.log("Delete payment:", payment);
+  };
 
   return (
     <div>
@@ -102,7 +131,7 @@ function PaymentListTable({ data }: { data: PaymentType[] }) {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="hover">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="md:text-base">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

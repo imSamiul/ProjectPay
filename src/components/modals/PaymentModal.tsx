@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CustomDatePicker from "./CustomDatePicker";
+import CustomDatePicker from "../ui/CustomDatePicker";
 import { PaymentType } from "../../types/paymentType";
 import { useAddPayment } from "../../services/mutations/paymentMutation";
 
@@ -89,7 +89,7 @@ function PaymentModal({
     <div>
       {/* Button to open the modal */}
       <button
-        className="btn btn-warning btn-sm md:btn-md outline-none border-none"
+        className="btn btn-primary btn-sm md:btn-md outline-none border-none"
         onClick={() => toggleModal(id, "open")}
       >
         Add Payment
