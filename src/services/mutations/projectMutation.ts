@@ -13,10 +13,14 @@ import { useNavigate } from "@tanstack/react-router";
 
 export function useCreateNewProject() {
   const queryClient = useQueryClient();
+  const negative = useNavigate();
   return useMutation({
     mutationFn: (projectObj: ProjectType) => createNewProject(projectObj),
     onSuccess: (data) => {
-      console.log(data);
+      negative({
+        to: "/project/$projectCode",
+        params: { projectCode: data.projectCode },
+      });
     },
     onError: (error) => {
       console.log(error);
