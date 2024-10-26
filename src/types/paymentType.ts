@@ -18,3 +18,13 @@ export type EditPaymentModalPropsType = {
   due: number;
   projectName: string;
 };
+
+export type DeletePaymentModalPropsType = {
+  paymentId: string;
+  modalId: string;
+  projectName: string;
+  transactionId: string;
+  paymentAmount: number;
+  paymentDate: Date;
+  paymentMethod: string;
+};

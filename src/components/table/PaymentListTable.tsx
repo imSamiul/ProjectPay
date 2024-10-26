@@ -15,6 +15,7 @@ import Pagination from "./Pagination";
 import ItemsPerPage from "./ItemsPerPage";
 import TableSearchBar from "./TableSearchBar";
 import EditPaymentModal from "../modals/EditPaymentModal";
+import DeletePaymentModal from "../modals/PaymentDeleteModal";
 
 type PaymentListTablePropsType = {
   data: PaymentType[];
@@ -33,6 +34,7 @@ function PaymentListTable({
     null,
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const columnHelper = createColumnHelper<PaymentType>();
   const columns = [
@@ -74,7 +76,10 @@ function PaymentListTable({
           </button>
           <button
             className="btn btn-sm btn-error"
-            onClick={() => handleDelete(info.row.original)}
+            onClick={() => {
+              setSelectedPayment(info.row.original);
+              setIsDeleteModalOpen(true);
+            }}
           >
             Delete
           </button>
@@ -101,11 +106,6 @@ function PaymentListTable({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  const handleDelete = (payment: PaymentType) => {
-    // Implement delete logic here
-    console.log("Delete payment:", payment);
-  };
 
   return (
     <div>
@@ -186,6 +186,19 @@ function PaymentListTable({
           paymentId={selectedPayment._id || ""}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+        />
+      )}
+      {selectedPayment && (
+        <DeletePaymentModal
+          modalId="deletePaymentModal"
+          projectName={projectName}
+          transactionId={selectedPayment.transactionId}
+          paymentId={selectedPayment._id || ""}
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          paymentAmount={selectedPayment.paymentAmount}
+          paymentDate={new Date(selectedPayment.paymentDate)}
+          paymentMethod={selectedPayment.paymentMethod}
         />
       )}
     </div>

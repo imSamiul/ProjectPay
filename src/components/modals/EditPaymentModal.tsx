@@ -93,7 +93,7 @@ function EditPaymentModal({
     return true;
   };
 
-  const addPaymentHandler = () => {
+  const editPaymentHandler = () => {
     if (!validateForm()) return;
 
     const paymentObj = {
@@ -178,7 +178,7 @@ function EditPaymentModal({
           <button
             type="button"
             className="btn btn-warning"
-            onClick={addPaymentHandler}
+            onClick={editPaymentHandler}
           >
             Confirm
           </button>

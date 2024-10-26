@@ -48,4 +48,13 @@ export async function updatePayment(paymentObject: EditPaymentModalPropsType) {
   }
 }
 
-// DELETE:
+// DELETE: delete payment for specific project and increase the due amount
+export async function deletePayment(paymentId: string) {
+  try {
+    const response = await instance.delete(`/delete/${paymentId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting payment:", error);
+    throw error;
+  }
+}
