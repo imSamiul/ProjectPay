@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLoginForm } from "../../hooks/useLoginForm";
 import Button from "../../components/ui/Button";
 import LinkButton from "../../components/ui/LinkButton";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/_authentication/login")({
   component: Login,
@@ -16,21 +18,18 @@ function Login() {
     isError,
     error,
     isPending,
-    reset,
+    isSuccess,
   } = useLoginForm();
 
-  if (isPending) {
-    return <div>Pending</div>;
-  }
-  if (isError) {
-    console.log(error?.message);
-
-    return (
-      <h5 onClick={() => reset()}>
-        {error ? error.message : "There is an error"}
-      </h5>
-    );
-  }
+  // Use useEffect to handle errors
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.message || "There is an error");
+    }
+    if (isSuccess) {
+      toast.success("Login Successful");
+    }
+  }, [isError, error, isSuccess]); // Only run when isError or error changes
 
   return (
     <div className="container mx-auto p-4">
@@ -41,7 +40,7 @@ function Login() {
         </p>
 
         <form
-          className="my-10 w-full  md:w-3/4 md:flex md:flex-col md:items-center"
+          className="my-10 w-full md:w-3/4 md:flex md:flex-col md:items-center"
           onSubmit={onSubmitHandler}
         >
           <label className="form-control w-full max-w-xs">
@@ -71,20 +70,23 @@ function Login() {
             />
           </label>
 
-          <Button className="mt-5  btn-primary">Login</Button>
+          <Button className="mt-5 btn-primary" disabled={isPending}>
+            {isPending ? "loading..." : "Login"}
+          </Button>
           {formError && (
             <p className="text-red-500 w-56 text-center">{formError}</p>
           )}
         </form>
+
+        <p className="font-medium text-center">
+          Don't have an account?{" "}
+          <LinkButton
+            title="Sign Up"
+            className="text-[#606c38]"
+            to="/signUp"
+          ></LinkButton>
+        </p>
       </div>
-      <p className="font-medium text-center">
-        Don't have an account?{" "}
-        <LinkButton
-          title="Sign Up"
-          className="text-[#606c38] "
-          to="/signUp"
-        ></LinkButton>
-      </p>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const initialValues: UserType = {
 
 export function useLoginForm() {
   const [formValues, setFormValues] = useState<UserType>(initialValues);
-  const { error, isError, isPending, mutate, reset } = useLoginUser();
+  const { error, isError, isPending, mutate, isSuccess } = useLoginUser();
 
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -63,6 +63,6 @@ export function useLoginForm() {
     isError,
     error,
     isPending,
-    reset,
+    isSuccess,
   };
 }
