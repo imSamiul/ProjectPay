@@ -7,10 +7,12 @@ import {
 import {
   apiUpdateProjectDetails,
   createNewProject,
+  deleteProject,
   updateProjectStatus,
 } from "../projectApis";
 import { useNavigate } from "@tanstack/react-router";
 
+// Create a new project
 export function useCreateNewProject() {
   const queryClient = useQueryClient();
   const negative = useNavigate();
@@ -31,7 +33,7 @@ export function useCreateNewProject() {
     },
   });
 }
-
+// Update project status
 export function useUpdateProjectStatus() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -50,7 +52,7 @@ export function useUpdateProjectStatus() {
     },
   });
 }
-
+// Update project details
 export function useUpdateProjectDetails() {
   const queryClient = useQueryClient();
   const negative = useNavigate();
@@ -71,6 +73,26 @@ export function useUpdateProjectDetails() {
 
       await queryClient.invalidateQueries({
         queryKey: ["projects", projectCode],
+      });
+    },
+  });
+}
+// Delete project
+export function useDeleteProject() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async (projectId: string) => deleteProject(projectId),
+    onSuccess: () => {
+      navigate({ to: "/projectManager/managerOverview" });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onSettled: async (data) => {
+      await queryClient.removeQueries({
+        queryKey: ["projectDetails", data.projectCode],
       });
     },
   });

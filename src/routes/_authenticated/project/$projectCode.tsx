@@ -11,6 +11,7 @@ function Project() {
   const { projectCode } = Route.useParams();
 
   const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
+  console.log("called");
 
   if (isLoading) {
     return <div>Loading...</div>;

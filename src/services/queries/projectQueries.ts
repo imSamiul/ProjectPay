@@ -3,7 +3,7 @@ import { getProjectDetails, searchProject } from "../projectApis";
 
 export function useSearchProject(searchString: string) {
   return useQuery({
-    queryKey: ["projects", searchString],
+    queryKey: ["searchProjects", searchString],
     queryFn: () => searchProject(searchString),
     enabled: !!searchString,
   });
@@ -11,7 +11,7 @@ export function useSearchProject(searchString: string) {
 
 export function useGetProjectDetails(projectCode: string) {
   return useQuery({
-    queryKey: ["projects", projectCode],
+    queryKey: ["projectDetails", projectCode],
     queryFn: () => getProjectDetails(projectCode),
     enabled: !!projectCode,
   });

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { ProjectDeleteModalPropsType } from "../../types/projectType";
 import { MdDeleteForever } from "react-icons/md";
+import { useDeleteProject } from "../../services/mutations/projectMutation";
 
 function ProjectDeleteModal({
   modalId,
@@ -11,6 +12,7 @@ function ProjectDeleteModal({
 }: ProjectDeleteModalPropsType) {
   const [error, setError] = useState<string | null>(null);
   const [inputProjectCode, setInputProjectCode] = useState<string>("");
+  const deleteProject = useDeleteProject();
 
   const toggleModal = (modalId: string, action: "open" | "close") => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
@@ -36,7 +38,9 @@ function ProjectDeleteModal({
   const deletePaymentHandler = () => {
     if (!validateForm()) return;
 
+    deleteProject.mutate(projectId);
     console.log(projectId);
+
     setInputProjectCode("");
     toggleModal(modalId, "close");
   };

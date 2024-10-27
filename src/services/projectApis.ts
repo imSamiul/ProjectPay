@@ -32,7 +32,11 @@ export async function getProjectDetails(projectCode: string) {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching project details:", error);
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.status === 404) {
+        throw new Error(error.response.data || "Project not found");
+      }
+    }
     throw error;
   }
 }
@@ -97,4 +101,13 @@ export async function apiUpdateProjectDetails(
   }
 }
 
-// DELETE:project
+// DELETE: delete project
+export async function deleteProject(projectId: string) {
+  try {
+    const response = await instance.delete(`/delete/${projectId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    throw error;
+  }
+}
