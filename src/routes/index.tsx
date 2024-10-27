@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Navbar from "../components/ui/Navbar";
-import { fetchUserDetails } from "../services/apis";
+import { fetchUserDetails } from "../services/userApis";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {

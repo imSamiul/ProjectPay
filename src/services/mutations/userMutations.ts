@@ -1,14 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
-import { createUser, loginUser, logOutUser } from "../apis";
 import { UserType } from "../../types/userType";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "../../hooks/useAuth";
+import { createUser, loginUser, logOutUser } from "../userApis";
 
 // create user
 export function useCreateUser() {
-  const queryClient = useQueryClient();
   const auth = useAuth();
   const navigate = useNavigate();
   return useMutation({
@@ -21,18 +20,10 @@ export function useCreateUser() {
         navigate({ to: "/" });
       }
     },
-    onError: (error) => {
-      console.log(error);
-    },
-    onSettled: async (data, error) => {
-      console.log(data, error);
-      await queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
   });
 }
 // login user
 export function useLoginUser() {
-  const queryClient = useQueryClient();
   const auth = useAuth();
   const navigate = useNavigate();
   return useMutation({
@@ -45,29 +36,16 @@ export function useLoginUser() {
         navigate({ to: "/" });
       }
     },
-    onError: (error) => {
-      console.log(error);
-    },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
   });
 }
 // logout user
 export function useLogOutUser() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
     mutationFn: logOutUser,
     onSuccess: () => {
       Cookies.remove("token");
       navigate({ to: "/" });
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
 }

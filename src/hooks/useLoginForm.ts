@@ -10,13 +10,13 @@ const initialValues: UserType = {
 
 export function useLoginForm() {
   const [formValues, setFormValues] = useState<UserType>(initialValues);
-  const loginUserMutation = useLoginUser();
+  const { error, isError, isPending, mutate, reset } = useLoginUser();
 
-  const [error, setError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   // Handle form changes
   const handleFormValues = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setError(null);
+    setFormError(null);
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
@@ -26,13 +26,13 @@ export function useLoginForm() {
   // Form validation logic
   const validateForm = (): boolean => {
     if (formValues.email === "" || formValues.password === "") {
-      setError("Please fill all the fields");
+      setFormError("Please fill all the fields");
       return false;
     }
 
     const isValidEmail = EmailValidator.validate(formValues.email);
     if (!isValidEmail) {
-      setError("Email must be valid");
+      setFormError("Email must be valid");
       return false;
     }
 
@@ -40,7 +40,7 @@ export function useLoginForm() {
       formValues.password.length < 6 ||
       formValues.password.includes("password")
     ) {
-      setError("Password must be valid");
+      setFormError("Password must be valid");
       return false;
     }
 
@@ -51,7 +51,7 @@ export function useLoginForm() {
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      loginUserMutation.mutate(formValues);
+      mutate(formValues);
     }
   };
 
@@ -59,6 +59,10 @@ export function useLoginForm() {
     formValues,
     handleFormValues,
     onSubmitHandler,
+    formError,
+    isError,
     error,
+    isPending,
+    reset,
   };
 }

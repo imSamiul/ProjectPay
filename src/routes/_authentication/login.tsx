@@ -8,8 +8,30 @@ export const Route = createFileRoute("/_authentication/login")({
 });
 
 function Login() {
-  const { formValues, error, handleFormValues, onSubmitHandler } =
-    useLoginForm();
+  const {
+    formValues,
+    handleFormValues,
+    onSubmitHandler,
+    formError,
+    isError,
+    error,
+    isPending,
+    reset,
+  } = useLoginForm();
+
+  if (isPending) {
+    return <div>Pending</div>;
+  }
+  if (isError) {
+    console.log(error?.message);
+
+    return (
+      <h5 onClick={() => reset()}>
+        {error ? error.message : "There is an error"}
+      </h5>
+    );
+  }
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col pt-5 justify-center items-center">
@@ -49,8 +71,10 @@ function Login() {
             />
           </label>
 
-          <Button className="mt-5 bg-[#283618] text-white">Login</Button>
-          {error && <p className="text-red-500 w-56 text-center">{error}</p>}
+          <Button className="mt-5  btn-primary">Login</Button>
+          {formError && (
+            <p className="text-red-500 w-56 text-center">{formError}</p>
+          )}
         </form>
       </div>
       <p className="font-medium text-center">

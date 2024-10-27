@@ -17,6 +17,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticationSignUpImport } from './routes/_authentication/signUp'
 import { Route as AuthenticationLoginImport } from './routes/_authentication/login'
 import { Route as AuthenticatedProjectManagerImport } from './routes/_authenticated/projectManager'
+import { Route as AuthenticatedProjectManagerProjectListImport } from './routes/_authenticated/projectManager/projectList'
 import { Route as AuthenticatedProjectManagerManagerOverviewImport } from './routes/_authenticated/projectManager/managerOverview'
 import { Route as AuthenticatedProjectManagerAddProjectImport } from './routes/_authenticated/projectManager/addProject'
 import { Route as AuthenticatedProjectManagerAddClientImport } from './routes/_authenticated/projectManager/addClient'
@@ -54,6 +55,12 @@ const AuthenticatedProjectManagerRoute =
   AuthenticatedProjectManagerImport.update({
     path: '/projectManager',
     getParentRoute: () => AuthenticatedRoute,
+  } as any)
+
+const AuthenticatedProjectManagerProjectListRoute =
+  AuthenticatedProjectManagerProjectListImport.update({
+    path: '/projectList',
+    getParentRoute: () => AuthenticatedProjectManagerRoute,
   } as any)
 
 const AuthenticatedProjectManagerManagerOverviewRoute =
@@ -160,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectManagerManagerOverviewImport
       parentRoute: typeof AuthenticatedProjectManagerImport
     }
+    '/_authenticated/projectManager/projectList': {
+      id: '/_authenticated/projectManager/projectList'
+      path: '/projectList'
+      fullPath: '/projectManager/projectList'
+      preLoaderRoute: typeof AuthenticatedProjectManagerProjectListImport
+      parentRoute: typeof AuthenticatedProjectManagerImport
+    }
     '/_authenticated/project/edit/$projectCode': {
       id: '/_authenticated/project/edit/$projectCode'
       path: '/project/edit/$projectCode'
@@ -176,6 +190,7 @@ interface AuthenticatedProjectManagerRouteChildren {
   AuthenticatedProjectManagerAddClientRoute: typeof AuthenticatedProjectManagerAddClientRoute
   AuthenticatedProjectManagerAddProjectRoute: typeof AuthenticatedProjectManagerAddProjectRoute
   AuthenticatedProjectManagerManagerOverviewRoute: typeof AuthenticatedProjectManagerManagerOverviewRoute
+  AuthenticatedProjectManagerProjectListRoute: typeof AuthenticatedProjectManagerProjectListRoute
 }
 
 const AuthenticatedProjectManagerRouteChildren: AuthenticatedProjectManagerRouteChildren =
@@ -186,6 +201,8 @@ const AuthenticatedProjectManagerRouteChildren: AuthenticatedProjectManagerRoute
       AuthenticatedProjectManagerAddProjectRoute,
     AuthenticatedProjectManagerManagerOverviewRoute:
       AuthenticatedProjectManagerManagerOverviewRoute,
+    AuthenticatedProjectManagerProjectListRoute:
+      AuthenticatedProjectManagerProjectListRoute,
   }
 
 const AuthenticatedProjectManagerRouteWithChildren =
@@ -235,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/projectManager/addClient': typeof AuthenticatedProjectManagerAddClientRoute
   '/projectManager/addProject': typeof AuthenticatedProjectManagerAddProjectRoute
   '/projectManager/managerOverview': typeof AuthenticatedProjectManagerManagerOverviewRoute
+  '/projectManager/projectList': typeof AuthenticatedProjectManagerProjectListRoute
   '/project/edit/$projectCode': typeof AuthenticatedProjectEditProjectCodeRoute
 }
 
@@ -248,6 +266,7 @@ export interface FileRoutesByTo {
   '/projectManager/addClient': typeof AuthenticatedProjectManagerAddClientRoute
   '/projectManager/addProject': typeof AuthenticatedProjectManagerAddProjectRoute
   '/projectManager/managerOverview': typeof AuthenticatedProjectManagerManagerOverviewRoute
+  '/projectManager/projectList': typeof AuthenticatedProjectManagerProjectListRoute
   '/project/edit/$projectCode': typeof AuthenticatedProjectEditProjectCodeRoute
 }
 
@@ -263,6 +282,7 @@ export interface FileRoutesById {
   '/_authenticated/projectManager/addClient': typeof AuthenticatedProjectManagerAddClientRoute
   '/_authenticated/projectManager/addProject': typeof AuthenticatedProjectManagerAddProjectRoute
   '/_authenticated/projectManager/managerOverview': typeof AuthenticatedProjectManagerManagerOverviewRoute
+  '/_authenticated/projectManager/projectList': typeof AuthenticatedProjectManagerProjectListRoute
   '/_authenticated/project/edit/$projectCode': typeof AuthenticatedProjectEditProjectCodeRoute
 }
 
@@ -278,6 +298,7 @@ export interface FileRouteTypes {
     | '/projectManager/addClient'
     | '/projectManager/addProject'
     | '/projectManager/managerOverview'
+    | '/projectManager/projectList'
     | '/project/edit/$projectCode'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -290,6 +311,7 @@ export interface FileRouteTypes {
     | '/projectManager/addClient'
     | '/projectManager/addProject'
     | '/projectManager/managerOverview'
+    | '/projectManager/projectList'
     | '/project/edit/$projectCode'
   id:
     | '__root__'
@@ -303,6 +325,7 @@ export interface FileRouteTypes {
     | '/_authenticated/projectManager/addClient'
     | '/_authenticated/projectManager/addProject'
     | '/_authenticated/projectManager/managerOverview'
+    | '/_authenticated/projectManager/projectList'
     | '/_authenticated/project/edit/$projectCode'
   fileRoutesById: FileRoutesById
 }
@@ -360,7 +383,8 @@ export const routeTree = rootRoute
       "children": [
         "/_authenticated/projectManager/addClient",
         "/_authenticated/projectManager/addProject",
-        "/_authenticated/projectManager/managerOverview"
+        "/_authenticated/projectManager/managerOverview",
+        "/_authenticated/projectManager/projectList"
       ]
     },
     "/_authentication/login": {
@@ -385,6 +409,10 @@ export const routeTree = rootRoute
     },
     "/_authenticated/projectManager/managerOverview": {
       "filePath": "_authenticated/projectManager/managerOverview.tsx",
+      "parent": "/_authenticated/projectManager"
+    },
+    "/_authenticated/projectManager/projectList": {
+      "filePath": "_authenticated/projectManager/projectList.tsx",
       "parent": "/_authenticated/projectManager"
     },
     "/_authenticated/project/edit/$projectCode": {

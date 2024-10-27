@@ -29,4 +29,13 @@ dist-ssr
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+.env
+/config
+config
+.vercel
+.env
+.env.development
+.env.production
+.env.*
+*.env
 

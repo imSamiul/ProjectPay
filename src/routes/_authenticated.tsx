@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import Navbar from "../components/ui/Navbar";
-import { fetchUserDetails } from "../services/apis";
+import { fetchUserDetails } from "../services/userApis";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context }) => {
