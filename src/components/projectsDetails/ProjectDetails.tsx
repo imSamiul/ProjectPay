@@ -5,6 +5,7 @@ import { TiTick } from "react-icons/ti";
 import { MdEditDocument } from "react-icons/md";
 import { useUpdateProjectStatus } from "../../services/mutations/projectMutation";
 import { Link } from "@tanstack/react-router";
+import ProjectDeleteModal from "../modals/ProjectDeleteModal";
 
 type ClientSectionKeys = keyof ProjectType;
 type ProjectSectionKeys = keyof ProjectType;
@@ -105,18 +106,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
         <h1 className="text-2xl font-bold md:text-3xl font-lexend ">
           {details.name}
         </h1>
-        <div className="flex gap-2 ">
-          <Link
-            to="/project/edit/$projectCode"
-            params={{
-              projectCode: details.projectCode ? details.projectCode : "",
-            }}
-            className="btn btn-primary btn-sm md:btn-md"
-          >
-            <MdEditDocument size={20} />
-            Edit
-          </Link>
-
+        <div className="flex  justify-center items-center gap-2 flex-wrap ">
           {details.status === true ? (
             <Button className="btn-success" onClick={handleProjectStatus}>
               <TiTick size={20} />
@@ -128,6 +118,23 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
               Make Complete
             </Button>
           )}
+
+          <Link
+            to="/project/edit/$projectCode"
+            params={{
+              projectCode: details.projectCode ? details.projectCode : "",
+            }}
+            className="btn btn-primary btn-sm md:btn-md"
+          >
+            <MdEditDocument size={20} />
+            Edit
+          </Link>
+          <ProjectDeleteModal
+            modalId="projectDeleteModal"
+            projectCode={details.projectCode!}
+            projectId={details._id!}
+            projectName={details.name}
+          />
         </div>
       </div>
       <div className="divider m-0 mb-2"></div>

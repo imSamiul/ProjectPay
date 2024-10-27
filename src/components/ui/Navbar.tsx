@@ -20,10 +20,6 @@ const projectManagerNavItem: NavItem[] = [
     title: "Add Project",
     link: "/projectManager/addProject",
   },
-  {
-    title: "All Projects",
-    link: "/projectManager/allProjects",
-  },
 ];
 const clientNavItem: NavItem[] = [
   {

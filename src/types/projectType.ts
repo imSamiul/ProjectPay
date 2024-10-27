@@ -43,3 +43,10 @@ export type UpdateProjectType = {
   typeOfWeb: string;
   description: string;
 };
+
+export type ProjectDeleteModalPropsType = {
+  modalId: string;
+  projectName: string;
+  projectCode: string;
+  projectId: string;
+};
