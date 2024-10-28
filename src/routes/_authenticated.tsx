@@ -10,6 +10,8 @@ export const Route = createFileRoute("/_authenticated")({
         to: "/login",
       });
     }
+    console.log("User is logged in");
+
     const data = await fetchUserDetails();
     context.auth.user = data.user;
   },
@@ -17,10 +19,6 @@ export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
 });
 function AuthenticatedLayout() {
-  // const auth = useAuth();
-
-  // console.log(auth);
-
   return (
     <div>
       <Navbar />

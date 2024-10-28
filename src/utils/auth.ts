@@ -6,7 +6,6 @@ export function setAuthToken(token: string) {
 export function getAuthToken() {
   const token = Cookies.get("token");
   if (!token) {
-    console.log("No token found");
     return null;
   }
   return token;

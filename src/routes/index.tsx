@@ -4,7 +4,9 @@ import { fetchUserDetails } from "../services/userApis";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
-    if (context.auth.isLogged()) {
+    const isLogged = context.auth.isLogged();
+
+    if (isLogged) {
       const data = await fetchUserDetails();
       context.auth.setUserDetails(data.user);
       return data.user;
@@ -14,9 +16,6 @@ export const Route = createFileRoute("/")({
 });
 
 function AuthenticatedLayout() {
-  const user = Route.useLoaderData();
-  console.log(user);
-
   return (
     <div>
       <Navbar />
