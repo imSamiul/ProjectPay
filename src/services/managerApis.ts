@@ -17,22 +17,3 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
-
-// GET:Manger
-// get all projects for manager
-
-export async function getManagerProjects({ pageParam }: { pageParam: number }) {
-  try {
-    const response = await instance.get("/projects", {
-      params: {
-        pageParam,
-        limit: 10,
-      },
-    });
-
-    return response.data.projects;
-  } catch (error) {
-    console.log("Error loading all projects", error);
-    throw error;
-  }
-}

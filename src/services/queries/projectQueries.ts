@@ -1,6 +1,9 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getProjectDetails, searchProject } from "../projectApis";
-import { getManagerProjects } from "../managerApis";
+import {
+  getManagerProjects,
+  getProjectDetails,
+  searchProject,
+} from "../projectApis";
 
 // get all projects for a manager
 export function useGetManagerProjects() {

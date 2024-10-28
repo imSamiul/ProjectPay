@@ -49,6 +49,22 @@ export async function searchProject(searchString: string) {
     throw new Error(getErrorMessage(error));
   }
 }
+// GET: get all projects for manager
+
+export async function getManagerProjects({ pageParam }: { pageParam: number }) {
+  try {
+    const response = await instance.get("/project", {
+      params: {
+        pageParam,
+        limit: 10,
+      },
+    });
+
+    return response.data.projects;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}
 
 // POST:create new project
 export async function createNewProject(projectObject: ProjectType) {
