@@ -5,10 +5,12 @@ import {
   UpdateProjectStatusType,
   UpdateProjectType,
 } from "../types/projectType";
+import { getErrorMessage } from "../utils/errorHandler";
 
-const MONGOOSE_URL = "http://localhost:4000/projects";
+const apiUrl = `${import.meta.env.VITE_BASE_API_URL}/projects`;
+
 const defaultOptions = {
-  baseURL: MONGOOSE_URL,
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -24,24 +26,17 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-// GET:Project
-// get project details
+// GET: get project details
 export async function getProjectDetails(projectCode: string) {
   try {
     const response = await instance.get(`/details/${projectCode}`);
-
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response && error.response.status === 404) {
-        throw new Error(error.response.data || "Project not found");
-      }
-    }
-    throw error;
+    throw new Error(getErrorMessage(error));
   }
 }
 
-// search project
+// GET: search project
 export async function searchProject(searchString: string) {
   try {
     const response = await instance.get("/search", {
@@ -51,8 +46,7 @@ export async function searchProject(searchString: string) {
     });
     return response.data;
   } catch (error) {
-    console.error("Error searching project:", error);
-    throw error;
+    throw new Error(getErrorMessage(error));
   }
 }
 
@@ -62,8 +56,7 @@ export async function createNewProject(projectObject: ProjectType) {
     const response = await instance.post("/create", projectObject);
     return response.data;
   } catch (error) {
-    console.error("Error creating project:", error);
-    throw error;
+    throw new Error(getErrorMessage(error));
   }
 }
 
@@ -81,8 +74,7 @@ export async function updateProjectStatus(
 
     return response.data;
   } catch (error) {
-    console.error("Error updating project status:", error);
-    throw error;
+    throw new Error(getErrorMessage(error));
   }
 }
 // PATCH: update project
@@ -96,8 +88,7 @@ export async function apiUpdateProjectDetails(
     );
     return response.data;
   } catch (error) {
-    console.error("Error updating project:", error);
-    throw error;
+    throw new Error(getErrorMessage(error));
   }
 }
 
@@ -107,7 +98,6 @@ export async function deleteProject(projectId: string) {
     const response = await instance.delete(`/delete/${projectId}`);
     return response.data;
   } catch (error) {
-    console.error("Error deleting project:", error);
-    throw error;
+    throw new Error(getErrorMessage(error));
   }
 }
