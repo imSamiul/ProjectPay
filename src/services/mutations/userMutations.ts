@@ -1,6 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-
 import { UserType } from "../../types/userType";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "../../hooks/useAuth";
@@ -40,10 +39,14 @@ export function useLoginUser() {
 }
 // logout user
 export function useLogOutUser() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: logOutUser,
     onSuccess: () => {
       Cookies.remove("token");
+      queryClient.removeQueries();
+      navigate({ to: "/" });
     },
   });
 }

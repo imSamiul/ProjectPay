@@ -4,13 +4,13 @@ import Navbar from "../components/ui/Navbar";
 import { fetchUserDetails } from "../services/userApis";
 
 export const Route = createFileRoute("/_authenticated")({
-  beforeLoad: async ({ context }) => {
-    if (!context.auth.isTokenSaved()) {
+  loader: async ({ context }) => {
+    const isTokenSaved = context.auth.isTokenSaved();
+    if (!isTokenSaved) {
       throw redirect({
         to: "/login",
       });
     }
-    console.log("User is logged in");
 
     const data = await fetchUserDetails();
     context.auth.user = data.user;

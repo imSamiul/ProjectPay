@@ -25,7 +25,7 @@ instance.interceptors.request.use((config) => {
 // GET: get user details
 export async function fetchUserDetails() {
   try {
-    const response = await instance(`${apiUrl}/me`);
+    const response = await instance.get(`${apiUrl}/me`);
     return response.data;
   } catch (error) {
     throw new Error(getErrorMessage(error));

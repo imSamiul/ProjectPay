@@ -37,7 +37,7 @@ const clientNavItem: NavItem[] = [
 function Navbar() {
   const auth = useAuth();
   const { error, isError, isPending, mutate, isSuccess } = useLogOutUser();
-  console.log(isSuccess);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,8 +46,6 @@ function Navbar() {
     }
     if (isSuccess) {
       toast.success("Logout Successful");
-
-      navigate({ to: "/" });
     }
   }, [isError, error, isSuccess, navigate]);
 
