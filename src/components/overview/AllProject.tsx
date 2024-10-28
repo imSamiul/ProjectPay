@@ -53,17 +53,27 @@ function AllProject({
     if (isInfiniteScrollError) {
       toast.error(infiniteScrollError?.message);
     }
-  }, [inView, fetchNextPage, isInfiniteScrollError, infiniteScrollError]);
+    if (isSearchResultsError) {
+      toast.error(searchResultsError?.message);
+    }
+  }, [
+    inView,
+    fetchNextPage,
+    isInfiniteScrollError,
+    infiniteScrollError,
+    isSearchResultsError,
+    searchResultsError,
+  ]);
 
-  if (searchResultsError) {
-    return <div>Search Results Error</div>;
-  }
-
-  if (isSearchResultsLoading) {
-    return <div>Search Results Loading...</div>;
-  }
   if (isSearchResultsError) {
-    return <div>Search Results Error</div>;
+    return (
+      <ErrorComponent
+        errorMessage={
+          searchResultsError ? searchResultsError.message : "An error occurred"
+        }
+        onRetry={refetchInfiniteProjects}
+      />
+    );
   }
 
   if (isInfiniteScrollError) {
@@ -78,10 +88,18 @@ function AllProject({
       />
     );
   }
+  if (isSearchResultsLoading) {
+    return (
+      <div>
+        <Loader className="h-96" />
+      </div>
+    );
+  }
+
   if (isInfiniteScrollLoading) {
     return (
       <div>
-        <Loader />
+        <Loader className="h-96" />
       </div>
     );
   }
