@@ -1,10 +1,12 @@
-import { Link, LinkOptions } from "@tanstack/react-router";
+import { Link, LinkOptions, useNavigate } from "@tanstack/react-router";
 import LinkButton from "./LinkButton";
 import ThemeSwap from "./ThemeSwap";
 import navbarLogo from "../../assets/nav-logo.png";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../modals/Modal";
 import { useLogOutUser } from "../../services/mutations/userMutations";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 type NavItem = {
   title: string;
@@ -34,7 +36,20 @@ const clientNavItem: NavItem[] = [
 
 function Navbar() {
   const auth = useAuth();
-  const logOutUserMutation = useLogOutUser();
+  const { error, isError, isPending, mutate, isSuccess } = useLogOutUser();
+  console.log(isSuccess);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.message || "There is an error");
+    }
+    if (isSuccess) {
+      toast.success("Logout Successful");
+
+      navigate({ to: "/" });
+    }
+  }, [isError, error, isSuccess, navigate]);
 
   const isLogged = auth.isTokenSaved();
 
@@ -51,7 +66,7 @@ function Navbar() {
   }
 
   function handleLogout() {
-    logOutUserMutation.mutate();
+    mutate();
   }
 
   return (
@@ -126,7 +141,7 @@ function Navbar() {
               id="logout"
               title="Logout"
               content="Are you sure you want to logout?"
-              openButtonLabel="Logout"
+              openButtonLabel={isPending ? "Logging out..." : "Logout"}
               closeButtonLabel="Cancel"
               confirmButtonLabel="Logout"
               btnConfirmAction={handleLogout}

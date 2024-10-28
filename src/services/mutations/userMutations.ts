@@ -40,12 +40,10 @@ export function useLoginUser() {
 }
 // logout user
 export function useLogOutUser() {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: logOutUser,
     onSuccess: () => {
       Cookies.remove("token");
-      navigate({ to: "/" });
     },
   });
 }
