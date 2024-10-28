@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { RouterContext } from "../types/routerContextType";
 import Toast from "../components/ui/Toast";
+import NotFound from "../components/NotFound";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
@@ -16,7 +17,5 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <TanStackRouterDevtools initialIsOpen={false} />
     </React.Fragment>
   ),
-  notFoundComponent: () => (
-    <div>Freak! make a component first. Useless Developer.</div>
-  ),
+  notFoundComponent: NotFound,
 });
