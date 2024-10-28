@@ -3,6 +3,9 @@ import { ProjectType } from "../../types/projectType";
 import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import Loader from "../Loader";
+import { toast } from "react-toastify";
+
+import ErrorComponent from "../ErrorComponent";
 
 type AllProjectPropsType = {
   projects: ProjectType[];
@@ -19,6 +22,7 @@ type AllProjectPropsType = {
   isSearchResultsLoading: boolean;
   isSearchResultsError: boolean;
   searchResultsError: Error | null;
+  refetchInfiniteProjects: () => void;
 };
 
 // true => Done
@@ -38,6 +42,7 @@ function AllProject({
   isSearchResultsLoading,
   isSearchResultsError,
   searchResultsError,
+  refetchInfiniteProjects,
 }: AllProjectPropsType) {
   const { ref, inView } = useInView();
 
@@ -45,12 +50,11 @@ function AllProject({
     if (inView) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage]);
-  console.log(infiniteScrollError);
+    if (isInfiniteScrollError) {
+      toast.error(infiniteScrollError?.message);
+    }
+  }, [inView, fetchNextPage, isInfiniteScrollError, infiniteScrollError]);
 
-  if (isInfiniteScrollError) {
-    return <div>error</div>;
-  }
   if (searchResultsError) {
     return <div>Search Results Error</div>;
   }
@@ -62,6 +66,18 @@ function AllProject({
     return <div>Search Results Error</div>;
   }
 
+  if (isInfiniteScrollError) {
+    return (
+      <ErrorComponent
+        errorMessage={
+          infiniteScrollError
+            ? infiniteScrollError.message
+            : "An error occurred"
+        }
+        onRetry={refetchInfiniteProjects}
+      />
+    );
+  }
   if (isInfiniteScrollLoading) {
     return (
       <div>

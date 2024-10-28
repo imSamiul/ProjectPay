@@ -5,7 +5,7 @@ function Toast() {
   return (
     <ToastContainer
       position="top-center"
-      autoClose={1000}
+      autoClose={5000}
       hideProgressBar
       newestOnTop={false}
       closeOnClick

@@ -1,9 +1,10 @@
 import axios from "axios";
 import { getAuthToken } from "../utils/auth";
+import { getErrorMessage } from "../utils/errorHandler";
 
-const MONGOOSE_URL = "http://192.168.31.207:4000/manager";
+const apiUrl = `${import.meta.env.VITE_BASE_API_URL}/manager`;
 const defaultOptions = {
-  baseURL: MONGOOSE_URL,
+  baseURL: apiUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -17,3 +18,20 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// GET: get all projects for manager
+
+export async function getManagerProjects({ pageParam }: { pageParam: number }) {
+  try {
+    const response = await instance.get("/projects", {
+      params: {
+        pageParam,
+        limit: 10,
+      },
+    });
+
+    return response.data.projects;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+}

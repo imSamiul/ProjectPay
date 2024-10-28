@@ -26,7 +26,7 @@ function ManagerOverview() {
     isError: isInfiniteScrollError,
     error: infiniteScrollError,
     isFetching: isInfiniteScrollFetching,
-
+    refetch: refetchInfiniteProjects,
     isLoading: isInfiniteScrollLoading,
   } = useGetManagerProjects();
 
@@ -82,6 +82,7 @@ function ManagerOverview() {
             isSearchResultsLoading={isSearchResultsLoading}
             isSearchResultsError={isSearchResultsError}
             searchResultsError={searchResultsError}
+            refetchInfiniteProjects={refetchInfiniteProjects}
           />
         </div>
       </div>
