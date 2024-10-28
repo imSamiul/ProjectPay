@@ -36,7 +36,7 @@ function Navbar() {
   const auth = useAuth();
   const logOutUserMutation = useLogOutUser();
 
-  const isLogged = auth.isLogged();
+  const isLogged = auth.isTokenSaved();
 
   const userType = auth.user?.userType;
 

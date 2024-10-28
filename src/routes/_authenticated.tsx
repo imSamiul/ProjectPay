@@ -5,7 +5,7 @@ import { fetchUserDetails } from "../services/userApis";
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async ({ context }) => {
-    if (!context.auth.isLogged()) {
+    if (!context.auth.isTokenSaved()) {
       throw redirect({
         to: "/login",
       });

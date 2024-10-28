@@ -4,7 +4,7 @@ import authenticationPageImage from "../assets/authentication-page-image.jpg";
 export const Route = createFileRoute("/_authentication")({
   component: AuthenticationLayout,
   beforeLoad: async ({ context }) => {
-    if (context.auth.isLogged()) {
+    if (context.auth.isTokenSaved()) {
       throw redirect({
         to: "/",
       });

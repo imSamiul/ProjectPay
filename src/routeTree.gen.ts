@@ -16,7 +16,7 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticationSignUpImport } from './routes/_authentication/signUp'
 import { Route as AuthenticationLoginImport } from './routes/_authentication/login'
-import { Route as AuthenticatedProjectManagerImport } from './routes/_authenticated/projectManager'
+import { Route as AuthenticatedProjectManagerImport } from './routes/_authenticated/_projectManager'
 import { Route as AuthenticatedProjectManagerProjectListImport } from './routes/_authenticated/projectManager/projectList'
 import { Route as AuthenticatedProjectManagerManagerOverviewImport } from './routes/_authenticated/projectManager/managerOverview'
 import { Route as AuthenticatedProjectManagerAddProjectImport } from './routes/_authenticated/projectManager/addProject'
@@ -53,32 +53,32 @@ const AuthenticationLoginRoute = AuthenticationLoginImport.update({
 
 const AuthenticatedProjectManagerRoute =
   AuthenticatedProjectManagerImport.update({
-    path: '/projectManager',
+    id: '/_projectManager',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedProjectManagerProjectListRoute =
   AuthenticatedProjectManagerProjectListImport.update({
-    path: '/projectList',
-    getParentRoute: () => AuthenticatedProjectManagerRoute,
+    path: '/projectManager/projectList',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedProjectManagerManagerOverviewRoute =
   AuthenticatedProjectManagerManagerOverviewImport.update({
-    path: '/managerOverview',
-    getParentRoute: () => AuthenticatedProjectManagerRoute,
+    path: '/projectManager/managerOverview',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedProjectManagerAddProjectRoute =
   AuthenticatedProjectManagerAddProjectImport.update({
-    path: '/addProject',
-    getParentRoute: () => AuthenticatedProjectManagerRoute,
+    path: '/projectManager/addProject',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedProjectManagerAddClientRoute =
   AuthenticatedProjectManagerAddClientImport.update({
-    path: '/addClient',
-    getParentRoute: () => AuthenticatedProjectManagerRoute,
+    path: '/projectManager/addClient',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 const AuthenticatedProjectProjectCodeRoute =
@@ -118,10 +118,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticationImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/projectManager': {
-      id: '/_authenticated/projectManager'
-      path: '/projectManager'
-      fullPath: '/projectManager'
+    '/_authenticated/_projectManager': {
+      id: '/_authenticated/_projectManager'
+      path: ''
+      fullPath: ''
       preLoaderRoute: typeof AuthenticatedProjectManagerImport
       parentRoute: typeof AuthenticatedImport
     }
@@ -148,31 +148,31 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/projectManager/addClient': {
       id: '/_authenticated/projectManager/addClient'
-      path: '/addClient'
+      path: '/projectManager/addClient'
       fullPath: '/projectManager/addClient'
       preLoaderRoute: typeof AuthenticatedProjectManagerAddClientImport
-      parentRoute: typeof AuthenticatedProjectManagerImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/projectManager/addProject': {
       id: '/_authenticated/projectManager/addProject'
-      path: '/addProject'
+      path: '/projectManager/addProject'
       fullPath: '/projectManager/addProject'
       preLoaderRoute: typeof AuthenticatedProjectManagerAddProjectImport
-      parentRoute: typeof AuthenticatedProjectManagerImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/projectManager/managerOverview': {
       id: '/_authenticated/projectManager/managerOverview'
-      path: '/managerOverview'
+      path: '/projectManager/managerOverview'
       fullPath: '/projectManager/managerOverview'
       preLoaderRoute: typeof AuthenticatedProjectManagerManagerOverviewImport
-      parentRoute: typeof AuthenticatedProjectManagerImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/projectManager/projectList': {
       id: '/_authenticated/projectManager/projectList'
-      path: '/projectList'
+      path: '/projectManager/projectList'
       fullPath: '/projectManager/projectList'
       preLoaderRoute: typeof AuthenticatedProjectManagerProjectListImport
-      parentRoute: typeof AuthenticatedProjectManagerImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authenticated/project/edit/$projectCode': {
       id: '/_authenticated/project/edit/$projectCode'
@@ -186,40 +186,27 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-interface AuthenticatedProjectManagerRouteChildren {
+interface AuthenticatedRouteChildren {
+  AuthenticatedProjectManagerRoute: typeof AuthenticatedProjectManagerRoute
+  AuthenticatedProjectProjectCodeRoute: typeof AuthenticatedProjectProjectCodeRoute
   AuthenticatedProjectManagerAddClientRoute: typeof AuthenticatedProjectManagerAddClientRoute
   AuthenticatedProjectManagerAddProjectRoute: typeof AuthenticatedProjectManagerAddProjectRoute
   AuthenticatedProjectManagerManagerOverviewRoute: typeof AuthenticatedProjectManagerManagerOverviewRoute
   AuthenticatedProjectManagerProjectListRoute: typeof AuthenticatedProjectManagerProjectListRoute
-}
-
-const AuthenticatedProjectManagerRouteChildren: AuthenticatedProjectManagerRouteChildren =
-  {
-    AuthenticatedProjectManagerAddClientRoute:
-      AuthenticatedProjectManagerAddClientRoute,
-    AuthenticatedProjectManagerAddProjectRoute:
-      AuthenticatedProjectManagerAddProjectRoute,
-    AuthenticatedProjectManagerManagerOverviewRoute:
-      AuthenticatedProjectManagerManagerOverviewRoute,
-    AuthenticatedProjectManagerProjectListRoute:
-      AuthenticatedProjectManagerProjectListRoute,
-  }
-
-const AuthenticatedProjectManagerRouteWithChildren =
-  AuthenticatedProjectManagerRoute._addFileChildren(
-    AuthenticatedProjectManagerRouteChildren,
-  )
-
-interface AuthenticatedRouteChildren {
-  AuthenticatedProjectManagerRoute: typeof AuthenticatedProjectManagerRouteWithChildren
-  AuthenticatedProjectProjectCodeRoute: typeof AuthenticatedProjectProjectCodeRoute
   AuthenticatedProjectEditProjectCodeRoute: typeof AuthenticatedProjectEditProjectCodeRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedProjectManagerRoute:
-    AuthenticatedProjectManagerRouteWithChildren,
+  AuthenticatedProjectManagerRoute: AuthenticatedProjectManagerRoute,
   AuthenticatedProjectProjectCodeRoute: AuthenticatedProjectProjectCodeRoute,
+  AuthenticatedProjectManagerAddClientRoute:
+    AuthenticatedProjectManagerAddClientRoute,
+  AuthenticatedProjectManagerAddProjectRoute:
+    AuthenticatedProjectManagerAddProjectRoute,
+  AuthenticatedProjectManagerManagerOverviewRoute:
+    AuthenticatedProjectManagerManagerOverviewRoute,
+  AuthenticatedProjectManagerProjectListRoute:
+    AuthenticatedProjectManagerProjectListRoute,
   AuthenticatedProjectEditProjectCodeRoute:
     AuthenticatedProjectEditProjectCodeRoute,
 }
@@ -244,8 +231,7 @@ const AuthenticationRouteWithChildren = AuthenticationRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthenticationRouteWithChildren
-  '/projectManager': typeof AuthenticatedProjectManagerRouteWithChildren
+  '': typeof AuthenticatedProjectManagerRoute
   '/login': typeof AuthenticationLoginRoute
   '/signUp': typeof AuthenticationSignUpRoute
   '/project/$projectCode': typeof AuthenticatedProjectProjectCodeRoute
@@ -258,8 +244,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthenticationRouteWithChildren
-  '/projectManager': typeof AuthenticatedProjectManagerRouteWithChildren
+  '': typeof AuthenticatedProjectManagerRoute
   '/login': typeof AuthenticationLoginRoute
   '/signUp': typeof AuthenticationSignUpRoute
   '/project/$projectCode': typeof AuthenticatedProjectProjectCodeRoute
@@ -275,7 +260,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authentication': typeof AuthenticationRouteWithChildren
-  '/_authenticated/projectManager': typeof AuthenticatedProjectManagerRouteWithChildren
+  '/_authenticated/_projectManager': typeof AuthenticatedProjectManagerRoute
   '/_authentication/login': typeof AuthenticationLoginRoute
   '/_authentication/signUp': typeof AuthenticationSignUpRoute
   '/_authenticated/project/$projectCode': typeof AuthenticatedProjectProjectCodeRoute
@@ -291,7 +276,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
-    | '/projectManager'
     | '/login'
     | '/signUp'
     | '/project/$projectCode'
@@ -304,7 +288,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
-    | '/projectManager'
     | '/login'
     | '/signUp'
     | '/project/$projectCode'
@@ -318,7 +301,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/_authentication'
-    | '/_authenticated/projectManager'
+    | '/_authenticated/_projectManager'
     | '/_authentication/login'
     | '/_authentication/signUp'
     | '/_authenticated/project/$projectCode'
@@ -365,8 +348,12 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
-        "/_authenticated/projectManager",
+        "/_authenticated/_projectManager",
         "/_authenticated/project/$projectCode",
+        "/_authenticated/projectManager/addClient",
+        "/_authenticated/projectManager/addProject",
+        "/_authenticated/projectManager/managerOverview",
+        "/_authenticated/projectManager/projectList",
         "/_authenticated/project/edit/$projectCode"
       ]
     },
@@ -377,15 +364,9 @@ export const routeTree = rootRoute
         "/_authentication/signUp"
       ]
     },
-    "/_authenticated/projectManager": {
-      "filePath": "_authenticated/projectManager.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/projectManager/addClient",
-        "/_authenticated/projectManager/addProject",
-        "/_authenticated/projectManager/managerOverview",
-        "/_authenticated/projectManager/projectList"
-      ]
+    "/_authenticated/_projectManager": {
+      "filePath": "_authenticated/_projectManager.tsx",
+      "parent": "/_authenticated"
     },
     "/_authentication/login": {
       "filePath": "_authentication/login.tsx",
@@ -401,19 +382,19 @@ export const routeTree = rootRoute
     },
     "/_authenticated/projectManager/addClient": {
       "filePath": "_authenticated/projectManager/addClient.tsx",
-      "parent": "/_authenticated/projectManager"
+      "parent": "/_authenticated"
     },
     "/_authenticated/projectManager/addProject": {
       "filePath": "_authenticated/projectManager/addProject.tsx",
-      "parent": "/_authenticated/projectManager"
+      "parent": "/_authenticated"
     },
     "/_authenticated/projectManager/managerOverview": {
       "filePath": "_authenticated/projectManager/managerOverview.tsx",
-      "parent": "/_authenticated/projectManager"
+      "parent": "/_authenticated"
     },
     "/_authenticated/projectManager/projectList": {
       "filePath": "_authenticated/projectManager/projectList.tsx",
-      "parent": "/_authenticated/projectManager"
+      "parent": "/_authenticated"
     },
     "/_authenticated/project/edit/$projectCode": {
       "filePath": "_authenticated/project/edit/$projectCode.tsx",

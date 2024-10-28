@@ -4,7 +4,7 @@ import { getAuthToken, setAuthToken } from "../utils/auth";
 
 export type AuthContext = {
   login: (token: string, user: UserType) => void;
-  isLogged: () => boolean;
+  isTokenSaved: () => boolean;
   getAuthToken: () => string | null;
   user: UserType | null;
   setUserDetails: (user: UserType) => void;
@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(user);
   }
 
-  function isLogged() {
+  function isTokenSaved() {
     const token = getAuthToken();
     if (token) {
       return true;
@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         setUserDetails,
         login,
-        isLogged,
+        isTokenSaved,
         getAuthToken,
         isProjectManager,
       }}

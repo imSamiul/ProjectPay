@@ -1,21 +1,25 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import Navbar from "../components/ui/Navbar";
 import { fetchUserDetails } from "../services/userApis";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
-    const isLogged = context.auth.isLogged();
+    const saved = context.auth.isTokenSaved();
 
-    if (isLogged) {
+    if (saved) {
       const data = await fetchUserDetails();
       context.auth.setUserDetails(data.user);
-      return data.user;
+      if (data.user.userType === "project manager") {
+        return redirect({
+          to: "/projectManager/managerOverview",
+        });
+      }
     }
   },
-  component: AuthenticatedLayout,
+  component: HomeLayout,
 });
 
-function AuthenticatedLayout() {
+function HomeLayout() {
   return (
     <div>
       <Navbar />
