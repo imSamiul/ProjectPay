@@ -23,7 +23,7 @@ instance.interceptors.request.use((config) => {
 
 export async function getManagerProjects({ pageParam }: { pageParam: number }) {
   try {
-    const response = await instance.get("/projects", {
+    const response = await instance.get("/project", {
       params: {
         pageParam,
         limit: 10,

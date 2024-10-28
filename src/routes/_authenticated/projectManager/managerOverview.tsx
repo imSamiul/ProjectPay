@@ -1,39 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useGetManagerProjects } from "../../../services/queries/managerQueries";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import SearchBox from "../../../components/overview/SearchBox";
 import AllProject from "../../../components/overview/AllProject";
-import { useSearchProject } from "../../../services/queries/projectQueries";
+import {
+  useGetManagerProjects,
+  useSearchProject,
+} from "../../../services/queries/projectQueries";
 import { useDebounce } from "@uidotdev/usehooks";
 import { ProjectType } from "../../../types/projectType";
 
 export const Route = createFileRoute(
   "/_authenticated/projectManager/managerOverview",
 )({
-  loader: async ({ context }) => {
-    const { queryClient } = context;
-    const data =
-      queryClient.getQueryData(["project"]) ??
-      (await queryClient.fetchInfiniteQuery(useGetManagerProjects));
-    return data;
-  },
   component: ManagerOverview,
-  pendingComponent: () => <div>Loading...</div>,
 });
 
 function ManagerOverview() {
   const [searchText, setSearchText] = useState("");
   const debouncedSearchText = useDebounce(searchText, 1000); // 1 second debounce
+
   const {
     data: allProjectsData,
     fetchNextPage,
     hasNextPage,
-  } = useSuspenseInfiniteQuery(useGetManagerProjects);
+    isError: isInfiniteScrollError,
+    error: infiniteScrollError,
+    isFetching: isInfiniteScrollFetching,
+
+    isLoading: isInfiniteScrollLoading,
+  } = useGetManagerProjects();
 
   // Fetch searched projects if search text exists
-  const { data: searchResults, isLoading } =
-    useSearchProject(debouncedSearchText);
+  const {
+    data: searchResults,
+    isLoading: isSearchResultsLoading,
+    isError: isSearchResultsError,
+    error: searchResultsError,
+  } = useSearchProject(debouncedSearchText);
 
   // Memoize the projects to display
   const projects = useMemo(() => {
@@ -68,11 +71,17 @@ function ManagerOverview() {
         <div className="flex flex-col gap-4">
           <SearchBox onSearchTextChange={setSearchText} />
           <AllProject
-            projects={sortedProjects}
-            isLoading={isLoading}
+            projects={sortedProjects || []}
             fetchNextPage={fetchNextPage}
             hasNextPage={hasNextPage}
             isSearching={isSearching}
+            isInfiniteScrollError={isInfiniteScrollError}
+            infiniteScrollError={infiniteScrollError}
+            isInfiniteScrollFetching={isInfiniteScrollFetching}
+            isInfiniteScrollLoading={isInfiniteScrollLoading}
+            isSearchResultsLoading={isSearchResultsLoading}
+            isSearchResultsError={isSearchResultsError}
+            searchResultsError={searchResultsError}
           />
         </div>
       </div>

@@ -2,13 +2,23 @@ import { useInView } from "react-intersection-observer";
 import { ProjectType } from "../../types/projectType";
 import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import Loader from "../Loader";
 
 type AllProjectPropsType = {
   projects: ProjectType[];
   hasNextPage: boolean;
   fetchNextPage: () => void;
+
   isSearching: boolean;
-  isLoading?: boolean;
+  isInfiniteScrollError: boolean;
+  infiniteScrollError: Error | null;
+  isInfiniteScrollFetching: boolean;
+
+  isInfiniteScrollLoading: boolean;
+
+  isSearchResultsLoading: boolean;
+  isSearchResultsError: boolean;
+  searchResultsError: Error | null;
 };
 
 // true => Done
@@ -19,7 +29,15 @@ function AllProject({
   hasNextPage,
   fetchNextPage,
   isSearching,
-  isLoading,
+  isInfiniteScrollError,
+  infiniteScrollError,
+  isInfiniteScrollFetching,
+
+  isInfiniteScrollLoading,
+
+  isSearchResultsLoading,
+  isSearchResultsError,
+  searchResultsError,
 }: AllProjectPropsType) {
   const { ref, inView } = useInView();
 
@@ -28,9 +46,28 @@ function AllProject({
       fetchNextPage();
     }
   }, [inView, fetchNextPage]);
+  console.log(infiniteScrollError);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isInfiniteScrollError) {
+    return <div>error</div>;
+  }
+  if (searchResultsError) {
+    return <div>Search Results Error</div>;
+  }
+
+  if (isSearchResultsLoading) {
+    return <div>Search Results Loading...</div>;
+  }
+  if (isSearchResultsError) {
+    return <div>Search Results Error</div>;
+  }
+
+  if (isInfiniteScrollLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (projects.length === 0) {
@@ -100,8 +137,18 @@ function AllProject({
           </Link>
         );
       })}
+      {hasNextPage && isInfiniteScrollFetching && (
+        <div className="skeleton"></div>
+      )}
+      {!hasNextPage && (
+        <div className="md:col-span-3 text-center">No more data</div>
+      )}
 
-      {hasNextPage && !isSearching && <div ref={ref}>Loading...</div>}
+      {hasNextPage && !isSearching && (
+        <div className="md:col-span-3 text-center" ref={ref}>
+          <span className="loading loading-dots loading-sm md:loading-lg"></span>
+        </div>
+      )}
     </div>
   );
 }
