@@ -111,6 +111,7 @@ function EditProject() {
             name="clientPhone"
             type="text"
             maxLength={10}
+            minLength={10}
           />
 
           <InputField

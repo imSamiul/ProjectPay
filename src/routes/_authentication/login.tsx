@@ -4,6 +4,7 @@ import Button from "../../components/ui/Button";
 import LinkButton from "../../components/ui/LinkButton";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import InputField from "../../components/ui/InputField";
 
 export const Route = createFileRoute("/_authentication/login")({
   component: Login,
@@ -39,50 +40,41 @@ function Login() {
           Enter your Credentials to access your account
         </p>
 
-        <form
-          className="my-10 w-full md:w-3/4 md:flex md:flex-col md:items-center"
-          onSubmit={onSubmitHandler}
-        >
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Email Address:</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Your email address"
-              value={formValues.email}
-              name="email"
-              onChange={handleFormValues}
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Password:</span>
-            </div>
-            <input
-              type="password"
-              placeholder="Type here"
-              value={formValues.password}
-              name="password"
-              onChange={handleFormValues}
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
+        <form className="my-10 w-full md:w-1/2  " onSubmit={onSubmitHandler}>
+          <InputField
+            label="Email Address"
+            type="text"
+            placeholder="Your email address"
+            value={formValues.email}
+            name="email"
+            onChange={handleFormValues}
+          />
 
-          <Button className="mt-5 btn-primary" disabled={isPending}>
-            {isPending ? "loading..." : "Login"}
-          </Button>
-          {formError && (
-            <p className="text-red-500 w-56 text-center">{formError}</p>
-          )}
+          <InputField
+            label="Password"
+            type="password"
+            placeholder="Type here"
+            value={formValues.password}
+            name="password"
+            onChange={handleFormValues}
+            className="input input-bordered w-full "
+          />
+
+          <div className="mt-5 flex flex-col md:flex-row gap-5 items-center">
+            <Button className=" btn-primary" disabled={isPending}>
+              {isPending ? "loading..." : "Login"}
+            </Button>
+            {formError && (
+              <p className="text-red-500 w-56 text-center">{formError}</p>
+            )}
+          </div>
         </form>
 
-        <p className="font-medium text-center">
+        <p className="font-medium text-center mb-5">
           Don't have an account?{" "}
           <LinkButton
             title="Sign Up"
-            className="text-[#606c38]"
+            className="text-[#606c38] text-lg"
             to="/signUp"
           ></LinkButton>
         </p>

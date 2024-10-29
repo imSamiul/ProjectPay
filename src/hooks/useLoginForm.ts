@@ -40,7 +40,7 @@ export function useLoginForm() {
       formValues.password.length < 6 ||
       formValues.password.includes("password")
     ) {
-      setFormError("Password must be valid");
+      setFormError("Password must be valid or at least 6 characters long");
       return false;
     }
 

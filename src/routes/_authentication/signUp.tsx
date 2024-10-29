@@ -2,14 +2,47 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSignUpForm } from "../../hooks/useSignUpForm";
 import Button from "../../components/ui/Button";
 import LinkButton from "../../components/ui/LinkButton";
+import ErrorComponent from "../../components/ErrorComponent";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import InputField from "../../components/ui/InputField";
 
 export const Route = createFileRoute("/_authentication/signUp")({
   component: SignUp,
 });
 
 function SignUp() {
-  const { formValues, error, handleFormValues, onSubmitHandler } =
-    useSignUpForm();
+  const {
+    formValues,
+    formError,
+    handleFormValues,
+    onSubmitHandler,
+    createUserError,
+    isCreateUserError,
+    isCreateUserPending,
+    isCreateUserSuccess,
+    resetCreateUser,
+  } = useSignUpForm();
+
+  useEffect(() => {
+    if (isCreateUserSuccess) {
+      toast.success("User created successfully");
+    }
+    if (isCreateUserError) {
+      toast.error(createUserError?.message || "An error occurred");
+    }
+  }, [isCreateUserSuccess, isCreateUserError, createUserError]);
+
+  if (isCreateUserError) {
+    return (
+      <ErrorComponent
+        errorMessage={
+          createUserError ? createUserError.message : "An error occurred"
+        }
+        onRetry={resetCreateUser}
+      />
+    );
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -17,70 +50,55 @@ function SignUp() {
         <h1 className="font-lexend text-3xl font-medium ">Get Started Now</h1>
 
         <form
-          className="my-10  w-full  md:w-3/4 md:flex md:flex-col md:items-center"
+          className="my-10  w-full md:w-3/4  lg:w-1/2 "
           onSubmit={onSubmitHandler}
         >
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Name:</span>
-            </div>
-            <input
+          <InputField
+            label="Name"
+            type="text"
+            placeholder="Your name"
+            value={formValues.name ?? ""}
+            name="name"
+            onChange={handleFormValues}
+          />
+
+          <InputField
+            label="Email Address"
+            type="text"
+            placeholder="Your email address"
+            value={formValues.email}
+            name="email"
+            onChange={handleFormValues}
+          />
+
+          <div className="flex items-center gap-2">
+            <p className="mt-10">(+880)</p>
+            <InputField
+              label="Phone"
               type="text"
-              placeholder="Your name"
-              value={formValues.name}
-              name="name"
+              placeholder="Your phone number"
+              value={formValues.phone ?? ""}
+              name="phone"
+              minLength={10}
+              maxLength={10}
               onChange={handleFormValues}
-              className="input input-bordered w-full max-w-xs"
+              className="w-full"
             />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Email Address:</span>
-            </div>
-            <input
-              type="text"
-              placeholder="Your email address"
-              value={formValues.email}
-              name="email"
-              onChange={handleFormValues}
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Phone:</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <p>(+880)</p>
-              <input
-                type="text"
-                placeholder="Your phone number"
-                value={formValues.phone}
-                name="phone"
-                minLength={10}
-                maxLength={10}
-                onChange={handleFormValues}
-                className="input input-bordered w-full max-w-xs"
-              />
-            </div>
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Password:</span>
-            </div>
-            <input
-              type="password"
-              placeholder="Type here"
-              value={formValues.password}
-              name="password"
-              onChange={handleFormValues}
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text font-lexend">Manger or Client?</span>
-            </div>
+          </div>
+
+          <InputField
+            label="Password"
+            type="password"
+            placeholder="Type here"
+            value={formValues.password}
+            name="password"
+            onChange={handleFormValues}
+          />
+
+          <div className="form-control w-full ">
+            <label className="label md:text-lg font-medium">
+              Manger or Client?
+            </label>
             <select
               className="select select-bordered"
               value={formValues.userType}
@@ -90,16 +108,22 @@ function SignUp() {
               <option>project manager</option>
               <option>client</option>
             </select>
-          </label>
-          <Button className="mt-5">Sign Up</Button>
-          {error && <p className="text-red-500 w-56 text-center">{error}</p>}
+          </div>
+          <div className=" mt-5 flex flex-col md:flex-row gap-5 items-center">
+            <Button className=" btn-primary" disabled={isCreateUserPending}>
+              {isCreateUserPending ? "Creating...." : "SignUp"}
+            </Button>
+            {formError && (
+              <p className="text-red-500 w-56 text-center">{formError}</p>
+            )}
+          </div>
         </form>
       </div>
-      <p className="font-medium text-center">
-        Already have an account?
+      <p className="font-medium text-center mb-5">
+        Already have an account?{" "}
         <LinkButton
           title="Login"
-          className="text-[#606c38] "
+          className="text-[#606c38] text-lg"
           to="/login"
         ></LinkButton>
       </p>

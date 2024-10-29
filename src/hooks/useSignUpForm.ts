@@ -14,9 +14,16 @@ const initialValues: UserType = {
 
 export function useSignUpForm() {
   const [formValues, setFormValues] = useState<UserType>(initialValues);
-  const [error, setError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const createUserMutation = useCreateUser();
+  const {
+    mutate: createUser,
+    isError: isCreateUserError,
+    error: createUserError,
+    isSuccess: isCreateUserSuccess,
+    isPending: isCreateUserPending,
+    reset: resetCreateUser,
+  } = useCreateUser();
 
   // Handle form changes
   const handleFormValues = (
@@ -24,7 +31,7 @@ export function useSignUpForm() {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    setError(null);
+    setFormError(null);
     setFormValues({
       ...formValues,
       [event.target.name]: event.target.value,
@@ -39,21 +46,25 @@ export function useSignUpForm() {
       formValues.phone === "" ||
       formValues.password === ""
     ) {
-      setError("Please fill all the fields");
+      setFormError("Please fill all the fields");
       return false;
     }
 
     const phoneNum = "+880" + formValues.phone;
     const isValidPhone = phone(phoneNum);
 
-    if (!isValidPhone.isValid && formValues.phone?.length !== 10) {
-      setError("Phone no must be valid");
+    if (!isValidPhone.isValid) {
+      setFormError("Phone no must be valid");
+      return false;
+    }
+    if (formValues.phone?.length !== 10) {
+      setFormError("Phone no must be 10 digit");
       return false;
     }
 
     const isValidEmail = EmailValidator.validate(formValues.email);
     if (!isValidEmail) {
-      setError("Email must be valid");
+      setFormError("Email must be valid");
       return false;
     }
 
@@ -61,7 +72,7 @@ export function useSignUpForm() {
       formValues.password.length < 6 ||
       formValues.password.includes("password")
     ) {
-      setError(
+      setFormError(
         "Password must be at least 6 characters long and should not contain the word 'password'",
       );
       return false;
@@ -70,7 +81,7 @@ export function useSignUpForm() {
       formValues.userType?.toLowerCase() !== "client" &&
       formValues.userType?.toLowerCase() !== "project manager"
     ) {
-      setError("User type must be either client or project manager");
+      setFormError("User type must be either client or project manager");
       return false;
     }
 
@@ -80,20 +91,25 @@ export function useSignUpForm() {
   // Handle form submission
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(null);
+    setFormError(null);
 
     if (!validateForm()) {
       return;
     }
 
-    createUserMutation.mutate(formValues);
+    createUser(formValues);
     setFormValues(initialValues);
   };
 
   return {
     formValues,
-    error,
+    formError,
     handleFormValues,
     onSubmitHandler,
+    isCreateUserError,
+    createUserError,
+    isCreateUserSuccess,
+    isCreateUserPending,
+    resetCreateUser,
   };
 }

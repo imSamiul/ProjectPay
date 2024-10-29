@@ -145,7 +145,11 @@ function Navbar() {
               btnConfirmAction={handleLogout}
             />
           ) : (
-            <LinkButton title="Sign In" to="/login" className="btn text-sm" />
+            <LinkButton
+              title="Sign In"
+              to="/login"
+              className="btn  btn-sm md:btn-md "
+            />
           )}
           <ThemeSwap />
         </div>

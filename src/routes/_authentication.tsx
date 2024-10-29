@@ -14,15 +14,15 @@ export const Route = createFileRoute("/_authentication")({
 
 function AuthenticationLayout() {
   return (
-    <div className="flex flex-col-reverse md:flex-row">
+    <div className="flex flex-col-reverse md:flex-row min-h-screen">
       <div className="flex-1 flex flex-col items-center justify-center">
         <Outlet />
       </div>
-      <div className="flex-1 h-screen">
+      <div className="flex-1 ">
         <img
           src={authenticationPageImage}
           alt="authentication page image"
-          className="h-full"
+          className=" h-full w-full"
         />
       </div>
     </div>
