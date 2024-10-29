@@ -11,14 +11,11 @@ type AllProjectPropsType = {
   projects: ProjectType[];
   hasNextPage: boolean;
   fetchNextPage: () => void;
-
   isSearching: boolean;
   isInfiniteScrollError: boolean;
   infiniteScrollError: Error | null;
   isInfiniteScrollFetching: boolean;
-
   isInfiniteScrollLoading: boolean;
-
   isSearchResultsLoading: boolean;
   isSearchResultsError: boolean;
   searchResultsError: Error | null;
@@ -36,9 +33,7 @@ function AllProject({
   isInfiniteScrollError,
   infiniteScrollError,
   isInfiniteScrollFetching,
-
   isInfiniteScrollLoading,
-
   isSearchResultsLoading,
   isSearchResultsError,
   searchResultsError,

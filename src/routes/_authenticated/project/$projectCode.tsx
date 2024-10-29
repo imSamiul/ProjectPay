@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useGetProjectDetails } from "../../../services/queries/projectQueries";
 import ProjectDetails from "../../../components/projectsDetails/ProjectDetails";
 import PaymentList from "../../../components/projectsDetails/PaymentList";
+import Loader from "../../../components/Loader";
+import ErrorComponent from "../../../components/ErrorComponent";
 
 export const Route = createFileRoute("/_authenticated/project/$projectCode")({
   component: Project,
@@ -10,14 +12,14 @@ export const Route = createFileRoute("/_authenticated/project/$projectCode")({
 function Project() {
   const { projectCode } = Route.useParams();
 
-  const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
-  console.log("called");
+  const { data, isLoading, isError, error, refetch } =
+    useGetProjectDetails(projectCode);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader className="h-screen" />;
   }
   if (isError) {
-    return <div>{error.message}</div>;
+    return <ErrorComponent errorMessage={error?.message} onRetry={refetch} />;
   }
 
   return (

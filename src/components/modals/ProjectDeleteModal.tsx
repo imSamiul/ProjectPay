@@ -48,7 +48,7 @@ function ProjectDeleteModal({
   return (
     <div>
       <button
-        className="btn btn-error btn-sm md:btn-md outline-none border-none"
+        className="btn btn-outline btn-error btn-sm md:btn-md "
         onClick={() => toggleModal(modalId, "open")}
       >
         <MdDeleteForever size={20} />

@@ -6,6 +6,8 @@ import { MdEditDocument } from "react-icons/md";
 import { useUpdateProjectStatus } from "../../services/mutations/projectMutation";
 import { Link } from "@tanstack/react-router";
 import ProjectDeleteModal from "../modals/ProjectDeleteModal";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 type ClientSectionKeys = keyof ProjectType;
 type ProjectSectionKeys = keyof ProjectType;
@@ -92,14 +94,21 @@ type ProjectDetailsPropsType = {
 };
 
 function ProjectDetails({ details }: ProjectDetailsPropsType) {
-  const updateProjectStatus = useUpdateProjectStatus();
+  const { mutate, isError, error, isPending } = useUpdateProjectStatus();
+  console.log(details.status);
 
   function handleProjectStatus() {
     // complete
     const status = !details.status;
 
-    updateProjectStatus.mutate({ projectCode: details.projectCode!, status });
+    mutate({ projectCode: details.projectCode!, status });
   }
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.message || "There is an error");
+    }
+  }, [isError, error]);
+
   return (
     <div className="mb-5">
       <div className="flex flex-col md:flex-row md:justify-between items-center py-2 gap-3">
@@ -108,14 +117,17 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
         </h1>
         <div className="flex  justify-center items-center gap-2 flex-wrap ">
           {details.status === true ? (
-            <Button className="btn-success" onClick={handleProjectStatus}>
+            <Button className="btn  btn-success" onClick={handleProjectStatus}>
               <TiTick size={20} />
-              Done
+              {isPending ? "Updating..." : "Completed"}
             </Button>
           ) : (
-            <Button className="btn-warning" onClick={handleProjectStatus}>
+            <Button
+              className="btn btn-outline btn-warning"
+              onClick={handleProjectStatus}
+            >
               <TiTick size={20} />
-              Make Complete
+              {isPending ? "Updating..." : "Complete"}
             </Button>
           )}
 
@@ -124,7 +136,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
             params={{
               projectCode: details.projectCode ? details.projectCode : "",
             }}
-            className="btn btn-primary btn-sm md:btn-md"
+            className="btn btn-outline btn-primary btn-sm md:btn-md"
           >
             <MdEditDocument size={20} />
             Edit

@@ -36,9 +36,13 @@ export function useCreateNewProject() {
 // Update project status
 export function useUpdateProjectStatus() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: (updatedStatusObj: UpdateProjectStatusType) =>
       updateProjectStatus(updatedStatusObj),
+    onSuccess: () => {
+      navigate({ to: "/projectManager/managerOverview" });
+    },
 
     onError: (error) => {
       console.log(error);
@@ -47,7 +51,7 @@ export function useUpdateProjectStatus() {
       const projectCode = data.projectCode;
 
       await queryClient.invalidateQueries({
-        queryKey: ["projects", projectCode],
+        queryKey: ["projectDetails", projectCode],
       });
     },
   });

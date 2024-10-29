@@ -15,7 +15,7 @@ function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`btn outline-none border-none   ${className}  btn-sm md:btn-md`}
+      className={`btn    ${className}  btn-sm md:btn-md`}
       onClick={onClick}
       disabled={disabled}
     >
