@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import CustomDatePicker from "../../../../components/ui/CustomDatePicker";
 import InputField from "../../../../components/ui/InputField";
 import { useEditProjectForm } from "../../../../hooks/useEditProjectForm";
+import Loader from "../../../../components/Loader";
+import ErrorComponent from "../../../../components/ErrorComponent";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const Route = createFileRoute(
   "/_authenticated/project/edit/$projectCode",
@@ -14,21 +18,48 @@ function EditProject() {
 
   const {
     editProjectValues,
-    isError,
-    isLoading,
-    error,
     handleInputChange,
     handleDateChange,
     onSubmitHandler,
     formError,
+    isProjectFetchError,
+    isProjectLoading,
+    isUpdateError,
+    isUpdatePending,
+
+    projectFetchError,
+    refetchProjectDetails,
+    resetUpdateState,
+    updateError,
   } = useEditProjectForm(projectCode);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  useEffect(() => {
+    if (isUpdateError) {
+      toast.error("Failed to update project");
+    }
+  }, [isUpdateError]);
+
+  if (isProjectLoading) {
+    return <Loader className="h-screen" />;
   }
 
-  if (isError) {
-    return <div>{error?.message}</div>;
+  if (isProjectFetchError) {
+    return (
+      <ErrorComponent
+        errorMessage={
+          projectFetchError ? projectFetchError.message : "An error occurred"
+        }
+        onRetry={refetchProjectDetails}
+      />
+    );
+  }
+  if (isUpdateError) {
+    return (
+      <ErrorComponent
+        errorMessage={updateError ? updateError.message : "An error occurred"}
+        onRetry={resetUpdateState}
+      />
+    );
   }
 
   return (
@@ -79,6 +110,7 @@ function EditProject() {
             onChange={handleInputChange}
             name="clientPhone"
             type="text"
+            maxLength={10}
           />
 
           <InputField
@@ -144,7 +176,9 @@ function EditProject() {
           </div>
         </div>
         <div className="flex gap-5 items-center">
-          <button className="btn btn-primary">Update</button>
+          <button className="btn btn-primary">
+            {isUpdatePending ? "Updating..." : "Update"}
+          </button>
           {formError && <div className="text-red-500">{formError}</div>}
         </div>
       </form>

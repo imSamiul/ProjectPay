@@ -26,22 +26,37 @@ const INITIAL_VALUES = {
 };
 type CombinedProjectType = ProjectType & UpdateProjectType;
 export function useEditProjectForm(projectCode: string) {
-  const { data, isLoading, isError, error } = useGetProjectDetails(projectCode);
-  const editProjectDetailsMutation = useUpdateProjectDetails();
+  const {
+    data: projectDetails,
+    isLoading: isProjectLoading,
+    isError: isProjectFetchError,
+    error: projectFetchError,
+    refetch: refetchProjectDetails,
+  } = useGetProjectDetails(projectCode);
+  const {
+    error: updateError,
+    isError: isUpdateError,
+    isPending: isUpdatePending,
+
+    mutate: updateProject,
+    reset: resetUpdateState,
+  } = useUpdateProjectDetails();
+
+  useUpdateProjectDetails();
   const [editProjectValues, setEditProjectValues] =
     useState<CombinedProjectType>(INITIAL_VALUES);
   const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (data) {
+    if (projectDetails) {
       setEditProjectValues((prevValues) => ({
         ...prevValues,
-        ...data,
+        ...projectDetails,
       }));
     }
-  }, [data]);
+  }, [projectDetails]);
 
-  const totalPaid = data?.totalPaid || 0;
+  const totalPaid = projectDetails?.totalPaid || 0;
 
   function handleInputChange(
     e:
@@ -89,11 +104,7 @@ export function useEditProjectForm(projectCode: string) {
       setFormError("Invalid phone number.");
       return false;
     }
-    // check if phone number is 10 digits long
-    if (editProjectValues.clientPhone.length !== 11) {
-      setFormError("Phone number must be 11 digits long.");
-      return false;
-    }
+
     // check if email is valid
     const isValidEmail = EmailValidator.validate(editProjectValues.clientEmail);
     if (!isValidEmail) {
@@ -132,18 +143,24 @@ export function useEditProjectForm(projectCode: string) {
     }
 
     // Add logic to handle form submission (e.g., mutation, API call, etc.)
-    editProjectDetailsMutation.mutate(editProjectValues);
+    updateProject(editProjectValues);
     // Reset form after successful submission
   };
 
   return {
     editProjectValues,
-    isLoading,
-    isError,
-    error,
+    isProjectLoading,
+    isProjectFetchError,
+    projectFetchError,
+    refetchProjectDetails,
     handleInputChange,
     handleDateChange,
     formError,
     onSubmitHandler,
+    updateError,
+    isUpdateError,
+    isUpdatePending,
+
+    resetUpdateState,
   };
 }

@@ -7,7 +7,7 @@ type InputFieldPropsType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: string; // Optional, defaults to 'text'
   name: string;
-};
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 function InputField({
   label,
@@ -16,6 +16,7 @@ function InputField({
   onChange,
   type = "text",
   name,
+  ...props
 }: InputFieldPropsType) {
   return (
     <div className="form-control">
@@ -27,6 +28,7 @@ function InputField({
         value={value}
         onChange={onChange}
         name={name}
+        {...props}
       />
     </div>
   );
