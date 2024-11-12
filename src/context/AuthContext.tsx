@@ -1,20 +1,27 @@
 import * as React from "react";
 import { UserType } from "../types/userType";
 import { getAuthToken, setAuthToken } from "../utils/auth";
+import { useFetchUserDetails } from "../services/queries/userQueries";
 
 export type AuthContext = {
   login: (token: string, user: UserType) => void;
   isTokenSaved: () => boolean;
-  getAuthToken: () => string | null;
+
   user: UserType | null;
   setUserDetails: (user: UserType) => void;
-  isProjectManager: () => boolean;
 };
 
 export const AuthContext = React.createContext<AuthContext | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<UserType>({} as UserType);
+  const { data, isPending } = useFetchUserDetails();
+
+  React.useEffect(() => {
+    if (data?.user !== undefined) {
+      setUser(data.user);
+    }
+  }, [data]);
 
   function login(token: string, user: UserType) {
     setAuthToken(token);
@@ -28,17 +35,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     return false;
   }
+
   function setUserDetails(user: UserType) {
     setUser(user);
   }
-
-  function isProjectManager() {
-    console.log(user?.userType);
-
-    if (user?.userType === "project manager") {
-      return true;
-    }
-    return false;
+  if (isPending) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -48,8 +50,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUserDetails,
         login,
         isTokenSaved,
-        getAuthToken,
-        isProjectManager,
       }}
     >
       {children}

@@ -51,12 +51,12 @@ function Navbar() {
 
   const isLogged = auth.isTokenSaved();
 
-  const userType = auth.user?.userType;
+  const userType = auth.user?.role;
 
   let navItem: NavItem[] = [];
 
   if (isLogged) {
-    if (userType === "project manager") {
+    if (userType === "project_manager") {
       navItem = projectManagerNavItem;
     } else if (userType === "client") {
       navItem = clientNavItem;

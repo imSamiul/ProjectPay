@@ -1,16 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSignUpForm } from "../../hooks/useSignUpForm";
-import Button from "../../components/ui/Button";
-import LinkButton from "../../components/ui/LinkButton";
-import ErrorComponent from "../../components/ErrorComponent";
+import { useSignUpForm } from "../../../hooks/useSignUpForm";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import InputField from "../../components/ui/InputField";
+import ErrorComponent from "../../../components/ErrorComponent";
+import InputField from "../../../components/ui/InputField";
+import Button from "../../../components/ui/Button";
+import LinkButton from "../../../components/ui/LinkButton";
 
-export const Route = createFileRoute("/_authentication/signUp")({
+export const Route = createFileRoute("/_authentication/signUp/")({
   component: SignUp,
 });
-
 function SignUp() {
   const {
     formValues,
@@ -43,6 +42,9 @@ function SignUp() {
       />
     );
   }
+  function handleGoogleSignUp() {
+    window.location.href = `${import.meta.env.VITE_BASE_API_URL}/auth/login`;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -71,21 +73,6 @@ function SignUp() {
             onChange={handleFormValues}
           />
 
-          <div className="flex items-center gap-2">
-            <p className="mt-10">(+880)</p>
-            <InputField
-              label="Phone"
-              type="text"
-              placeholder="Your phone number"
-              value={formValues.phone ?? ""}
-              name="phone"
-              minLength={10}
-              maxLength={10}
-              onChange={handleFormValues}
-              className="w-full"
-            />
-          </div>
-
           <InputField
             label="Password"
             type="password"
@@ -95,20 +82,6 @@ function SignUp() {
             onChange={handleFormValues}
           />
 
-          <div className="form-control w-full ">
-            <label className="label md:text-lg font-medium">
-              Manger or Client?
-            </label>
-            <select
-              className="select select-bordered"
-              value={formValues.userType}
-              name="userType"
-              onChange={handleFormValues}
-            >
-              <option>project manager</option>
-              <option>client</option>
-            </select>
-          </div>
           <div className=" mt-5 flex flex-col md:flex-row gap-5 items-center">
             <Button className=" btn-primary" disabled={isCreateUserPending}>
               {isCreateUserPending ? "Creating...." : "SignUp"}
@@ -118,6 +91,7 @@ function SignUp() {
             )}
           </div>
         </form>
+        <Button onClick={handleGoogleSignUp}>Sign Up with google</Button>
       </div>
       <p className="font-medium text-center mb-5">
         Already have an account?{" "}

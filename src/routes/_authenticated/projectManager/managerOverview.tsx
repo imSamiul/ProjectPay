@@ -1,23 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import SearchBox from "../../../components/overview/SearchBox";
-import AllProject from "../../../components/overview/AllProject";
+import { createFileRoute } from '@tanstack/react-router'
+import { useMemo, useState } from 'react'
+import SearchBox from '../../../components/overview/SearchBox'
+import AllProject from '../../../components/overview/AllProject'
 import {
   useGetManagerProjects,
   useSearchProject,
-} from "../../../services/queries/projectQueries";
-import { useDebounce } from "@uidotdev/usehooks";
-import { ProjectType } from "../../../types/projectType";
+} from '../../../services/queries/projectQueries'
+import { useDebounce } from '@uidotdev/usehooks'
+import { ProjectType } from '../../../types/projectType'
 
 export const Route = createFileRoute(
-  "/_authenticated/projectManager/managerOverview",
+  '/_authenticated/projectManager/managerOverview',
 )({
   component: ManagerOverview,
-});
+})
 
 function ManagerOverview() {
-  const [searchText, setSearchText] = useState("");
-  const debouncedSearchText = useDebounce(searchText, 1000); // 1 second debounce
+  const [searchText, setSearchText] = useState('')
+  const debouncedSearchText = useDebounce(searchText, 1000) // 1 second debounce
 
   const {
     data: allProjectsData,
@@ -28,7 +28,7 @@ function ManagerOverview() {
     isFetching: isInfiniteScrollFetching,
     refetch: refetchInfiniteProjects,
     isLoading: isInfiniteScrollLoading,
-  } = useGetManagerProjects();
+  } = useGetManagerProjects()
 
   // Fetch searched projects if search text exists
   const {
@@ -36,32 +36,29 @@ function ManagerOverview() {
     isLoading: isSearchResultsLoading,
     isError: isSearchResultsError,
     error: searchResultsError,
-  } = useSearchProject(debouncedSearchText);
+  } = useSearchProject(debouncedSearchText)
 
   // Memoize the projects to display
   const projects = useMemo(() => {
     if (debouncedSearchText) {
-      return searchResults || []; // If searching, return search results
+      return searchResults || [] // If searching, return search results
     } else {
-      return allProjectsData?.pages.reduce(
-        (acc, page) => [...acc, ...page],
-        [],
-      ); // Otherwise, return all projects
+      return allProjectsData?.pages.reduce((acc, page) => [...acc, ...page], []) // Otherwise, return all projects
     }
-  }, [debouncedSearchText, searchResults, allProjectsData]);
+  }, [debouncedSearchText, searchResults, allProjectsData])
 
-  const isSearching = !!debouncedSearchText;
+  const isSearching = !!debouncedSearchText
   const sortedProjects = isSearching
     ? projects // If searching, do not sort
     : projects?.sort((a: ProjectType, b: ProjectType) => {
         if (a.status === false && b.status === true) {
-          return -1;
+          return -1
         } else if (a.status === true && b.status === false) {
-          return 1;
+          return 1
         } else {
-          return 0;
+          return 0
         }
-      });
+      })
 
   return (
     <div>
@@ -87,5 +84,5 @@ function ManagerOverview() {
         </div>
       </div>
     </div>
-  );
+  )
 }

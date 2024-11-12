@@ -1,5 +1,6 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import authenticationPageImage from "../assets/authentication-page-image.jpg";
+import { redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authentication")({
   component: AuthenticationLayout,

@@ -4,6 +4,7 @@ import { routeTree } from "./routeTree.gen";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuth } from "./hooks/useAuth";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,13 +30,17 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-function App() {
+function Provider() {
   const auth = useAuth();
-
+  return <RouterProvider router={router} context={{ auth }} />;
+}
+function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} context={{ auth }} />
+        <AuthProvider>
+          <Provider />
+        </AuthProvider>
       </QueryClientProvider>
     </>
   );

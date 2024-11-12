@@ -1,23 +1,74 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { UserType } from "../../types/userType";
+import {
+  AddOtherInfoFormType,
+  SignUpFormType,
+  UserType,
+} from "../../types/userType";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "../../hooks/useAuth";
-import { createUser, loginUser, logOutUser } from "../userApis";
+import {
+  addUserOtherInfo,
+  createUser,
+  loginUser,
+  logOutUser,
+} from "../userApis";
+import { setAuthToken, setTemporaryToken } from "../../utils/auth";
+import { setRole } from "../../utils/role";
+import { toast } from "react-toastify";
 
 // create user
 export function useCreateUser() {
-  const auth = useAuth();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (userObj: UserType) => createUser(userObj),
+    mutationFn: (userObj: SignUpFormType) => createUser(userObj),
     onSuccess: (data) => {
-      auth.login(data.token, data.user);
-      if (data.user.userType === "project manager") {
+      if (data.status === 208) {
+        toast.warning(data.data.message);
+      }
+      console.log(data);
+      setTemporaryToken(data.data.temporaryToken);
+      navigate({ to: "/signUp/addOtherInfo" });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onSettled: (data, error) => {
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        console.log(data);
+      }
+    },
+  });
+}
+// Add other info
+export function useAddUserOtherInfo() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (userObj: AddOtherInfoFormType) => addUserOtherInfo(userObj),
+    onSuccess: (data) => {
+      setAuthToken(data.token);
+
+      setRole(data.user.role);
+      if (data.user.role === "project_manager") {
         navigate({ to: "/projectManager/managerOverview" });
-      } else {
+      }
+      // if (data.user.userType === "client") {
+      //   navigate({ to: "/client/clientOverview" });
+      // }
+      else {
         navigate({ to: "/" });
       }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onSettled: async (data, error) => {
+      console.log(data, error);
+      await queryClient.invalidateQueries({ queryKey: ["userDetails"] });
     },
   });
 }

@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { phone } from "phone";
+
 import * as EmailValidator from "email-validator";
-import { UserType } from "../types/userType";
+import { SignUpFormType } from "../types/userType";
 import { useCreateUser } from "../services/mutations/userMutations";
 
-const initialValues: UserType = {
+const initialValues: SignUpFormType = {
   name: "",
   email: "",
-  phone: "",
   password: "",
-  userType: "client",
 };
 
 export function useSignUpForm() {
-  const [formValues, setFormValues] = useState<UserType>(initialValues);
+  const [formValues, setFormValues] = useState<SignUpFormType>(initialValues);
   const [formError, setFormError] = useState<string | null>(null);
 
   const {
@@ -26,11 +24,7 @@ export function useSignUpForm() {
   } = useCreateUser();
 
   // Handle form changes
-  const handleFormValues = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleFormValues = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormError(null);
     setFormValues({
       ...formValues,
@@ -43,22 +37,9 @@ export function useSignUpForm() {
     if (
       formValues.name === "" ||
       formValues.email === "" ||
-      formValues.phone === "" ||
       formValues.password === ""
     ) {
       setFormError("Please fill all the fields");
-      return false;
-    }
-
-    const phoneNum = "+880" + formValues.phone;
-    const isValidPhone = phone(phoneNum);
-
-    if (!isValidPhone.isValid) {
-      setFormError("Phone no must be valid");
-      return false;
-    }
-    if (formValues.phone?.length !== 10) {
-      setFormError("Phone no must be 10 digit");
       return false;
     }
 
@@ -75,13 +56,6 @@ export function useSignUpForm() {
       setFormError(
         "Password must be at least 6 characters long and should not contain the word 'password'",
       );
-      return false;
-    }
-    if (
-      formValues.userType?.toLowerCase() !== "client" &&
-      formValues.userType?.toLowerCase() !== "project manager"
-    ) {
-      setFormError("User type must be either client or project manager");
       return false;
     }
 

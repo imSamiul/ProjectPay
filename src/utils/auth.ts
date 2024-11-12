@@ -10,3 +10,14 @@ export function getAuthToken() {
   }
   return token;
 }
+
+export function setTemporaryToken(token: string) {
+  Cookies.set("temporaryToken", token, { expires: (1 / 1440) * 5 });
+}
+export function getTemporaryToken() {
+  const token = Cookies.get("temporaryToken");
+  if (!token) {
+    return null;
+  }
+  return token;
+}

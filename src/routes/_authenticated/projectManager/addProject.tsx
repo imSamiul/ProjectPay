@@ -1,18 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-  "/_authenticated/projectManager/addProject",
+  '/_authenticated/projectManager/addProject',
 )({
   component: AddProject,
-});
+})
 
-import Button from "../../../components/ui/Button";
+import Button from '../../../components/ui/Button'
 
-import { useProjectForm } from "../../../hooks/useAddProjectForm";
+import { useProjectForm } from '../../../hooks/useAddProjectForm'
 
 function AddProject() {
   const { project, error, handleInputChange, onSubmitHandler } =
-    useProjectForm();
+    useProjectForm()
 
   return (
     <div className="p-4">
@@ -39,7 +39,7 @@ function AddProject() {
               className="input input-bordered"
               type="number"
               name="budget"
-              value={project.budget ?? ""}
+              value={project.budget ?? ''}
               placeholder="Project Total Budget (required)"
               onChange={handleInputChange}
             />
@@ -50,7 +50,7 @@ function AddProject() {
               className="input input-bordered"
               type="number"
               name="advance"
-              value={project.advance ?? ""}
+              value={project.advance ?? ''}
               placeholder="Advance Payment (required)"
               onChange={handleInputChange}
             />
@@ -173,5 +173,5 @@ function AddProject() {
         <Button className="w-auto btn-warning">Submit</Button>
       </form>
     </div>
-  );
+  )
 }
