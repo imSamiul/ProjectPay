@@ -70,7 +70,7 @@ export async function loginUser(userLoginObj: UserType) {
 // POST: logout user
 export async function logOutUser() {
   try {
-    const response = await instance.post(`${apiUrl}/logout`);
+    const response = await instance.post(`/auth/logout`);
     return response.data;
   } catch (error) {
     throw new Error(getErrorMessage(error));

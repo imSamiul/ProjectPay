@@ -4,3 +4,6 @@ export function setRole(role: string) {
 export function getRole() {
   return localStorage.getItem("role");
 }
+export function removeRole() {
+  localStorage.removeItem("role");
+}

@@ -21,3 +21,7 @@ export function getTemporaryToken() {
   }
   return token;
 }
+
+export function removeAuthToken() {
+  Cookies.remove("token");
+}

@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import {
   AddOtherInfoFormType,
   SignUpFormType,
@@ -13,8 +12,12 @@ import {
   loginUser,
   logOutUser,
 } from "../userApis";
-import { setAuthToken, setTemporaryToken } from "../../utils/auth";
-import { setRole } from "../../utils/role";
+import {
+  removeAuthToken,
+  setAuthToken,
+  setTemporaryToken,
+} from "../../utils/auth";
+import { removeRole, setRole } from "../../utils/role";
 import { toast } from "react-toastify";
 
 // create user
@@ -95,7 +98,8 @@ export function useLogOutUser() {
   return useMutation({
     mutationFn: logOutUser,
     onSuccess: () => {
-      Cookies.remove("token");
+      removeAuthToken();
+      removeRole();
       queryClient.removeQueries();
       navigate({ to: "/" });
     },
