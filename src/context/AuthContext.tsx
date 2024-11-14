@@ -18,7 +18,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data, isPending } = useFetchUserDetails();
 
   React.useEffect(() => {
-    if (data?.user !== undefined) {
+    if (data?.user !== null && data?.user !== undefined) {
+      console.log("called");
+
       setUser(data.user);
     }
   }, [data]);

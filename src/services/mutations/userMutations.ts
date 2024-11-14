@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   AddOtherInfoFormType,
+  LoginFormType,
   SignUpFormType,
-  UserType,
 } from "../../types/userType";
 import { useNavigate } from "@tanstack/react-router";
-import { useAuth } from "../../hooks/useAuth";
+
 import {
   addUserOtherInfo,
   createUser,
@@ -36,14 +36,6 @@ export function useCreateUser() {
     onError: (error) => {
       console.log(error);
     },
-    onSettled: (data, error) => {
-      if (error) {
-        console.log(error);
-      }
-      if (data) {
-        console.log(data);
-      }
-    },
   });
 }
 // Add other info
@@ -54,7 +46,6 @@ export function useAddUserOtherInfo() {
     mutationFn: (userObj: AddOtherInfoFormType) => addUserOtherInfo(userObj),
     onSuccess: (data) => {
       setAuthToken(data.token);
-
       setRole(data.user.role);
       if (data.user.role === "project_manager") {
         navigate({ to: "/projectManager/managerOverview" });
@@ -77,17 +68,25 @@ export function useAddUserOtherInfo() {
 }
 // login user
 export function useLoginUser() {
-  const auth = useAuth();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (userLoginObj: UserType) => loginUser(userLoginObj),
+    mutationFn: (userLoginObj: LoginFormType) => loginUser(userLoginObj),
     onSuccess: (data) => {
-      auth.login(data.token, data.user);
-      if (data.user.userType === "project manager") {
+      setAuthToken(data.token);
+      setRole(data.user.role);
+      if (data.user.role === "project_manager") {
         navigate({ to: "/projectManager/managerOverview" });
       } else {
         navigate({ to: "/" });
       }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onSettled: async (data, error) => {
+      console.log(data, error);
+      await queryClient.invalidateQueries({ queryKey: ["userDetails"] });
     },
   });
 }
@@ -100,7 +99,7 @@ export function useLogOutUser() {
     onSuccess: () => {
       removeAuthToken();
       removeRole();
-      queryClient.removeQueries();
+      queryClient.invalidateQueries({ queryKey: ["userDetails"] });
       navigate({ to: "/" });
     },
   });

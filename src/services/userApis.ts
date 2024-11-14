@@ -2,8 +2,8 @@ import axios from "axios";
 
 import {
   AddOtherInfoFormType,
+  LoginFormType,
   SignUpFormType,
-  UserType,
 } from "../types/userType";
 import { getErrorMessage } from "../utils/errorHandler";
 
@@ -18,14 +18,6 @@ const defaultOptions = {
 };
 
 const instance = axios.create(defaultOptions);
-
-// instance.interceptors.request.use((config) => {
-//   const TOKEN = getAuthToken();
-//   if (TOKEN) {
-//     config.headers.Authorization = `Bearer ${TOKEN}`;
-//   }
-//   return config;
-// });
 
 // GET: get user details
 export async function fetchUserDetails() {
@@ -59,9 +51,9 @@ export async function addUserOtherInfo(userOtherInfoObj: AddOtherInfoFormType) {
   }
 }
 // POST: login user
-export async function loginUser(userLoginObj: UserType) {
+export async function loginUser(userLoginObj: LoginFormType) {
   try {
-    const response = await instance.post(`${apiUrl}/auth/login`, userLoginObj);
+    const response = await instance.post(`/auth/login`, userLoginObj);
     return response.data;
   } catch (error) {
     throw new Error(getErrorMessage(error));

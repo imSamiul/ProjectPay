@@ -12,6 +12,10 @@ export type SignUpFormType = {
   email: string;
   password: string;
 };
+export type LoginFormType = {
+  email: string;
+  password: string;
+};
 
 export type AddOtherInfoFormType = {
   phone: string;
