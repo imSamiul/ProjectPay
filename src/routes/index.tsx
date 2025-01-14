@@ -3,18 +3,18 @@ import Navbar from "../components/ui/Navbar";
 import { getRole } from "../utils/role";
 
 export const Route = createFileRoute("/")({
-  beforeLoad: async ({ context }) => {
-    const isTokenSaved = context.auth.isTokenSaved();
+  // beforeLoad: async ({ context }) => {
+  //   const isTokenSaved = context.auth.isTokenSaved();
 
-    if (isTokenSaved) {
-      if (getRole() === "project_manager") {
-        throw redirect({
-          to: "/projectManager/managerOverview",
-        });
-      }
-      // TODO: Add navigation for client
-    }
-  },
+  //   if (isTokenSaved) {
+  //     if (getRole() === "project_manager") {
+  //       throw redirect({
+  //         to: "/projectManager/managerOverview",
+  //       });
+  //     }
+  //     // TODO: Add navigation for client
+  //   }
+  // },
   component: HomeLayout,
 });
 

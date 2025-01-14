@@ -1,30 +1,28 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import * as EmailValidator from "email-validator";
-import { SignUpFormType } from "../types/userType";
-import { useCreateUser } from "../services/mutations/userMutations";
+import * as EmailValidator from 'email-validator';
+import { SignupCredentials } from '../types/auth.types';
+import { useAuth } from '../context/AuthContext';
 
-const initialValues: SignUpFormType = {
-  name: "",
-  email: "",
-  password: "",
+const initialValues: SignupCredentials = {
+  name: '',
+  email: '',
+  password: '',
+  role: '',
 };
 
 export function useSignUpForm() {
-  const [formValues, setFormValues] = useState<SignUpFormType>(initialValues);
+  const [formValues, setFormValues] =
+    useState<SignupCredentials>(initialValues);
   const [formError, setFormError] = useState<string | null>(null);
-
-  const {
-    mutate: createUser,
-    isError: isCreateUserError,
-    error: createUserError,
-    isSuccess: isCreateUserSuccess,
-    isPending: isCreateUserPending,
-    reset: resetCreateUser,
-  } = useCreateUser();
+  const { signup } = useAuth();
 
   // Handle form changes
-  const handleFormValues = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFormValues = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setFormError(null);
     setFormValues({
       ...formValues,
@@ -35,27 +33,34 @@ export function useSignUpForm() {
   // Form validation logic
   const validateForm = (): boolean => {
     if (
-      formValues.name === "" ||
-      formValues.email === "" ||
-      formValues.password === ""
+      formValues.name === '' ||
+      formValues.email === '' ||
+      formValues.password === ''
     ) {
-      setFormError("Please fill all the fields");
+      setFormError('Please fill all the fields');
       return false;
     }
 
     const isValidEmail = EmailValidator.validate(formValues.email);
     if (!isValidEmail) {
-      setFormError("Email must be valid");
+      setFormError('Email must be valid');
       return false;
     }
 
     if (
       formValues.password.length < 6 ||
-      formValues.password.includes("password")
+      formValues.password.includes('password')
     ) {
       setFormError(
         "Password must be at least 6 characters long and should not contain the word 'password'",
       );
+      return false;
+    }
+    if (
+      formValues.role?.toLowerCase() !== 'client' &&
+      formValues.role?.toLowerCase() !== 'project_manager'
+    ) {
+      setFormError('User type must be either client or project manager');
       return false;
     }
 
@@ -63,16 +68,14 @@ export function useSignUpForm() {
   };
 
   // Handle form submission
-  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError(null);
 
-    if (!validateForm()) {
-      return;
+    if (validateForm()) {
+      await signup(formValues);
     }
-
-    createUser(formValues);
-    setFormValues(initialValues);
+    return;
   };
 
   return {
@@ -80,10 +83,5 @@ export function useSignUpForm() {
     formError,
     handleFormValues,
     onSubmitHandler,
-    isCreateUserError,
-    createUserError,
-    isCreateUserSuccess,
-    isCreateUserPending,
-    resetCreateUser,
   };
 }

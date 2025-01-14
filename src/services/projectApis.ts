@@ -1,25 +1,26 @@
-import axios from "axios";
-import { getAuthToken } from "../utils/auth";
+import axios from 'axios';
+
 import {
   ProjectType,
   UpdateProjectStatusType,
   UpdateProjectType,
-} from "../types/projectType";
-import { getErrorMessage } from "../utils/errorHandler";
+} from '../types/projectType';
+import { getErrorMessage } from '../utils/errorHandler';
+import { getAccessToken } from '../utils/auth';
 
-const apiUrl = `${import.meta.env.VITE_BASE_API_URL}/projects`;
+const apiUrl = `${import.meta.env.VITE_BASE_URL}/projects`;
 
 const defaultOptions = {
   baseURL: apiUrl,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 };
 
 const instance = axios.create(defaultOptions);
 
 instance.interceptors.request.use((config) => {
-  const TOKEN = getAuthToken();
+  const TOKEN = getAccessToken();
   if (TOKEN) {
     config.headers.Authorization = `Bearer ${TOKEN}`;
   }
@@ -39,7 +40,7 @@ export async function getProjectDetails(projectCode: string) {
 // GET: search project
 export async function searchProject(searchString: string) {
   try {
-    const response = await instance.get("/search", {
+    const response = await instance.get('/search', {
       params: {
         q: searchString,
       },
@@ -53,7 +54,7 @@ export async function searchProject(searchString: string) {
 // POST:create new project
 export async function createNewProject(projectObject: ProjectType) {
   try {
-    const response = await instance.post("/create", projectObject);
+    const response = await instance.post('/create', projectObject);
     return response.data;
   } catch (error) {
     throw new Error(getErrorMessage(error));

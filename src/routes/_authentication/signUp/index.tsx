@@ -42,9 +42,6 @@ function SignUp() {
       />
     );
   }
-  function handleGoogleSignUp() {
-    window.location.href = `${import.meta.env.VITE_BASE_API_URL}/auth/login`;
-  }
 
   return (
     <div className="container mx-auto p-4">
@@ -59,7 +56,7 @@ function SignUp() {
             label="Name"
             type="text"
             placeholder="Your name"
-            value={formValues.name ?? ""}
+            value={formValues.name}
             name="name"
             onChange={handleFormValues}
           />
@@ -81,6 +78,21 @@ function SignUp() {
             name="password"
             onChange={handleFormValues}
           />
+          <div className="form-control w-full ">
+            <label className="label md:text-lg font-medium">
+              Manger or Client?
+            </label>
+            <select
+              className="select select-bordered"
+              value={formValues.role}
+              name="role"
+              onChange={handleFormValues}
+            >
+              <option>Choose...</option>
+              <option>project_manager</option>
+              <option>client</option>
+            </select>
+          </div>
 
           <div className=" mt-5 flex flex-col md:flex-row gap-5 items-center">
             <Button className=" btn-primary" disabled={isCreateUserPending}>
@@ -91,7 +103,6 @@ function SignUp() {
             )}
           </div>
         </form>
-        <Button onClick={handleGoogleSignUp}>Sign Up with google</Button>
       </div>
       <p className="font-medium text-center mb-5">
         Already have an account?{" "}

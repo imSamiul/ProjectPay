@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { UserType } from "../types/userType";
-import { useLoginUser } from "../services/mutations/userMutations";
-import * as EmailValidator from "email-validator";
+import * as EmailValidator from 'email-validator';
+import { LoginCredentials } from '../types/auth.types';
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
-const initialValues: UserType = {
-  email: "",
-  password: "",
+const initialValues: LoginCredentials = {
+  email: '',
+  password: '',
 };
 
 export function useLoginForm() {
-  const [formValues, setFormValues] = useState<UserType>(initialValues);
-  const { error, isError, isPending, mutate, isSuccess } = useLoginUser();
+  const [formValues, setFormValues] = useState<LoginCredentials>(initialValues);
+  const { login } = useAuth();
 
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -25,22 +25,22 @@ export function useLoginForm() {
 
   // Form validation logic
   const validateForm = (): boolean => {
-    if (formValues.email === "" || formValues.password === "") {
-      setFormError("Please fill all the fields");
+    if (formValues.email === '' || formValues.password === '') {
+      setFormError('Please fill all the fields');
       return false;
     }
 
     const isValidEmail = EmailValidator.validate(formValues.email);
     if (!isValidEmail) {
-      setFormError("Email must be valid");
+      setFormError('Email must be valid');
       return false;
     }
 
     if (
       formValues.password.length < 6 ||
-      formValues.password.includes("password")
+      formValues.password.includes('password')
     ) {
-      setFormError("Password must be valid or at least 6 characters long");
+      setFormError('Password must be valid or at least 6 characters long');
       return false;
     }
 
@@ -51,7 +51,7 @@ export function useLoginForm() {
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      mutate(formValues);
+      await login(formValues);
     }
   };
 
@@ -60,9 +60,5 @@ export function useLoginForm() {
     handleFormValues,
     onSubmitHandler,
     formError,
-    isError,
-    error,
-    isPending,
-    isSuccess,
   };
 }

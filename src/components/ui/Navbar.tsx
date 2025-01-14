@@ -1,77 +1,58 @@
-import { Link, LinkOptions, useNavigate } from "@tanstack/react-router";
-import LinkButton from "./LinkButton";
-import ThemeSwap from "./ThemeSwap";
-import navbarLogo from "../../assets/nav-logo.png";
-import { useAuth } from "../../hooks/useAuth";
-import Modal from "../modals/Modal";
-import { useLogOutUser } from "../../services/mutations/userMutations";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { Link, LinkOptions } from '@tanstack/react-router';
+import LinkButton from './LinkButton';
+import ThemeSwap from './ThemeSwap';
+import navbarLogo from '../../assets/nav-logo.png';
+import Modal from '../modals/Modal';
+import { useAuth } from '../../context/AuthContext';
 
 type NavItem = {
   title: string;
-  link: LinkOptions["to"];
+  link: LinkOptions['to'];
 };
 const projectManagerNavItem: NavItem[] = [
   {
-    title: "Overview",
-    link: "/projectManager/managerOverview",
+    title: 'Overview',
+    link: '/projectManager/managerOverview',
   },
 
   {
-    title: "Add Project",
-    link: "/projectManager/addProject",
+    title: 'Add Project',
+    link: '/projectManager/addProject',
   },
   {
-    title: "Project List",
-    link: "/projectManager/projectList",
+    title: 'Project List',
+    link: '/projectManager/projectList',
   },
 ];
 const clientNavItem: NavItem[] = [
   {
-    title: "Overview",
-    link: "/",
+    title: 'Overview',
+    link: '/',
   },
 ];
 
 function Navbar() {
-  const auth = useAuth();
-  const { error, isError, isPending, mutate, isSuccess } = useLogOutUser();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(error?.message || "There is an error");
-    }
-    if (isSuccess) {
-      toast.success("Logout Successful");
-    }
-  }, [isError, error, isSuccess, navigate]);
-
-  const isLogged = auth.isTokenSaved();
-
-  const userType = auth.user?.role;
+  const { logout, isAuthenticated, user } = useAuth();
 
   let navItem: NavItem[] = [];
 
-  if (isLogged) {
-    if (userType === "project_manager") {
+  if (isAuthenticated) {
+    if (user?.role === 'project_manager') {
       navItem = projectManagerNavItem;
-    } else if (userType === "client") {
+    } else if (user?.role === 'client') {
       navItem = clientNavItem;
     }
   }
 
-  function handleLogout() {
-    mutate();
+  async function handleLogout() {
+    await logout();
   }
 
   return (
     <div>
       <div className="navbar bg-secondary  font-lexend flex px-4">
         <div className="navbar-start flex-[2] md:flex-1">
-          {isLogged && (
+          {isAuthenticated && (
             <div className="dropdown">
               <div
                 tabIndex={0}
@@ -123,7 +104,7 @@ function Navbar() {
                 to={item.link}
                 key={index}
                 activeProps={{
-                  className: "rounded-md bg-neutral/15 font-medium",
+                  className: 'rounded-md bg-neutral/15 font-medium',
                 }}
               >
                 <li>
@@ -134,14 +115,14 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end flex items-center gap-2 flex-1 ">
-          {isLogged ? (
+          {isAuthenticated ? (
             <Modal
               id="logout"
               title="Logout"
               content="Are you sure you want to logout?"
-              openButtonLabel={isPending ? "Logging out..." : "Logout"}
+              openButtonLabel="Logout"
               closeButtonLabel="Cancel"
-              confirmButtonLabel="Logout"
+              confirmButtonLabel="Confirm Logout"
               btnConfirmAction={handleLogout}
             />
           ) : (
@@ -151,6 +132,7 @@ function Navbar() {
               className="btn  btn-sm md:btn-md "
             />
           )}
+
           <ThemeSwap />
         </div>
       </div>

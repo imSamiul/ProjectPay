@@ -1,18 +1,19 @@
-import axios from "axios";
-import { getAuthToken } from "../utils/auth";
-import { getErrorMessage } from "../utils/errorHandler";
+import axios from 'axios';
 
-const apiUrl = `${import.meta.env.VITE_BASE_API_URL}/manager`;
+import { getErrorMessage } from '../utils/errorHandler';
+import { getAccessToken } from '../utils/auth';
+
+const apiUrl = `${import.meta.env.VITE_BASE_URL}/manager`;
 const defaultOptions = {
   baseURL: apiUrl,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 };
 const instance = axios.create(defaultOptions);
 
 instance.interceptors.request.use((config) => {
-  const TOKEN = getAuthToken();
+  const TOKEN = getAccessToken();
   if (TOKEN) {
     config.headers.Authorization = `Bearer ${TOKEN}`;
   }
@@ -23,7 +24,7 @@ instance.interceptors.request.use((config) => {
 
 export async function getManagerProjects({ pageParam }: { pageParam: number }) {
   try {
-    const response = await instance.get("/projects", {
+    const response = await instance.get('/projects', {
       params: {
         pageParam,
         limit: 10,

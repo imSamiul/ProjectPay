@@ -1,27 +1,13 @@
-import Cookies from "js-cookie";
-
-export function setAuthToken(token: string) {
-  Cookies.set("token", token, { expires: 7 });
+export function setAccessToken(token: string) {
+  localStorage.setItem('accessToken', token);
 }
-export function getAuthToken() {
-  const token = Cookies.get("token");
+export function getAccessToken() {
+  const token = localStorage.getItem('accessToken');
   if (!token) {
     return null;
   }
   return token;
 }
-
-export function setTemporaryToken(token: string) {
-  Cookies.set("temporaryToken", token, { expires: (1 / 1440) * 5 });
-}
-export function getTemporaryToken() {
-  const token = Cookies.get("temporaryToken");
-  if (!token) {
-    return null;
-  }
-  return token;
-}
-
-export function removeAuthToken() {
-  Cookies.remove("token");
+export function clearAccessToken() {
+  localStorage.removeItem('accessToken');
 }

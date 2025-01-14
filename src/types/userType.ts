@@ -1,23 +1,16 @@
-export type UserType = {
-  id?: string;
-  name?: string;
-  email: string;
-  password: string;
-  photo?: string;
-  role?: "client" | "admin" | "project_manager";
-};
-
-export type SignUpFormType = {
+export type SignUpForm = {
   name: string;
   email: string;
   password: string;
+  role: string;
 };
-export type LoginFormType = {
+export type LoginForm = {
   email: string;
   password: string;
 };
 
-export type AddOtherInfoFormType = {
+export type AddOtherInfoForm = {
   phone: string;
   role: string;
+  temporaryToken: string;
 };
