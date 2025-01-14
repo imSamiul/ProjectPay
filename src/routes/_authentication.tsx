@@ -8,9 +8,9 @@ export const Route = createFileRoute('/_authentication')({
   beforeLoad: async ({ context }) => {
     if (context.auth.isAuthenticated) {
       if (context.auth.user?.role === 'project_manager') {
-        redirect({ to: '/projectManager/managerOverview' });
+        return redirect({ to: '/projectManager/managerOverview' });
       } else {
-        redirect({ to: '/' });
+        return redirect({ to: '/' });
       }
     }
   },
