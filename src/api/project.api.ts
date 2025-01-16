@@ -24,6 +24,20 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
+  updateProjectStatus: async (updatedStatusObj: UpdateProjectStatusType) => {
+    try {
+      const response = await instance.patch(
+        `/projects/updateProjectStatus/${updatedStatusObj.projectCode}`,
+        {
+          status: updatedStatusObj.status,
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
 };
 
 // GET: search project
@@ -41,22 +55,7 @@ export async function searchProject(searchString: string) {
 }
 
 // PATCH:update project status
-export async function updateProjectStatus(
-  updatedStatusObj: UpdateProjectStatusType,
-) {
-  try {
-    const response = await instance.patch(
-      `/updateProjectStatus/${updatedStatusObj.projectCode}`,
-      {
-        status: updatedStatusObj.status,
-      },
-    );
 
-    return response.data;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
 // PATCH: update project
 export async function apiUpdateProjectDetails(
   projectObject: UpdateProjectType,

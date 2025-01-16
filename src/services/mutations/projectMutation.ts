@@ -4,11 +4,7 @@ import {
   UpdateProjectStatusType,
   UpdateProjectType,
 } from '../../types/projectType';
-import {
-  apiUpdateProjectDetails,
-  deleteProject,
-  updateProjectStatus,
-} from '../../api/project.api';
+import { apiUpdateProjectDetails, deleteProject } from '../../api/project.api';
 import { useNavigate } from '@tanstack/react-router';
 import { projectApi } from '../../api/project.api';
 
@@ -40,11 +36,10 @@ export function useUpdateProjectStatus() {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: (updatedStatusObj: UpdateProjectStatusType) =>
-      updateProjectStatus(updatedStatusObj),
+      projectApi.updateProjectStatus(updatedStatusObj),
     onSuccess: () => {
       navigate({ to: '/projectManager/managerOverview' });
     },
-
     onError: (error) => {
       console.log(error);
     },
