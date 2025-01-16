@@ -49,21 +49,20 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
-};
 
-// GET: search project
-export async function searchProject(searchString: string) {
-  try {
-    const response = await instance.get('/search', {
-      params: {
-        q: searchString,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
+  searchProject: async (searchString: string) => {
+    try {
+      const response = await instance.get('/projects/search', {
+        params: {
+          q: searchString,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
+};
 
 // DELETE: delete project
 export async function deleteProject(projectId: string) {
