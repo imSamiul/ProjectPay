@@ -72,7 +72,7 @@ export function useUpdateProjectDetails() {
       const projectCode = data.projectCode;
 
       await queryClient.invalidateQueries({
-        queryKey: ['projects', projectCode],
+        queryKey: ['projectsDetails', projectCode],
       });
     },
   });

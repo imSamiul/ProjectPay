@@ -1,39 +1,21 @@
-import axios from 'axios';
-
 import { EditPaymentModalPropsType, PaymentType } from '../types/paymentType';
-import { getAccessToken } from '../utils/auth';
+import { instance } from './auth.api';
 
-const MONGOOSE_URL = 'http://192.168.31.207:4000/payment';
-const defaultOptions = {
-  baseURL: MONGOOSE_URL,
-  headers: {
-    'Content-Type': 'application/json',
+export const paymentApi = {
+  addPayment: async (paymentObject: PaymentType) => {
+    try {
+      const response = await instance.post('/payment/add', paymentObject);
+      return response.data;
+    } catch (error) {
+      console.error('Error adding payment:', error);
+      throw error;
+    }
   },
 };
-
-const instance = axios.create(defaultOptions);
-
-instance.interceptors.request.use((config) => {
-  const TOKEN = getAccessToken();
-  if (TOKEN) {
-    config.headers.Authorization = `Bearer ${TOKEN}`;
-  }
-  return config;
-});
 
 // GET:
 
 // POST: add payment for specific project and decrease the due amount
-
-export async function addPayment(paymentObject: PaymentType) {
-  try {
-    const response = await instance.post('/add', paymentObject);
-    return response.data;
-  } catch (error) {
-    console.error('Error adding payment:', error);
-    throw error;
-  }
-}
 
 // PATCH: update payment details
 export async function updatePayment(paymentObject: EditPaymentModalPropsType) {

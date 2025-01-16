@@ -65,8 +65,6 @@ export async function searchProject(searchString: string) {
   }
 }
 
-// PATCH: update project
-
 // DELETE: delete project
 export async function deleteProject(projectId: string) {
   try {
