@@ -4,7 +4,7 @@ import {
   UpdateProjectStatusType,
   UpdateProjectType,
 } from '../../types/projectType';
-import { deleteProject } from '../../api/project.api';
+
 import { useNavigate } from '@tanstack/react-router';
 import { projectApi } from '../../api/project.api';
 
@@ -82,10 +82,10 @@ export function useDeleteProject() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async (projectId: string) => deleteProject(projectId),
+    mutationFn: async (projectId: string) =>
+      projectApi.deleteProject(projectId),
     onSuccess: () => {
       navigate({ to: '/projectManager/managerOverview' });
-      queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
     onError: (error) => {
       console.log(error);
@@ -94,6 +94,7 @@ export function useDeleteProject() {
       await queryClient.removeQueries({
         queryKey: ['projectDetails', data.projectCode],
       });
+      await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
   });
 }

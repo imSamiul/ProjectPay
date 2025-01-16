@@ -62,14 +62,12 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
+  deleteProject: async (projectId: string) => {
+    try {
+      const response = await instance.delete(`/projects/delete/${projectId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
 };
-
-// DELETE: delete project
-export async function deleteProject(projectId: string) {
-  try {
-    const response = await instance.delete(`/delete/${projectId}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
