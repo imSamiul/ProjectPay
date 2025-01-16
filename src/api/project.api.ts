@@ -16,17 +16,15 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
+  getProjectDetails: async (projectCode: string) => {
+    try {
+      const response = await instance.get(`/projects/details/${projectCode}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
 };
-
-// GET: get project details
-export async function getProjectDetails(projectCode: string) {
-  try {
-    const response = await instance.get(`/details/${projectCode}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
 
 // GET: search project
 export async function searchProject(searchString: string) {
@@ -41,8 +39,6 @@ export async function searchProject(searchString: string) {
     throw new Error(getErrorMessage(error));
   }
 }
-
-// POST:create new project
 
 // PATCH:update project status
 export async function updateProjectStatus(

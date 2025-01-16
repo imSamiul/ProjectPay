@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getProjectDetails, searchProject } from '../../api/project.api';
+import { searchProject } from '../../api/project.api';
 import { managerApi } from '../../api/manager.apis';
+import { projectApi } from '../../api/project.api';
 
 // get all projects for a manager
 export function useGetManagerProjects() {
@@ -25,7 +26,7 @@ export function useSearchProject(searchString: string) {
 export function useGetProjectDetails(projectCode: string) {
   return useQuery({
     queryKey: ['projectDetails', projectCode],
-    queryFn: () => getProjectDetails(projectCode),
+    queryFn: () => projectApi.getProjectDetails(projectCode),
     enabled: !!projectCode,
   });
 }
