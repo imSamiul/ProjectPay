@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deletePayment, updatePayment } from '../../api/paymentApis';
+import { deletePayment } from '../../api/paymentApis';
 import { EditPaymentModalPropsType } from '../../types/paymentType';
 import { paymentApi } from '../../api/paymentApis';
 
@@ -28,7 +28,7 @@ export function useEditPayment() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (updatedPaymentObj: EditPaymentModalPropsType) =>
-      updatePayment(updatedPaymentObj),
+      paymentApi.updatePayment(updatedPaymentObj),
     onError: (error) => {
       console.log(error);
     },
@@ -36,7 +36,7 @@ export function useEditPayment() {
       const projectCode = data.updatedProject.projectCode;
 
       await queryClient.invalidateQueries({
-        queryKey: ['projects', projectCode],
+        queryKey: ['projectDetails', projectCode],
       });
     },
   });

@@ -11,25 +11,19 @@ export const paymentApi = {
       throw error;
     }
   },
+  updatePayment: async (paymentObject: EditPaymentModalPropsType) => {
+    try {
+      const response = await instance.patch(
+        `/payment/update/${paymentObject.paymentId}`,
+        paymentObject,
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error updating payment:', error);
+      throw error;
+    }
+  },
 };
-
-// GET:
-
-// POST: add payment for specific project and decrease the due amount
-
-// PATCH: update payment details
-export async function updatePayment(paymentObject: EditPaymentModalPropsType) {
-  try {
-    const response = await instance.patch(
-      `/update/${paymentObject.paymentId}`,
-      paymentObject,
-    );
-    return response.data;
-  } catch (error) {
-    console.error('Error updating payment:', error);
-    throw error;
-  }
-}
 
 // DELETE: delete payment for specific project and increase the due amount
 export async function deletePayment(paymentId: string) {
