@@ -1,31 +1,22 @@
-import axios from 'axios';
-
 import {
   ProjectType,
   UpdateProjectStatusType,
   UpdateProjectType,
 } from '../types/projectType';
 import { getErrorMessage } from '../utils/errorHandler';
-import { getAccessToken } from '../utils/auth';
 
-const apiUrl = `${import.meta.env.VITE_BASE_URL}/projects`;
+import { instance } from './auth.api';
 
-const defaultOptions = {
-  baseURL: apiUrl,
-  headers: {
-    'Content-Type': 'application/json',
+export const projectApi = {
+  createNewProject: async (projectObject: ProjectType) => {
+    try {
+      const response = await instance.post('/projects/create', projectObject);
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
   },
 };
-
-const instance = axios.create(defaultOptions);
-
-instance.interceptors.request.use((config) => {
-  const TOKEN = getAccessToken();
-  if (TOKEN) {
-    config.headers.Authorization = `Bearer ${TOKEN}`;
-  }
-  return config;
-});
 
 // GET: get project details
 export async function getProjectDetails(projectCode: string) {
@@ -52,14 +43,6 @@ export async function searchProject(searchString: string) {
 }
 
 // POST:create new project
-export async function createNewProject(projectObject: ProjectType) {
-  try {
-    const response = await instance.post('/create', projectObject);
-    return response.data;
-  } catch (error) {
-    throw new Error(getErrorMessage(error));
-  }
-}
 
 // PATCH:update project status
 export async function updateProjectStatus(

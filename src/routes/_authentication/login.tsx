@@ -1,12 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useLoginForm } from "../../hooks/useLoginForm";
-import Button from "../../components/ui/Button";
-import LinkButton from "../../components/ui/LinkButton";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
-import InputField from "../../components/ui/InputField";
+import { createFileRoute } from '@tanstack/react-router';
+import { useLoginForm } from '../../hooks/useLoginForm';
+import Button from '../../components/ui/Button';
+import LinkButton from '../../components/ui/LinkButton';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+import InputField from '../../components/ui/InputField';
 
-export const Route = createFileRoute("/_authentication/login")({
+export const Route = createFileRoute('/_authentication/login')({
   component: Login,
 });
 
@@ -19,18 +19,14 @@ function Login() {
     isError,
     error,
     isPending,
-    isSuccess,
   } = useLoginForm();
 
   // Use useEffect to handle errors
   useEffect(() => {
     if (isError) {
-      toast.error(error?.message || "There is an error");
+      toast.error(error?.message || 'There is an error');
     }
-    if (isSuccess) {
-      toast.success("Login Successful");
-    }
-  }, [isError, error, isSuccess]); // Only run when isError or error changes
+  }, [isError, error]); // Only run when isError or error changes
 
   return (
     <div className="container mx-auto p-4">
@@ -62,7 +58,7 @@ function Login() {
 
           <div className="mt-5 flex flex-col md:flex-row gap-5 items-center">
             <Button className=" btn-primary" disabled={isPending}>
-              {isPending ? "loading..." : "Login"}
+              {isPending ? 'loading...' : 'Login'}
             </Button>
             {formError && (
               <p className="text-red-500 w-56 text-center">{formError}</p>
@@ -71,7 +67,7 @@ function Login() {
         </form>
 
         <p className="font-medium text-center mb-5">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <LinkButton
             title="Sign Up"
             className="text-[#606c38] text-lg"

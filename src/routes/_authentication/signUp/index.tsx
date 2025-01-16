@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useSignUpForm } from "../../../hooks/useSignUpForm";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import ErrorComponent from "../../../components/ErrorComponent";
-import InputField from "../../../components/ui/InputField";
-import Button from "../../../components/ui/Button";
-import LinkButton from "../../../components/ui/LinkButton";
+import { createFileRoute } from '@tanstack/react-router';
+import { useSignUpForm } from '../../../hooks/useSignUpForm';
 
-export const Route = createFileRoute("/_authentication/signUp/")({
+import InputField from '../../../components/ui/InputField';
+import Button from '../../../components/ui/Button';
+import LinkButton from '../../../components/ui/LinkButton';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+
+export const Route = createFileRoute('/_authentication/signUp/')({
   component: SignUp,
 });
 function SignUp() {
@@ -16,32 +16,18 @@ function SignUp() {
     formError,
     handleFormValues,
     onSubmitHandler,
-    createUserError,
-    isCreateUserError,
-    isCreateUserPending,
-    isCreateUserSuccess,
-    resetCreateUser,
+    isPending,
+
+    isError,
+    error,
   } = useSignUpForm();
 
+  // Use useEffect to handle errors
   useEffect(() => {
-    if (isCreateUserSuccess) {
-      toast.success("User created successfully");
+    if (isError) {
+      toast.error(error?.message || 'There is an error');
     }
-    if (isCreateUserError) {
-      toast.error(createUserError?.message || "An error occurred");
-    }
-  }, [isCreateUserSuccess, isCreateUserError, createUserError]);
-
-  if (isCreateUserError) {
-    return (
-      <ErrorComponent
-        errorMessage={
-          createUserError ? createUserError.message : "An error occurred"
-        }
-        onRetry={resetCreateUser}
-      />
-    );
-  }
+  }, [isError, error]); // Only run when isError or error changes
 
   return (
     <div className="container mx-auto p-4">
@@ -56,8 +42,8 @@ function SignUp() {
             label="Name"
             type="text"
             placeholder="Your name"
-            value={formValues.name}
-            name="name"
+            value={formValues.userName}
+            name="userName"
             onChange={handleFormValues}
           />
 
@@ -95,8 +81,8 @@ function SignUp() {
           </div>
 
           <div className=" mt-5 flex flex-col md:flex-row gap-5 items-center">
-            <Button className=" btn-primary" disabled={isCreateUserPending}>
-              {isCreateUserPending ? "Creating...." : "SignUp"}
+            <Button className=" btn-primary">
+              {isPending ? 'Creating....' : 'SignUp'}
             </Button>
             {formError && (
               <p className="text-red-500 w-56 text-center">{formError}</p>
@@ -105,7 +91,7 @@ function SignUp() {
         </form>
       </div>
       <p className="font-medium text-center mb-5">
-        Already have an account?{" "}
+        Already have an account?{' '}
         <LinkButton
           title="Login"
           className="text-[#606c38] text-lg"

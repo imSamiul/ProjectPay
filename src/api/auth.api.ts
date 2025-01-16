@@ -30,6 +30,8 @@ export const authApi = {
     return data;
   },
   signup: async (credentials: SignupCredentials): Promise<AuthResponse> => {
+    console.log(credentials);
+
     const { data } = await instance.post<AuthResponse>(
       '/auth/signup',
       credentials,

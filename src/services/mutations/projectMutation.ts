@@ -1,26 +1,27 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ProjectType,
   UpdateProjectStatusType,
   UpdateProjectType,
-} from "../../types/projectType";
+} from '../../types/projectType';
 import {
   apiUpdateProjectDetails,
-  createNewProject,
   deleteProject,
   updateProjectStatus,
-} from "../projectApis";
-import { useNavigate } from "@tanstack/react-router";
+} from '../../api/project.api';
+import { useNavigate } from '@tanstack/react-router';
+import { projectApi } from '../../api/project.api';
 
 // Create a new project
 export function useCreateNewProject() {
   const queryClient = useQueryClient();
   const negative = useNavigate();
   return useMutation({
-    mutationFn: (projectObj: ProjectType) => createNewProject(projectObj),
+    mutationFn: (projectObj: ProjectType) =>
+      projectApi.createNewProject(projectObj),
     onSuccess: (data) => {
       negative({
-        to: "/project/$projectCode",
+        to: '/project/$projectCode',
         params: { projectCode: data.projectCode },
       });
     },
@@ -29,7 +30,7 @@ export function useCreateNewProject() {
     },
     onSettled: async (data, error) => {
       console.log(data, error);
-      await queryClient.invalidateQueries({ queryKey: ["projects"] });
+      await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
   });
 }
@@ -41,7 +42,7 @@ export function useUpdateProjectStatus() {
     mutationFn: (updatedStatusObj: UpdateProjectStatusType) =>
       updateProjectStatus(updatedStatusObj),
     onSuccess: () => {
-      navigate({ to: "/projectManager/managerOverview" });
+      navigate({ to: '/projectManager/managerOverview' });
     },
 
     onError: (error) => {
@@ -51,7 +52,7 @@ export function useUpdateProjectStatus() {
       const projectCode = data.projectCode;
 
       await queryClient.invalidateQueries({
-        queryKey: ["projectDetails", projectCode],
+        queryKey: ['projectDetails', projectCode],
       });
     },
   });
@@ -65,7 +66,7 @@ export function useUpdateProjectDetails() {
       apiUpdateProjectDetails(updatedProjectObj),
     onSuccess: (data) => {
       negative({
-        to: "/project/$projectCode",
+        to: '/project/$projectCode',
         params: { projectCode: data.projectCode },
       });
     },
@@ -76,7 +77,7 @@ export function useUpdateProjectDetails() {
       const projectCode = data.projectCode;
 
       await queryClient.invalidateQueries({
-        queryKey: ["projects", projectCode],
+        queryKey: ['projects', projectCode],
       });
     },
   });
@@ -88,15 +89,15 @@ export function useDeleteProject() {
   return useMutation({
     mutationFn: async (projectId: string) => deleteProject(projectId),
     onSuccess: () => {
-      navigate({ to: "/projectManager/managerOverview" });
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      navigate({ to: '/projectManager/managerOverview' });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
     onError: (error) => {
       console.log(error);
     },
     onSettled: async (data) => {
       await queryClient.removeQueries({
-        queryKey: ["projectDetails", data.projectCode],
+        queryKey: ['projectDetails', data.projectCode],
       });
     },
   });

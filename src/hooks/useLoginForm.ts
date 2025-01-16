@@ -11,6 +11,7 @@ const initialValues: LoginCredentials = {
 export function useLoginForm() {
   const [formValues, setFormValues] = useState<LoginCredentials>(initialValues);
   const { login } = useAuth();
+  const { isError, error, isPending, mutate } = login();
 
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -51,7 +52,7 @@ export function useLoginForm() {
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      await login(formValues);
+      mutate(formValues);
     }
   };
 
@@ -60,5 +61,8 @@ export function useLoginForm() {
     handleFormValues,
     onSubmitHandler,
     formError,
+    isError,
+    error,
+    isPending,
   };
 }

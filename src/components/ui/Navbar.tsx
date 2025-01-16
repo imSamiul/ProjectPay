@@ -33,6 +33,7 @@ const clientNavItem: NavItem[] = [
 
 function Navbar() {
   const { logout, isAuthenticated, user } = useAuth();
+  const { mutate, isPending } = logout();
 
   let navItem: NavItem[] = [];
 
@@ -45,7 +46,7 @@ function Navbar() {
   }
 
   async function handleLogout() {
-    await logout();
+    mutate();
   }
 
   return (
@@ -122,8 +123,9 @@ function Navbar() {
               content="Are you sure you want to logout?"
               openButtonLabel="Logout"
               closeButtonLabel="Cancel"
-              confirmButtonLabel="Confirm Logout"
+              confirmButtonLabel={`${isPending ? 'Loading...' : 'Confirm Logout'}`}
               btnConfirmAction={handleLogout}
+              isPending={isPending}
             />
           ) : (
             <LinkButton

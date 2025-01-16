@@ -1,14 +1,6 @@
 import { getErrorMessage } from '../utils/errorHandler';
-import { getAccessToken } from '../utils/auth';
-import { instance } from './auth.api';
 
-instance.interceptors.request.use((config) => {
-  const TOKEN = getAccessToken();
-  if (TOKEN) {
-    config.headers.Authorization = `Bearer ${TOKEN}`;
-  }
-  return config;
-});
+import { instance } from './auth.api';
 
 // GET: get all projects for manager
 

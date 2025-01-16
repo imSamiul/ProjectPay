@@ -5,7 +5,7 @@ import { SignupCredentials } from '../types/auth.types';
 import { useAuth } from '../context/AuthContext';
 
 const initialValues: SignupCredentials = {
-  name: '',
+  userName: '',
   email: '',
   password: '',
   role: '',
@@ -16,6 +16,7 @@ export function useSignUpForm() {
     useState<SignupCredentials>(initialValues);
   const [formError, setFormError] = useState<string | null>(null);
   const { signup } = useAuth();
+  const { mutate, isError, error, isPending } = signup();
 
   // Handle form changes
   const handleFormValues = (
@@ -33,7 +34,7 @@ export function useSignUpForm() {
   // Form validation logic
   const validateForm = (): boolean => {
     if (
-      formValues.name === '' ||
+      formValues.userName === '' ||
       formValues.email === '' ||
       formValues.password === ''
     ) {
@@ -73,7 +74,7 @@ export function useSignUpForm() {
     setFormError(null);
 
     if (validateForm()) {
-      await signup(formValues);
+      mutate(formValues);
     }
     return;
   };
@@ -83,5 +84,8 @@ export function useSignUpForm() {
     formError,
     handleFormValues,
     onSubmitHandler,
+    isError,
+    error,
+    isPending,
   };
 }

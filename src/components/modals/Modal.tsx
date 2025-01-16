@@ -6,16 +6,18 @@ type ModalProps = {
   closeButtonLabel?: string; // Optional prop with a default value
   confirmButtonLabel?: string; // Optional prop with a default value
   btnConfirmAction: () => void;
+  isPending?: boolean;
 };
 
 function Modal({
   id,
   title,
   content,
-  openButtonLabel = "Open Modal",
-  closeButtonLabel = "Close",
-  confirmButtonLabel = "Confirm",
+  openButtonLabel = 'Open Modal',
+  closeButtonLabel = 'Close',
+  confirmButtonLabel = 'Confirm',
   btnConfirmAction,
+  isPending,
 }: ModalProps) {
   const openModal = (modalId: string) => {
     const modal = document.getElementById(modalId) as HTMLDialogElement;
@@ -57,7 +59,7 @@ function Modal({
         </div>
         {/* Clicking outside the modal area to close */}
         <form method="dialog" className="modal-backdrop">
-          <button>{closeButtonLabel}</button>
+          <button disabled={isPending}>{closeButtonLabel}</button>
         </form>
       </dialog>
     </div>

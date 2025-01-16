@@ -1,6 +1,16 @@
 import { createContext, useCallback, useContext, useEffect } from 'react';
-import { LoginCredentials, SignupCredentials, User } from '../types/auth.types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  AuthResponse,
+  LoginCredentials,
+  SignupCredentials,
+  User,
+} from '../types/auth.types';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import { authApi } from '../api/auth.api';
 import {
@@ -15,9 +25,9 @@ export type AuthContextType = {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
-  signup: (credentials: SignupCredentials) => Promise<void>;
-  logout: () => Promise<void>;
+  login: () => UseMutationResult<AuthResponse, Error, LoginCredentials>;
+  signup: () => UseMutationResult<AuthResponse, Error, SignupCredentials>;
+  logout: () => UseMutationResult<void, Error, void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -53,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     mutationFn: authApi.login,
     onSuccess: async (data) => {
       toast.success('Login successful');
-      console.log(data);
+
       setAccessToken(data.accessToken);
       await refetchUser();
       if (data.user.role === 'project_manager') {
@@ -69,7 +79,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     mutationFn: authApi.signup,
     onSuccess: async (data) => {
       toast.success('Signup successful');
-      console.log(data);
+
       setAccessToken(data.accessToken);
       await refetchUser();
       if (data.user.role === 'project_manager') {
@@ -91,23 +101,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     },
   });
 
-  const login = useCallback(
-    async (credentials: LoginCredentials) => {
-      await loginMutation.mutateAsync(credentials);
-    },
-    [loginMutation],
-  );
-
-  const signup = useCallback(
-    async (credentials: SignupCredentials) => {
-      await signupMutation.mutateAsync(credentials);
-    },
-    [signupMutation],
-  );
-
-  const logout = useCallback(async () => {
-    await logoutMutation.mutateAsync();
-  }, [logoutMutation]);
+  const login = useCallback(() => loginMutation, [loginMutation]);
+  const signup = useCallback(() => signupMutation, [signupMutation]);
+  const logout = useCallback(() => logoutMutation, [logoutMutation]);
 
   // Effect to handle token refresh
 
@@ -117,8 +113,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         const { accessToken } = await authApi.refreshToken();
         setAccessToken(accessToken);
         await refetchUser();
-      } catch (e) {
+      } catch (error) {
         clearAccessToken();
+        console.log('Error refreshing token', error);
+
         queryClient.setQueryData(['user'], null);
       }
     };
@@ -134,8 +132,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     // initial token refresh
     if (getAccessToken()) {
-      console.log('initial token refresh');
-
       refreshToken();
     }
     return () => clearInterval(intervalId);
