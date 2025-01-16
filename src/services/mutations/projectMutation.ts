@@ -4,7 +4,7 @@ import {
   UpdateProjectStatusType,
   UpdateProjectType,
 } from '../../types/projectType';
-import { apiUpdateProjectDetails, deleteProject } from '../../api/project.api';
+import { deleteProject } from '../../api/project.api';
 import { useNavigate } from '@tanstack/react-router';
 import { projectApi } from '../../api/project.api';
 
@@ -58,7 +58,7 @@ export function useUpdateProjectDetails() {
   const negative = useNavigate();
   return useMutation({
     mutationFn: (updatedProjectObj: UpdateProjectType) =>
-      apiUpdateProjectDetails(updatedProjectObj),
+      projectApi.updateProjectDetails(updatedProjectObj),
     onSuccess: (data) => {
       negative({
         to: '/project/$projectCode',

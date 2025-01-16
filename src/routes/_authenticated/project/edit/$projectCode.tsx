@@ -1,14 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
-import CustomDatePicker from "../../../../components/ui/CustomDatePicker";
-import InputField from "../../../../components/ui/InputField";
-import { useEditProjectForm } from "../../../../hooks/useEditProjectForm";
-import Loader from "../../../../components/Loader";
-import ErrorComponent from "../../../../components/ErrorComponent";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { createFileRoute } from '@tanstack/react-router';
+import CustomDatePicker from '../../../../components/ui/CustomDatePicker';
+import InputField from '../../../../components/ui/InputField';
+import { useEditProjectForm } from '../../../../hooks/useEditProjectForm';
+import Loader from '../../../../components/Loader';
+import ErrorComponent from '../../../../components/ErrorComponent';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const Route = createFileRoute(
-  "/_authenticated/project/edit/$projectCode",
+  '/_authenticated/project/edit/$projectCode',
 )({
   component: EditProject,
 });
@@ -35,7 +35,7 @@ function EditProject() {
 
   useEffect(() => {
     if (isUpdateError) {
-      toast.error("Failed to update project");
+      toast.error('Failed to update project');
     }
   }, [isUpdateError]);
 
@@ -47,7 +47,7 @@ function EditProject() {
     return (
       <ErrorComponent
         errorMessage={
-          projectFetchError ? projectFetchError.message : "An error occurred"
+          projectFetchError ? projectFetchError.message : 'An error occurred'
         }
         onRetry={refetchProjectDetails}
       />
@@ -56,7 +56,7 @@ function EditProject() {
   if (isUpdateError) {
     return (
       <ErrorComponent
-        errorMessage={updateError ? updateError.message : "An error occurred"}
+        errorMessage={updateError ? updateError.message : 'An error occurred'}
         onRetry={resetUpdateState}
       />
     );
@@ -173,12 +173,13 @@ function EditProject() {
               className="textarea textarea-bordered"
               value={editProjectValues.description}
               onChange={handleInputChange}
+              name="description"
             ></textarea>
           </div>
         </div>
         <div className="flex gap-5 items-center">
           <button className="btn btn-primary">
-            {isUpdatePending ? "Updating..." : "Update"}
+            {isUpdatePending ? 'Updating...' : 'Update'}
           </button>
           {formError && <div className="text-red-500">{formError}</div>}
         </div>
