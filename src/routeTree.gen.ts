@@ -18,6 +18,7 @@ import { Route as AuthenticationLoginImport } from './routes/_authentication/log
 import { Route as AuthenticatedProjectManagerImport } from './routes/_authenticated/projectManager'
 import { Route as AuthenticationSignUpIndexImport } from './routes/_authentication/signUp/index'
 import { Route as AuthenticationSignUpAddOtherInfoImport } from './routes/_authentication/signUp/addOtherInfo'
+import { Route as AuthenticationSignUpOAuthSuccessImport } from './routes/_authentication/signUp/OAuthSuccess'
 import { Route as AuthenticatedProjectManagerProjectListImport } from './routes/_authenticated/projectManager/projectList'
 import { Route as AuthenticatedProjectManagerManagerOverviewImport } from './routes/_authenticated/projectManager/managerOverview'
 import { Route as AuthenticatedProjectManagerAddProjectImport } from './routes/_authenticated/projectManager/addProject'
@@ -66,6 +67,13 @@ const AuthenticationSignUpAddOtherInfoRoute =
   AuthenticationSignUpAddOtherInfoImport.update({
     id: '/signUp/addOtherInfo',
     path: '/signUp/addOtherInfo',
+    getParentRoute: () => AuthenticationRoute,
+  } as any)
+
+const AuthenticationSignUpOAuthSuccessRoute =
+  AuthenticationSignUpOAuthSuccessImport.update({
+    id: '/signUp/OAuthSuccess',
+    path: '/signUp/OAuthSuccess',
     getParentRoute: () => AuthenticationRoute,
   } as any)
 
@@ -185,6 +193,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProjectManagerProjectListImport
       parentRoute: typeof AuthenticatedProjectManagerImport
     }
+    '/_authentication/signUp/OAuthSuccess': {
+      id: '/_authentication/signUp/OAuthSuccess'
+      path: '/signUp/OAuthSuccess'
+      fullPath: '/signUp/OAuthSuccess'
+      preLoaderRoute: typeof AuthenticationSignUpOAuthSuccessImport
+      parentRoute: typeof AuthenticationImport
+    }
     '/_authentication/signUp/addOtherInfo': {
       id: '/_authentication/signUp/addOtherInfo'
       path: '/signUp/addOtherInfo'
@@ -255,12 +270,14 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 interface AuthenticationRouteChildren {
   AuthenticationLoginRoute: typeof AuthenticationLoginRoute
+  AuthenticationSignUpOAuthSuccessRoute: typeof AuthenticationSignUpOAuthSuccessRoute
   AuthenticationSignUpAddOtherInfoRoute: typeof AuthenticationSignUpAddOtherInfoRoute
   AuthenticationSignUpIndexRoute: typeof AuthenticationSignUpIndexRoute
 }
 
 const AuthenticationRouteChildren: AuthenticationRouteChildren = {
   AuthenticationLoginRoute: AuthenticationLoginRoute,
+  AuthenticationSignUpOAuthSuccessRoute: AuthenticationSignUpOAuthSuccessRoute,
   AuthenticationSignUpAddOtherInfoRoute: AuthenticationSignUpAddOtherInfoRoute,
   AuthenticationSignUpIndexRoute: AuthenticationSignUpIndexRoute,
 }
@@ -279,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/projectManager/addProject': typeof AuthenticatedProjectManagerAddProjectRoute
   '/projectManager/managerOverview': typeof AuthenticatedProjectManagerManagerOverviewRoute
   '/projectManager/projectList': typeof AuthenticatedProjectManagerProjectListRoute
+  '/signUp/OAuthSuccess': typeof AuthenticationSignUpOAuthSuccessRoute
   '/signUp/addOtherInfo': typeof AuthenticationSignUpAddOtherInfoRoute
   '/signUp': typeof AuthenticationSignUpIndexRoute
   '/project/edit/$projectCode': typeof AuthenticatedProjectEditProjectCodeRoute
@@ -294,6 +312,7 @@ export interface FileRoutesByTo {
   '/projectManager/addProject': typeof AuthenticatedProjectManagerAddProjectRoute
   '/projectManager/managerOverview': typeof AuthenticatedProjectManagerManagerOverviewRoute
   '/projectManager/projectList': typeof AuthenticatedProjectManagerProjectListRoute
+  '/signUp/OAuthSuccess': typeof AuthenticationSignUpOAuthSuccessRoute
   '/signUp/addOtherInfo': typeof AuthenticationSignUpAddOtherInfoRoute
   '/signUp': typeof AuthenticationSignUpIndexRoute
   '/project/edit/$projectCode': typeof AuthenticatedProjectEditProjectCodeRoute
@@ -311,6 +330,7 @@ export interface FileRoutesById {
   '/_authenticated/projectManager/addProject': typeof AuthenticatedProjectManagerAddProjectRoute
   '/_authenticated/projectManager/managerOverview': typeof AuthenticatedProjectManagerManagerOverviewRoute
   '/_authenticated/projectManager/projectList': typeof AuthenticatedProjectManagerProjectListRoute
+  '/_authentication/signUp/OAuthSuccess': typeof AuthenticationSignUpOAuthSuccessRoute
   '/_authentication/signUp/addOtherInfo': typeof AuthenticationSignUpAddOtherInfoRoute
   '/_authentication/signUp/': typeof AuthenticationSignUpIndexRoute
   '/_authenticated/project/edit/$projectCode': typeof AuthenticatedProjectEditProjectCodeRoute
@@ -328,6 +348,7 @@ export interface FileRouteTypes {
     | '/projectManager/addProject'
     | '/projectManager/managerOverview'
     | '/projectManager/projectList'
+    | '/signUp/OAuthSuccess'
     | '/signUp/addOtherInfo'
     | '/signUp'
     | '/project/edit/$projectCode'
@@ -342,6 +363,7 @@ export interface FileRouteTypes {
     | '/projectManager/addProject'
     | '/projectManager/managerOverview'
     | '/projectManager/projectList'
+    | '/signUp/OAuthSuccess'
     | '/signUp/addOtherInfo'
     | '/signUp'
     | '/project/edit/$projectCode'
@@ -357,6 +379,7 @@ export interface FileRouteTypes {
     | '/_authenticated/projectManager/addProject'
     | '/_authenticated/projectManager/managerOverview'
     | '/_authenticated/projectManager/projectList'
+    | '/_authentication/signUp/OAuthSuccess'
     | '/_authentication/signUp/addOtherInfo'
     | '/_authentication/signUp/'
     | '/_authenticated/project/edit/$projectCode'
@@ -405,6 +428,7 @@ export const routeTree = rootRoute
       "filePath": "_authentication.tsx",
       "children": [
         "/_authentication/login",
+        "/_authentication/signUp/OAuthSuccess",
         "/_authentication/signUp/addOtherInfo",
         "/_authentication/signUp/"
       ]
@@ -442,6 +466,10 @@ export const routeTree = rootRoute
     "/_authenticated/projectManager/projectList": {
       "filePath": "_authenticated/projectManager/projectList.tsx",
       "parent": "/_authenticated/projectManager"
+    },
+    "/_authentication/signUp/OAuthSuccess": {
+      "filePath": "_authentication/signUp/OAuthSuccess.tsx",
+      "parent": "/_authentication"
     },
     "/_authentication/signUp/addOtherInfo": {
       "filePath": "_authentication/signUp/addOtherInfo.tsx",

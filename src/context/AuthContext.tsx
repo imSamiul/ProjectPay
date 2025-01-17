@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect } from 'react';
 import {
+  AddOtherInfoCredentials,
   AuthResponse,
   LoginCredentials,
   SignupCredentials,
@@ -28,6 +29,11 @@ export type AuthContextType = {
   login: () => UseMutationResult<AuthResponse, Error, LoginCredentials>;
   signup: () => UseMutationResult<AuthResponse, Error, SignupCredentials>;
   logout: () => UseMutationResult<void, Error, void>;
+  addOtherInfo: () => UseMutationResult<
+    AuthResponse,
+    Error,
+    AddOtherInfoCredentials
+  >;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -97,13 +103,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       toast.success('Logout successful');
       clearAccessToken();
       queryClient.clear();
+    },
+    onSettled: () => {
+      queryClient.setQueryData(['user'], null);
       router.navigate({ to: '/' });
+    },
+  });
+
+  const addUserOtherInfo = useMutation({
+    mutationFn: (credentials: AddOtherInfoCredentials) =>
+      authApi.addOtherInfo(credentials),
+    onSuccess: async (data) => {
+      toast.success('User info added successfully');
+      setAccessToken(data.accessToken);
+      await refetchUser();
+      if (data.user.role === 'project_manager') {
+        router.navigate({ to: '/projectManager/managerOverview' });
+      } else {
+        router.navigate({ to: '/' });
+      }
+    },
+    onError: (error) => {
+      console.log('error', error);
     },
   });
 
   const login = useCallback(() => loginMutation, [loginMutation]);
   const signup = useCallback(() => signupMutation, [signupMutation]);
   const logout = useCallback(() => logoutMutation, [logoutMutation]);
+  const addOtherInfo = useCallback(() => addUserOtherInfo, [addUserOtherInfo]);
 
   // Effect to handle token refresh
 
@@ -146,6 +174,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         login,
         signup,
         logout,
+        addOtherInfo,
       }}
     >
       {children}

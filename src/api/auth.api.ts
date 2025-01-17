@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  AddOtherInfoCredentials,
   AuthResponse,
   LoginCredentials,
   SignupCredentials,
@@ -22,7 +23,7 @@ const instance = axios.create({
 });
 
 export const authApi = {
-  login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
+  login: async (credentials: LoginCredentials) => {
     const { data } = await instance.post<AuthResponse>(
       '/auth/login',
       credentials,
@@ -48,6 +49,14 @@ export const authApi = {
   getUser: async (): Promise<User> => {
     const { data } = await instance.get('/users/me');
     return data.user;
+  },
+  addOtherInfo: async (
+    credentials: AddOtherInfoCredentials,
+  ): Promise<AuthResponse> => {
+    console.log(credentials);
+
+    const { data } = await instance.post('/auth/addRole', credentials);
+    return data;
   },
 };
 

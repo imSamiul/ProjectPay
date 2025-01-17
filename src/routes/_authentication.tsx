@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_authentication')({
 });
 
 function handleGoogleSignUp() {
-  window.location.href = `${import.meta.env.VITE_BASE_URL}/api/auth/login`;
+  window.location.href = `${import.meta.env.VITE_BASE_URL}/api/auth/google`;
 }
 
 function AuthenticationLayout() {
@@ -25,7 +25,7 @@ function AuthenticationLayout() {
     <div className="flex flex-col-reverse md:flex-row min-h-screen">
       <div className="flex-1 flex flex-col items-center justify-center">
         <Outlet />
-        <Button onClick={handleGoogleSignUp}>Sign Up with google</Button>
+        <Button onClick={handleGoogleSignUp}>Sign In with google</Button>
       </div>
       <div className="flex-1 ">
         <img

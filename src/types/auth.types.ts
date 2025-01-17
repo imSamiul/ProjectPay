@@ -19,3 +19,8 @@ export type SignupCredentials = {
   password: string;
   role: string;
 };
+export type AddOtherInfoCredentials = {
+  role: string;
+  email: string;
+  googleId: string;
+};

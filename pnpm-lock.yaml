@@ -35,9 +35,6 @@ importers:
       email-validator:
         specifier: ^2.0.4
         version: 2.0.4
-      phone:
-        specifier: ^3.1.53
-        version: 3.1.53
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1759,10 +1756,6 @@ packages:
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
-
-  phone@3.1.53:
-    resolution: {integrity: sha512-+0sMjlxjcm1rjUDRLzXW06vRg/SePwa+MubuSt9WhHoUziGrGHjuC/tfFYfh2oXKU/dcckwCyMUMDAOaVArb6w==}
-    engines: {node: '>=12'}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -3984,8 +3977,6 @@ snapshots:
     dependencies:
       lru-cache: 10.4.3
       minipass: 7.1.2
-
-  phone@3.1.53: {}
 
   picocolors@1.1.1: {}
 

@@ -9,8 +9,6 @@ export type LoginForm = {
   password: string;
 };
 
-export type AddOtherInfoForm = {
-  phone: string;
+export type AddOtherInfoCredentials = {
   role: string;
-  temporaryToken: string;
 };
