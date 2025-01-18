@@ -4,8 +4,7 @@ import {
   UpdateProjectType,
 } from '../types/projectType';
 import { getErrorMessage } from '../utils/errorHandler';
-
-import { instance } from './auth.api';
+import { instance } from './instance.api';
 
 export const projectApi = {
   createNewProject: async (projectObject: ProjectType) => {

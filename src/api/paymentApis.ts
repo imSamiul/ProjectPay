@@ -1,5 +1,5 @@
 import { EditPaymentModalPropsType, PaymentType } from '../types/paymentType';
-import { instance } from './auth.api';
+import { instance } from './instance.api';
 
 export const paymentApi = {
   addPayment: async (paymentObject: PaymentType) => {

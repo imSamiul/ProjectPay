@@ -7,7 +7,8 @@ import Button from '../../../components/ui/Button';
 import CustomErrorComponent from '../../../components/CustomErrorComponent';
 
 import { AddOtherInfoCredentials } from '../../../types/userType';
-import { useAuth } from '../../../context/AuthContext';
+
+import { useAuthMutation } from '../../../services/mutations/authMutations';
 
 const initialValues: AddOtherInfoCredentials = {
   role: '',
@@ -45,16 +46,8 @@ function AddOtherInfo() {
     useState<AddOtherInfoCredentials>(initialValues);
   const [formError, setFormError] = useState<string | null>(null);
   const { email, googleId } = Route.useSearch();
-  const { addOtherInfo } = useAuth();
+  const { addUserOtherInfo } = useAuthMutation();
   console.log(googleId);
-
-  const {
-    mutate,
-    isError: isAddUserOtherInfoError,
-    error: addUserOtherInfoError,
-    isPending: isAddUserOtherInfoPending,
-    reset: resetAddUserOtherInfo,
-  } = addOtherInfo();
 
   // Handle form changes
   const handleFormValues = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -85,7 +78,7 @@ function AddOtherInfo() {
     if (!validateForm()) {
       return;
     }
-    mutate({
+    addUserOtherInfo.mutate({
       role: formValues.role,
       email,
       googleId,
@@ -94,20 +87,20 @@ function AddOtherInfo() {
   };
 
   useEffect(() => {
-    if (isAddUserOtherInfoError) {
-      toast.error(addUserOtherInfoError?.message || 'An error occurred');
+    if (addUserOtherInfo.isError) {
+      toast.error(addUserOtherInfo.error?.message || 'An error occurred');
     }
-  }, [isAddUserOtherInfoError, addUserOtherInfoError]);
+  }, [addUserOtherInfo.isError, addUserOtherInfo.error]);
 
-  if (isAddUserOtherInfoError) {
+  if (addUserOtherInfo.isError) {
     return (
       <ErrorComponent
         errorMessage={
-          addUserOtherInfoError
-            ? addUserOtherInfoError.message
+          addUserOtherInfo.error.message
+            ? addUserOtherInfo.error.message
             : 'An error occurred'
         }
-        onRetry={resetAddUserOtherInfo}
+        onRetry={addUserOtherInfo.reset}
       />
     );
   }
@@ -139,9 +132,9 @@ function AddOtherInfo() {
           <div className=" mt-5 flex flex-col md:flex-row gap-5 items-center">
             <Button
               className=" btn-primary"
-              disabled={isAddUserOtherInfoPending}
+              disabled={addUserOtherInfo.isPending}
             >
-              {isAddUserOtherInfoPending ? 'loading...' : 'Continue'}
+              {addUserOtherInfo.isPending ? 'loading...' : 'Continue'}
             </Button>
             {formError && (
               <p className="text-red-500 w-56 text-center">{formError}</p>

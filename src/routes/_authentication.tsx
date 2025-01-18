@@ -6,7 +6,10 @@ import Button from '../components/ui/Button';
 export const Route = createFileRoute('/_authentication')({
   component: AuthenticationLayout,
   beforeLoad: async ({ context }) => {
-    if (context.auth.isAuthenticated) {
+    // console.log(context.auth);
+    const isAuthenticated = context.auth.isAuthenticated;
+
+    if (isAuthenticated) {
       if (context.auth.user?.role === 'project_manager') {
         return redirect({ to: '/projectManager/managerOverview' });
       } else {

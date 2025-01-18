@@ -1,6 +1,5 @@
 import { getErrorMessage } from '../utils/errorHandler';
-
-import { instance } from './auth.api';
+import { instance } from './instance.api';
 
 // GET: get all projects for manager
 

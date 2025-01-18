@@ -4,6 +4,7 @@ import ThemeSwap from './ThemeSwap';
 import navbarLogo from '../../assets/nav-logo.png';
 import Modal from '../modals/Modal';
 import { useAuth } from '../../context/AuthContext';
+import { useAuthMutation } from '../../services/mutations/authMutations';
 
 type NavItem = {
   title: string;
@@ -32,8 +33,9 @@ const clientNavItem: NavItem[] = [
 ];
 
 function Navbar() {
-  const { logout, isAuthenticated, user } = useAuth();
-  const { mutate, isPending } = logout();
+  const { isAuthenticated, user } = useAuth();
+  const { logoutMutation } = useAuthMutation();
+  const { mutate, isPending } = logoutMutation;
 
   let navItem: NavItem[] = [];
 

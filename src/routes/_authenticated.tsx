@@ -4,6 +4,8 @@ import Navbar from '../components/ui/Navbar';
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: ({ context }) => {
+    console.log(context.auth);
+
     if (!context.auth.isAuthenticated) {
       throw redirect({
         to: '/login',

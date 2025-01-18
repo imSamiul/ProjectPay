@@ -1,7 +1,8 @@
 import * as EmailValidator from 'email-validator';
 import { LoginCredentials } from '../types/auth.types';
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+
+import { useAuthMutation } from '../services/mutations/authMutations';
 
 const initialValues: LoginCredentials = {
   email: '',
@@ -10,8 +11,9 @@ const initialValues: LoginCredentials = {
 
 export function useLoginForm() {
   const [formValues, setFormValues] = useState<LoginCredentials>(initialValues);
-  const { login } = useAuth();
-  const { isError, error, isPending, mutate } = login();
+
+  const { loginMutation } = useAuthMutation();
+  const { isError, error, isPending, mutateAsync } = loginMutation;
 
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -52,7 +54,7 @@ export function useLoginForm() {
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      mutate(formValues);
+      mutateAsync(formValues);
     }
   };
 
