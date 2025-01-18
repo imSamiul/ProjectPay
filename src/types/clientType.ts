@@ -1,6 +1,7 @@
 export type ClientType = {
-  id: string;
-  clientName: string;
+  _id?: string;
+  clientUserName: string;
   clientEmail: string;
   clientPhone: string;
+  clientProjects?: string[];
 };

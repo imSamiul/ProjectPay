@@ -1,9 +1,7 @@
-export type ManagerType = {
+export type Manager = {
   _id?: string;
-  name: string;
-  email: string;
-  phone: string;
-  password: string;
-  userType: "project_manager";
+  managerUserName: string;
+  managerEmail: string;
+  managerPhone: string;
   managerProjects?: string[];
 };

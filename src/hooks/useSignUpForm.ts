@@ -83,6 +83,8 @@ export function useSignUpForm() {
         onSuccess: (data) => {
           if (data.user.role === 'project_manager') {
             navigate({ to: '/projectManager/managerOverview' });
+          } else if (data.user.role === 'client') {
+            navigate({ to: '/client/clientOverview' });
           }
         },
       });

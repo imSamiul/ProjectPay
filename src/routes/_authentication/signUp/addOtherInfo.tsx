@@ -86,8 +86,8 @@ function AddOtherInfo() {
         onSuccess: (data) => {
           if (data.user.role === 'project_manager') {
             navigate({ to: '/projectManager/managerOverview' });
-          } else {
-            navigate({ to: '/' });
+          } else if (data.user.role === 'client') {
+            navigate({ to: '/client/clientOverview' });
           }
         },
       },
