@@ -1,13 +1,13 @@
-export function setAccessToken(token: string) {
+export function saveLocalAccessToken(token: string) {
   localStorage.setItem('accessToken', token);
 }
-export function getAccessToken() {
+export function getLocalAccessToken() {
   const token = localStorage.getItem('accessToken');
   if (!token) {
     return null;
   }
   return token;
 }
-export function clearAccessToken() {
+export function clearLocalAccessToken() {
   localStorage.removeItem('accessToken');
 }

@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { setAccessToken } from '../../../utils/auth';
+
 import { useEffect } from 'react';
+import { saveLocalAccessToken } from '../../../utils/auth';
 
 type SearchParams = {
   accessToken: string;
@@ -20,8 +21,7 @@ function RouteComponent() {
   const navigate = Route.useNavigate();
   useEffect(() => {
     if (accessToken) {
-      console.log(accessToken);
-      setAccessToken(accessToken);
+      saveLocalAccessToken(accessToken);
       navigate({ to: '/' });
     }
   }, [accessToken, navigate]);

@@ -1,10 +1,11 @@
 import axios from 'axios';
-import {
-  clearAccessToken,
-  getAccessToken,
-  setAccessToken,
-} from '../utils/auth';
+
 import { authApi } from './auth.api';
+import {
+  clearLocalAccessToken,
+  getLocalAccessToken,
+  saveLocalAccessToken,
+} from '../utils/auth';
 
 // Base API URL from environment variables
 const API_URL = `${import.meta.env.VITE_BASE_URL}/api`;
@@ -18,7 +19,7 @@ const instance = axios.create({
 
 // Request Interceptor: Attach Access Token
 instance.interceptors.request.use((config) => {
-  const token = getAccessToken();
+  const token = getLocalAccessToken();
   if (token) {
     config.headers['x-auth-token'] = `${token}`;
   }
@@ -35,11 +36,11 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const { accessToken } = await authApi.refreshToken();
-        setAccessToken(accessToken); // Update the access token in localStorage
+        saveLocalAccessToken(accessToken); // Update the access token in localStorage
         originalRequest.headers['x-auth-token'] = `${accessToken}`; // Retry the original request
         return instance(originalRequest);
       } catch (refreshError) {
-        clearAccessToken(); // Clear the access token from localStorage
+        clearLocalAccessToken(); // Clear the access token from localStorage
         window.location.href = '/'; // Redirect to login page
         console.error('Failed to refresh token:', refreshError);
         throw Promise.reject(refreshError);

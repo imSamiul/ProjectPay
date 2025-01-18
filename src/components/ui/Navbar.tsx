@@ -1,10 +1,11 @@
-import { Link, LinkOptions } from '@tanstack/react-router';
+import { Link, LinkOptions, useNavigate } from '@tanstack/react-router';
 import LinkButton from './LinkButton';
 import ThemeSwap from './ThemeSwap';
 import navbarLogo from '../../assets/nav-logo.png';
 import Modal from '../modals/Modal';
 import { useAuth } from '../../context/AuthContext';
 import { useAuthMutation } from '../../services/mutations/authMutations';
+import { useEffect } from 'react';
 
 type NavItem = {
   title: string;
@@ -35,7 +36,8 @@ const clientNavItem: NavItem[] = [
 function Navbar() {
   const { isAuthenticated, user } = useAuth();
   const { logoutMutation } = useAuthMutation();
-  const { mutate, isPending } = logoutMutation;
+  const { mutate, isPending, isSuccess } = logoutMutation;
+  const navigate = useNavigate();
 
   let navItem: NavItem[] = [];
 
@@ -50,6 +52,11 @@ function Navbar() {
   async function handleLogout() {
     mutate();
   }
+  useEffect(() => {
+    if (isSuccess) {
+      navigate({ to: '/login' });
+    }
+  }, [isSuccess]);
 
   return (
     <div>

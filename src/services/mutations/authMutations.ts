@@ -1,21 +1,24 @@
+/* eslint-disable no-console */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authApi } from '../../api/auth.api';
 import { toast } from 'react-toastify';
-import { clearAccessToken, setAccessToken } from '../../utils/auth';
+
 import { useNavigate } from '@tanstack/react-router';
 import { router } from '../../App';
 import { AddOtherInfoCredentials } from '../../types/auth.types';
+import { useAuth } from '../../context/AuthContext';
 
 export function useAuthMutation() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const auth = useAuth();
 
   // Login mutation
   const loginMutation = useMutation({
     mutationFn: authApi.login,
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       toast.success('Login successful');
-      setAccessToken(data.accessToken);
+      auth.saveAccessToken(data.accessToken);
 
       if (data.user.role === 'project_manager') {
         navigate({ to: '/projectManager/managerOverview' });
@@ -33,15 +36,9 @@ export function useAuthMutation() {
   // Signup mutation
   const signupMutation = useMutation({
     mutationFn: authApi.signup,
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       toast.success('Signup successful');
-      setAccessToken(data.accessToken);
-
-      if (data.user.role === 'project_manager') {
-        navigate({ to: '/projectManager/managerOverview' });
-      } else {
-        navigate({ to: '/' });
-      }
+      auth.saveAccessToken(data.accessToken);
     },
     onError: (error) => {
       console.log(error);
@@ -55,16 +52,14 @@ export function useAuthMutation() {
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: async () => {
-      clearAccessToken();
-      await queryClient.clear();
-      router.navigate({ to: '/' });
+      auth.clearAccessToken();
       toast.success('Logout successful');
     },
     onError: (error) => {
       console.log(error);
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['user'] });
+      await queryClient.clear();
     },
   });
   // Add other info mutation
@@ -73,7 +68,7 @@ export function useAuthMutation() {
       authApi.addOtherInfo(credentials),
     onSuccess: async (data) => {
       toast.success('User info added successfully');
-      setAccessToken(data.accessToken);
+      // auth.saveAccessToken(data.accessToken);
 
       if (data.user.role === 'project_manager') {
         router.navigate({ to: '/projectManager/managerOverview' });

@@ -12,7 +12,7 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     rules: {
-      // 'no-console': ['warn', { allow: ['error'] }],
+      'no-console': ['warn', { allow: ['error'] }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/no-unescaped-entities': 'off',

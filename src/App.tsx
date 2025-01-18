@@ -29,7 +29,7 @@ declare module '@tanstack/react-router' {
 }
 function Provider() {
   const auth = useAuth();
-  if (auth.isLoading) return null;
+
   return <RouterProvider router={router} context={{ auth }} />;
 }
 function App() {

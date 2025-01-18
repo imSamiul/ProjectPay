@@ -2,7 +2,10 @@ import { useState } from 'react';
 
 import * as EmailValidator from 'email-validator';
 import { SignupCredentials } from '../types/auth.types';
-import { useAuth } from '../context/AuthContext';
+
+import { useAuthMutation } from '../services/mutations/authMutations';
+
+import { useNavigate } from '@tanstack/react-router';
 
 const initialValues: SignupCredentials = {
   userName: '',
@@ -15,8 +18,10 @@ export function useSignUpForm() {
   const [formValues, setFormValues] =
     useState<SignupCredentials>(initialValues);
   const [formError, setFormError] = useState<string | null>(null);
-  const { signup } = useAuth();
-  const { mutate, isError, error, isPending } = signup();
+  const { signupMutation } = useAuthMutation();
+  const navigate = useNavigate();
+
+  const { mutate, isError, error, isPending } = signupMutation;
 
   // Handle form changes
   const handleFormValues = (
@@ -74,7 +79,13 @@ export function useSignUpForm() {
     setFormError(null);
 
     if (validateForm()) {
-      mutate(formValues);
+      mutate(formValues, {
+        onSuccess: (data) => {
+          if (data.user.role === 'project_manager') {
+            navigate({ to: '/projectManager/managerOverview' });
+          }
+        },
+      });
     }
     return;
   };
