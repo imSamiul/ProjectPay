@@ -61,7 +61,7 @@ export const authApi = {
     credentials: AddOtherInfoCredentials,
   ): Promise<AuthResponse> => {
     try {
-      const { data } = await instance.post('/auth/addOtherInfo', credentials);
+      const { data } = await instance.post('/auth/addRole', credentials);
       return data;
     } catch (error) {
       throw new Error(getErrorMessage(error));

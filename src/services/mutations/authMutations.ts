@@ -4,7 +4,7 @@ import { authApi } from '../../api/auth.api';
 import { toast } from 'react-toastify';
 
 import { useNavigate } from '@tanstack/react-router';
-import { router } from '../../App';
+
 import { AddOtherInfoCredentials } from '../../types/auth.types';
 import { useAuth } from '../../context/AuthContext';
 
@@ -68,13 +68,7 @@ export function useAuthMutation() {
       authApi.addOtherInfo(credentials),
     onSuccess: async (data) => {
       toast.success('User info added successfully');
-      // auth.saveAccessToken(data.accessToken);
-
-      if (data.user.role === 'project_manager') {
-        router.navigate({ to: '/projectManager/managerOverview' });
-      } else {
-        router.navigate({ to: '/' });
-      }
+      auth.saveAccessToken(data.accessToken);
     },
     onError: (error) => {
       console.log('error', error);

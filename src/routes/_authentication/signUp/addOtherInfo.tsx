@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 
 import ErrorComponent from '../../../components/ErrorComponent';
 import { useEffect, useState } from 'react';
@@ -21,8 +21,6 @@ type SearchParams = {
 
 export const Route = createFileRoute('/_authentication/signUp/addOtherInfo')({
   validateSearch: (search: Record<string, string>): SearchParams => {
-    console.log(search);
-
     return {
       email: search.email,
       googleId: search.googleId,
@@ -47,7 +45,7 @@ function AddOtherInfo() {
   const [formError, setFormError] = useState<string | null>(null);
   const { email, googleId } = Route.useSearch();
   const { addUserOtherInfo } = useAuthMutation();
-  console.log(googleId);
+  const navigate = useNavigate();
 
   // Handle form changes
   const handleFormValues = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -78,11 +76,22 @@ function AddOtherInfo() {
     if (!validateForm()) {
       return;
     }
-    addUserOtherInfo.mutate({
-      role: formValues.role,
-      email,
-      googleId,
-    });
+    addUserOtherInfo.mutate(
+      {
+        role: formValues.role,
+        email,
+        googleId,
+      },
+      {
+        onSuccess: (data) => {
+          if (data.user.role === 'project_manager') {
+            navigate({ to: '/projectManager/managerOverview' });
+          } else {
+            navigate({ to: '/' });
+          }
+        },
+      },
+    );
     setFormValues(initialValues);
   };
 
