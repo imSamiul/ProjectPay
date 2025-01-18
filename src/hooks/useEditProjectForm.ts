@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react";
-import { ProjectType, UpdateProjectType } from "../types/projectType";
-import { useGetProjectDetails } from "../services/queries/projectQueries";
-import phone from "phone";
-import * as EmailValidator from "email-validator";
-import { useUpdateProjectDetails } from "../services/mutations/projectMutation";
+import { useEffect, useState } from 'react';
+import { ProjectType, UpdateProjectType } from '../types/projectType';
+import { useGetProjectDetails } from '../services/queries/projectQueries';
+
+import * as EmailValidator from 'email-validator';
+import { useUpdateProjectDetails } from '../services/mutations/projectMutation';
 
 // custom hook for validate and submit form
 
 const INITIAL_VALUES = {
-  projectCode: "",
-  name: "",
+  projectCode: '',
+  name: '',
   budget: 0,
   advance: 0,
-  clientName: "",
-  clientEmail: "",
-  clientAddress: "",
-  clientDetails: "",
-  clientPhone: "",
-  demoLink: "",
-  endDate: "",
-  typeOfWeb: "",
-  description: "",
-  startDate: "",
+  clientName: '',
+  clientEmail: '',
+  clientAddress: '',
+  clientDetails: '',
+  clientPhone: '',
+  demoLink: '',
+  endDate: '',
+  typeOfWeb: '',
+  description: '',
+  startDate: '',
   status: false,
 };
 type CombinedProjectType = ProjectType & UpdateProjectType;
@@ -73,53 +73,47 @@ export function useEditProjectForm(projectCode: string) {
     if (date) {
       setEditProjectValues((prev) => ({
         ...prev,
-        endDate: date.toISOString().split("T")[0],
+        endDate: date.toISOString().split('T')[0],
       }));
     }
   };
 
   function validateForm(): boolean {
     if (
-      editProjectValues.name === "" ||
+      editProjectValues.name === '' ||
       editProjectValues.budget === 0 ||
       editProjectValues.advance === 0 ||
-      editProjectValues.clientName === "" ||
-      editProjectValues.clientPhone === "" ||
-      editProjectValues.clientEmail === "" ||
-      editProjectValues.endDate === ""
+      editProjectValues.clientName === '' ||
+      editProjectValues.clientPhone === '' ||
+      editProjectValues.clientEmail === '' ||
+      editProjectValues.endDate === ''
     ) {
-      setFormError("All fields must be filled.");
+      setFormError('All fields must be filled.');
       return false;
     }
     // check if advance is greater than budget
     if (Number(editProjectValues.advance) > Number(editProjectValues.budget)) {
-      setFormError("Advance cannot exceed the total budget.");
+      setFormError('Advance cannot exceed the total budget.');
       return false;
     }
     // check if phone number is valid
-    const phoneNum = "+880" + editProjectValues.clientPhone;
-    const isValidPhone = phone(phoneNum); // phone() returns an array
-
-    if (!isValidPhone) {
-      setFormError("Invalid phone number.");
-      return false;
-    }
+    //TODO: check if phone number is valid
 
     // check if email is valid
     const isValidEmail = EmailValidator.validate(editProjectValues.clientEmail);
     if (!isValidEmail) {
-      setFormError("Invalid email.");
+      setFormError('Invalid email.');
       return false;
     }
     // check if totalPaid is greater than budget
     if (totalPaid > editProjectValues.budget) {
-      setFormError("Total paid amount cannot exceed the total budget.");
+      setFormError('Total paid amount cannot exceed the total budget.');
       return false;
     }
     // ensure total paid does not exceed remaining amount after advance
     if (totalPaid > editProjectValues.budget - editProjectValues.advance) {
       setFormError(
-        "The total paid amount cannot be more than the remaining budget after subtracting the advance payment.",
+        'The total paid amount cannot be more than the remaining budget after subtracting the advance payment.',
       );
       return false;
     }
@@ -127,7 +121,7 @@ export function useEditProjectForm(projectCode: string) {
     const calculatedDue =
       editProjectValues.budget - editProjectValues.advance - totalPaid;
     if (calculatedDue < 0) {
-      setFormError("Due amount cannot be negative.");
+      setFormError('Due amount cannot be negative.');
       return false;
     }
 
