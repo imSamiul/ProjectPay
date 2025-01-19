@@ -6,6 +6,7 @@ import Modal from '../modals/Modal';
 import { useAuth } from '../../context/AuthContext';
 import { useAuthMutation } from '../../services/mutations/authMutations';
 import { useEffect } from 'react';
+import { IoIosNotifications } from 'react-icons/io';
 
 type NavItem = {
   title: string;
@@ -95,6 +96,27 @@ function Navbar() {
                     </li>
                   </Link>
                 ))}
+                <div className="">
+                  <div className="divider py-1 my-1"></div>
+                  {isAuthenticated ? (
+                    <Modal
+                      id="logout"
+                      title="Logout"
+                      content="Are you sure you want to logout?"
+                      openButtonLabel="Logout"
+                      closeButtonLabel="Cancel"
+                      confirmButtonLabel={`${isPending ? 'Loading...' : 'Confirm Logout'}`}
+                      btnConfirmAction={handleLogout}
+                      isPending={isPending}
+                    />
+                  ) : (
+                    <LinkButton
+                      title="Sign In"
+                      to="/login"
+                      className="btn  btn-sm md:btn-md "
+                    />
+                  )}
+                </div>
               </ul>
             </div>
           )}
@@ -125,25 +147,46 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end flex items-center gap-2 flex-1 ">
-          {isAuthenticated ? (
-            <Modal
-              id="logout"
-              title="Logout"
-              content="Are you sure you want to logout?"
-              openButtonLabel="Logout"
-              closeButtonLabel="Cancel"
-              confirmButtonLabel={`${isPending ? 'Loading...' : 'Confirm Logout'}`}
-              btnConfirmAction={handleLogout}
-              isPending={isPending}
-            />
-          ) : (
-            <LinkButton
-              title="Sign In"
-              to="/login"
-              className="btn  btn-sm md:btn-md "
-            />
-          )}
+          <div className="indicator dropdown dropdown-bottom dropdown-end">
+            <span className="indicator-item badge badge-secondary ">99+</span>
 
+            <IoIosNotifications
+              tabIndex={0}
+              role="button"
+              className="h-8 w-full"
+            />
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li>
+                <a>Item 1</a>
+              </li>
+              <li>
+                <a>Item 2</a>
+              </li>
+            </ul>
+          </div>
+          <div className="hidden lg:flex">
+            {isAuthenticated ? (
+              <Modal
+                id="logout"
+                title="Logout"
+                content="Are you sure you want to logout?"
+                openButtonLabel="Logout"
+                closeButtonLabel="Cancel"
+                confirmButtonLabel={`${isPending ? 'Loading...' : 'Confirm Logout'}`}
+                btnConfirmAction={handleLogout}
+                isPending={isPending}
+              />
+            ) : (
+              <LinkButton
+                title="Sign In"
+                to="/login"
+                className="btn  btn-sm md:btn-md "
+              />
+            )}
+          </div>
           <ThemeSwap />
         </div>
       </div>

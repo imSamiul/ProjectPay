@@ -33,12 +33,9 @@ function Modal({
   return (
     <div>
       {/* Button to open the modal */}
-      <button
-        className="btn btn-warning btn-sm md:btn-md "
-        onClick={() => openModal(id)}
-      >
+      <div className="lg:btn lg:btn-warning px-3" onClick={() => openModal(id)}>
         {openButtonLabel}
-      </button>
+      </div>
 
       {/* Combined Modal with modal-bottom sm:modal-middle */}
       <dialog id={id} className="modal modal-bottom sm:modal-middle">
