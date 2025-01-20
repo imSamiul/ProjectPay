@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import CustomErrorComponent from '../../components/CustomErrorComponent';
 
-export const Route = createFileRoute('/_authenticated/clients')({
+export const Route = createFileRoute('/_authenticated/client')({
   beforeLoad: ({ context }) => {
     if (context.auth.user?.role !== 'client') {
       throw new Error('You are not authorized to access this page');
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_authenticated/clients')({
 
 function RouteComponent() {
   return (
-    <div className="container mx-auto">
+    <div>
       <Outlet />
     </div>
   );

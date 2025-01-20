@@ -8,8 +8,11 @@ export const Route = createFileRoute('/')({
         throw redirect({
           to: '/projectManager/managerOverview',
         });
+      } else if (context.auth.user?.role === 'client') {
+        throw redirect({
+          to: '/client/clientOverview',
+        });
       }
-      // TODO: Add navigation for client
     }
   },
   component: HomeLayout,

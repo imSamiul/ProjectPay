@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_authenticated/projectManager')({
 
 function ProjectManagerLayout() {
   return (
-    <div className="container mx-auto">
+    <div>
       <Outlet />
     </div>
   );

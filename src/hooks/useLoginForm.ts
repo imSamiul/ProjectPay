@@ -3,6 +3,7 @@ import { LoginCredentials } from '../types/auth.types';
 import { useState } from 'react';
 
 import { useAuthMutation } from '../services/mutations/authMutations';
+import { useNavigate } from '@tanstack/react-router';
 
 const initialValues: LoginCredentials = {
   email: '',
@@ -16,6 +17,7 @@ export function useLoginForm() {
   const { isError, error, isPending, mutateAsync } = loginMutation;
 
   const [formError, setFormError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   // Handle form changes
   const handleFormValues = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +56,16 @@ export function useLoginForm() {
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      mutateAsync(formValues);
+      mutateAsync(formValues, {
+        onSuccess: async (data) => {
+          setFormValues(initialValues);
+          if (data.user.role === 'project_manager') {
+            navigate({ to: '/projectManager/managerOverview' });
+          } else if (data.user.role === 'client') {
+            navigate({ to: '/client/clientOverview' });
+          }
+        },
+      });
     }
   };
 

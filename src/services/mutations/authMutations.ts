@@ -3,13 +3,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authApi } from '../../api/auth.api';
 import { toast } from 'react-toastify';
 
-import { useNavigate } from '@tanstack/react-router';
-
 import { AddOtherInfoCredentials } from '../../types/auth.types';
 import { useAuth } from '../../context/AuthContext';
 
 export function useAuthMutation() {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const auth = useAuth();
 
@@ -19,12 +16,6 @@ export function useAuthMutation() {
     onSuccess: (data) => {
       toast.success('Login successful');
       auth.saveAccessToken(data.accessToken);
-
-      if (data.user.role === 'project_manager') {
-        navigate({ to: '/projectManager/managerOverview' });
-      } else if (data.user.role === 'client') {
-        navigate({ to: '/client/clientOverview' });
-      }
     },
     onError: (error) => {
       console.log(error);
