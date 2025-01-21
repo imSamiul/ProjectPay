@@ -182,10 +182,13 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-1">
             {details.approvedClientList.map((client) => (
               <div
-                className="join bg-base-300 p-2"
+                className="join bg-base-300 p-2 cursor-pointer"
                 key={client._id}
                 onClick={() => {
-                  console.log(client);
+                  const modal = document.getElementById(
+                    'clientDetails',
+                  ) as HTMLDialogElement;
+                  modal.showModal();
                 }}
               >
                 <div className="avatar">
@@ -201,6 +204,25 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
                   <p className="font-semibold">{client.userName}</p>
                   <p className="text-xs">{client.email}</p>
                 </div>
+                <dialog
+                  id="clientDetails"
+                  className="modal modal-bottom sm:modal-middle"
+                >
+                  <div className="modal-box">
+                    <h3 className="font-bold text-lg ">{client.userName}</h3>
+                    <p className="py-4 ">{client.email}</p>
+                    <div className="modal-action">
+                      <form method="dialog">
+                        <div className="flex gap-3">
+                          <button className="btn btn-error">Close</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
               </div>
             ))}
           </div>
