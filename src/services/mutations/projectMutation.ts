@@ -21,11 +21,8 @@ export function useCreateNewProject() {
         params: { projectCode: data.projectCode },
       });
     },
-    onError: (error) => {
-      console.log(error);
-    },
-    onSettled: async (data, error) => {
-      console.log(data, error);
+
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
   });
@@ -40,9 +37,7 @@ export function useUpdateProjectStatus() {
     onSuccess: () => {
       navigate({ to: '/projectManager/managerOverview' });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+
     onSettled: async (data) => {
       const projectCode = data.projectCode;
 
@@ -65,9 +60,7 @@ export function useUpdateProjectDetails() {
         params: { projectCode: data.projectCode },
       });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+
     onSettled: async (data) => {
       const projectCode = data.projectCode;
 
@@ -87,9 +80,7 @@ export function useDeleteProject() {
     onSuccess: () => {
       navigate({ to: '/projectManager/managerOverview' });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+
     onSettled: async (data) => {
       await queryClient.removeQueries({
         queryKey: ['projectDetails', data.projectCode],

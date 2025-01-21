@@ -1,4 +1,4 @@
-import { ManagerType } from "./managerType";
+import { Client, ProjectManager } from './userType';
 
 export type ProjectType = {
   _id?: string;
@@ -7,20 +7,17 @@ export type ProjectType = {
   budget: number;
   advance: number;
   due?: number;
-  totalPaid?: number;
-  clientName: string;
   clientPhone: string;
   clientEmail: string;
-  clientAddress: string;
-  clientDetails: string;
+  totalPaid?: number;
   startDate?: string;
   endDate: string;
-  demoLink: string;
-  typeOfWeb: string;
+
   description: string;
   status?: boolean;
-  projectManager?: ManagerType;
-  verifiedClientList?: string[];
+  projectManager: ProjectManager;
+  approvedClientList: Client[];
+  paymentList: string[];
 };
 
 export type UpdateProjectStatusType = {

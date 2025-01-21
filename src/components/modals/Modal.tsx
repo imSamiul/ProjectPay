@@ -33,7 +33,10 @@ function Modal({
   return (
     <div>
       {/* Button to open the modal */}
-      <div className="lg:btn lg:btn-warning px-3" onClick={() => openModal(id)}>
+      <div
+        className="lg:btn lg:btn-warning px-3 cursor-pointer hover:bg-base-200 py-1 rounded-md"
+        onClick={() => openModal(id)}
+      >
         {openButtonLabel}
       </div>
 

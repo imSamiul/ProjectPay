@@ -2,7 +2,7 @@ export type User = {
   _id?: string;
   userName?: string;
   email: string;
-  photo?: string;
+  avatar?: string;
   role?: 'client' | 'admin' | 'project_manager';
 };
 export type AuthResponse = {

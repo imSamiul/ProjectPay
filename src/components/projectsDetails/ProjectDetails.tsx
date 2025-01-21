@@ -1,101 +1,81 @@
-import { ManagerType } from "../../types/managerType";
-import { ProjectType } from "../../types/projectType";
-import Button from "../ui/Button";
-import { TiTick } from "react-icons/ti";
-import { MdEditDocument } from "react-icons/md";
-import { useUpdateProjectStatus } from "../../services/mutations/projectMutation";
-import { Link } from "@tanstack/react-router";
-import ProjectDeleteModal from "../modals/ProjectDeleteModal";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { ProjectType } from '../../types/projectType';
+import Button from '../ui/Button';
+import { TiTick } from 'react-icons/ti';
+import { MdEditDocument } from 'react-icons/md';
+import { useUpdateProjectStatus } from '../../services/mutations/projectMutation';
+import { Link } from '@tanstack/react-router';
+import ProjectDeleteModal from '../modals/ProjectDeleteModal';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { ProjectManager } from '../../types/userType';
+import { FaUser } from 'react-icons/fa';
 
 type ClientSectionKeys = keyof ProjectType;
 type ProjectSectionKeys = keyof ProjectType;
-type ManagerSectionKeys = keyof ManagerType;
+type ManagerSectionKeys = keyof ProjectManager;
 const ClientSection: { name: string; value: ClientSectionKeys }[] = [
   {
-    name: "Client Name",
-    value: "clientName",
+    name: 'Client Email',
+    value: 'clientEmail',
   },
   {
-    name: "Client Email",
-    value: "clientEmail",
-  },
-  {
-    name: "Client Phone",
-    value: "clientPhone",
-  },
-  {
-    name: "Client Address",
-    value: "clientAddress",
-  },
-  {
-    name: "Client Details",
-    value: "clientDetails",
+    name: 'Client Phone',
+    value: 'clientPhone',
   },
 ];
 
 const ProjectSection: { name: string; value: ProjectSectionKeys }[] = [
   {
-    name: "Project Code",
-    value: "projectCode",
+    name: 'Project Code',
+    value: 'projectCode',
   },
   {
-    name: "Budget",
-    value: "budget",
+    name: 'Budget',
+    value: 'budget',
   },
   {
-    name: "Advance",
-    value: "advance",
+    name: 'Advance',
+    value: 'advance',
   },
   {
-    name: "Due",
-    value: "due",
+    name: 'Due',
+    value: 'due',
   },
   {
-    name: "Total Paid",
-    value: "totalPaid",
+    name: 'Total Paid',
+    value: 'totalPaid',
   },
   {
-    name: "Start Date",
-    value: "startDate",
+    name: 'Start Date',
+    value: 'startDate',
   },
   {
-    name: "End Date",
-    value: "endDate",
+    name: 'End Date',
+    value: 'endDate',
   },
   {
-    name: "Demo Link",
-    value: "demoLink",
-  },
-  {
-    name: "Type of Web",
-    value: "typeOfWeb",
-  },
-  {
-    name: "Description",
-    value: "description",
+    name: 'Description',
+    value: 'description',
   },
 ];
 
-const ProjectManager: { name: string; value: ManagerSectionKeys }[] = [
+const ProjectManagerSection: { name: string; value: ManagerSectionKeys }[] = [
   {
-    name: "Project Manager Name",
-    value: "name",
+    name: 'Project Manager Name',
+    value: 'userName',
   },
   {
-    name: "Project Manager Email",
-    value: "email",
+    name: 'Project Manager Email',
+    value: 'email',
   },
 ];
 
 type ProjectDetailsPropsType = {
-  details: ProjectType & ManagerType;
+  details: ProjectType & ProjectManager;
 };
 
 function ProjectDetails({ details }: ProjectDetailsPropsType) {
   const { mutate, isError, error, isPending } = useUpdateProjectStatus();
-  console.log(details.status);
 
   function handleProjectStatus() {
     // complete
@@ -105,7 +85,7 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
   }
   useEffect(() => {
     if (isError) {
-      toast.error(error?.message || "There is an error");
+      toast.error(error?.message || 'There is an error');
     }
   }, [isError, error]);
 
@@ -116,25 +96,18 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           {details.name}
         </h1>
         <div className="flex  justify-center items-center gap-2 flex-wrap ">
-          {details.status === true ? (
-            <Button className="btn  btn-success" onClick={handleProjectStatus}>
-              <TiTick size={20} />
-              {isPending ? "Updating..." : "Completed"}
-            </Button>
-          ) : (
-            <Button
-              className="btn btn-outline btn-warning"
-              onClick={handleProjectStatus}
-            >
-              <TiTick size={20} />
-              {isPending ? "Updating..." : "Complete"}
-            </Button>
-          )}
+          <Button
+            className={`btn  ${details.status === true ? 'btn-success' : 'btn-outline btn-warning'}`}
+            onClick={handleProjectStatus}
+          >
+            <TiTick size={20} />
+            {isPending ? 'Updating...' : 'Completed'}
+          </Button>
 
           <Link
             to="/project/edit/$projectCode"
             params={{
-              projectCode: details.projectCode ? details.projectCode : "",
+              projectCode: details.projectCode ? details.projectCode : '',
             }}
             className="btn btn-outline btn-primary btn-sm md:btn-md"
           >
@@ -160,9 +133,9 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
               return (
                 <p key={projectDetail.value} className=" md:text-lg">
                   <span className="text-secondary font-medium">
-                    {projectDetail.name}:{" "}
+                    {projectDetail.name}:{' '}
                   </span>
-                  {typeof value === "object" && value !== null
+                  {typeof value === 'object' && value !== null
                     ? JSON.stringify(value)
                     : value}
                 </p>
@@ -178,9 +151,9 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
               return (
                 <p key={clientDetail.value} className="text-base md:text-lg">
                   <span className="text-secondary font-medium">
-                    {clientDetail.name}:{" "}
+                    {clientDetail.name}:{' '}
                   </span>
-                  {typeof value === "object" && value !== null
+                  {typeof value === 'object' && value !== null
                     ? JSON.stringify(value)
                     : value}
                 </p>
@@ -189,20 +162,47 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
           </div>
           <h4 className="text-lg md:text-xl font-semibold">Manager Section</h4>
           <div className="divider  my-0"></div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-1">
-            {ProjectManager.map((managerDetail) => {
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 mb-4">
+            {ProjectManagerSection.map((managerDetail) => {
               const value = details.projectManager?.[managerDetail.value];
               return (
                 <p key={managerDetail.value} className="text-base md:text-lg">
                   <span className="text-secondary font-medium">
-                    {managerDetail.name}:{" "}
+                    {managerDetail.name}:{' '}
                   </span>
-                  {typeof value === "object" && value !== null
+                  {typeof value === 'object' && value !== null
                     ? JSON.stringify(value)
                     : value}
                 </p>
               );
             })}
+          </div>
+          <h4 className="text-lg md:text-xl font-semibold">Verified Clients</h4>
+          <div className="divider  my-0"></div>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-1">
+            {details.approvedClientList.map((client) => (
+              <div
+                className="join bg-base-300 p-2"
+                key={client._id}
+                onClick={() => {
+                  console.log(client);
+                }}
+              >
+                <div className="avatar">
+                  <div className="w-12 rounded-md">
+                    {client.avatar ? (
+                      <img src={client.avatar} alt="avatar" />
+                    ) : (
+                      <FaUser className="w-full h-full bg-base-300 p-1" />
+                    )}
+                  </div>
+                </div>
+                <div className="px-2">
+                  <p className="font-semibold">{client.userName}</p>
+                  <p className="text-xs">{client.email}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

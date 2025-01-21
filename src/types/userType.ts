@@ -1,3 +1,5 @@
+import { User } from './auth.types';
+
 export type SignUpForm = {
   name: string;
   email: string;
@@ -11,4 +13,13 @@ export type LoginForm = {
 
 export type AddOtherInfoCredentials = {
   role: string;
+};
+export type ProjectManager = User & {
+  managerProjects: string[];
+  clientList: string[];
+};
+export type Client = User & {
+  clientProjects: string[];
+  hasProjectInvitation: boolean;
+  projectInvitations: string[];
 };
