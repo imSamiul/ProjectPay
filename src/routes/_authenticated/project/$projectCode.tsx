@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useGetProjectDetails } from "../../../services/queries/projectQueries";
-import ProjectDetails from "../../../components/projectsDetails/ProjectDetails";
-import PaymentList from "../../../components/projectsDetails/PaymentList";
-import Loader from "../../../components/Loader";
-import ErrorComponent from "../../../components/ErrorComponent";
+import { createFileRoute } from '@tanstack/react-router';
+import ErrorComponent from '../../../components/ErrorComponent';
+import Loader from '../../../components/Loader';
+import PaymentList from '../../../components/projectsDetails/PaymentList';
+import ProjectDetails from '../../../components/projectsDetails/ProjectDetails';
+import VerifiedClientTable from '../../../components/table/VerifiedClientTable';
+import { useGetProjectDetails } from '../../../services/queries/projectQueries';
 
-export const Route = createFileRoute("/_authenticated/project/$projectCode")({
+export const Route = createFileRoute('/_authenticated/project/$projectCode')({
   component: Project,
 });
 
@@ -23,7 +24,7 @@ function Project() {
   }
 
   return (
-    <div className="container mx-auto p-4 ">
+    <div className="py-4 ">
       <ProjectDetails details={data} />
       <PaymentList
         projectName={data.name}
@@ -31,6 +32,7 @@ function Project() {
         projectId={data._id}
         paymentList={data.paymentList}
       />
+      <VerifiedClientTable approvedClients={data.approvedClientList} />
     </div>
   );
 }

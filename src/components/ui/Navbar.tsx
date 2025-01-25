@@ -1,12 +1,12 @@
 import { Link, LinkOptions, useNavigate } from '@tanstack/react-router';
-import LinkButton from './LinkButton';
-import ThemeSwap from './ThemeSwap';
-import navbarLogo from '../../assets/nav-logo.png';
-import Modal from '../modals/Modal';
-import { useAuth } from '../../context/AuthContext';
-import { useAuthMutation } from '../../services/mutations/authMutations';
 import { useEffect } from 'react';
 import { IoIosNotifications } from 'react-icons/io';
+import navbarLogo from '../../assets/nav-logo.png';
+import { useAuth } from '../../context/AuthContext';
+import { useAuthMutation } from '../../services/mutations/authMutations';
+import Modal from '../modals/Modal';
+import LinkButton from './LinkButton';
+import ThemeSwap from './ThemeSwap';
 
 type NavItem = {
   title: string;

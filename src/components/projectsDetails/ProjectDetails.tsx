@@ -1,14 +1,13 @@
-import { ProjectType } from '../../types/projectType';
-import Button from '../ui/Button';
-import { TiTick } from 'react-icons/ti';
-import { MdEditDocument } from 'react-icons/md';
-import { useUpdateProjectStatus } from '../../services/mutations/projectMutation';
 import { Link } from '@tanstack/react-router';
-import ProjectDeleteModal from '../modals/ProjectDeleteModal';
 import { useEffect } from 'react';
+import { MdEditDocument } from 'react-icons/md';
+import { TiTick } from 'react-icons/ti';
 import { toast } from 'react-toastify';
+import { useUpdateProjectStatus } from '../../services/mutations/projectMutation';
+import { ProjectType } from '../../types/projectType';
 import { ProjectManager } from '../../types/userType';
-import { FaUser } from 'react-icons/fa';
+import ProjectDeleteModal from '../modals/ProjectDeleteModal';
+import Button from '../ui/Button';
 
 type ClientSectionKeys = keyof ProjectType;
 type ProjectSectionKeys = keyof ProjectType;
@@ -176,55 +175,6 @@ function ProjectDetails({ details }: ProjectDetailsPropsType) {
                 </p>
               );
             })}
-          </div>
-          <h4 className="text-lg md:text-xl font-semibold">Verified Clients</h4>
-          <div className="divider  my-0"></div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-1">
-            {details.approvedClientList.map((client) => (
-              <div
-                className="join bg-base-300 p-2 cursor-pointer"
-                key={client._id}
-                onClick={() => {
-                  const modal = document.getElementById(
-                    'clientDetails',
-                  ) as HTMLDialogElement;
-                  modal.showModal();
-                }}
-              >
-                <div className="avatar">
-                  <div className="w-12 rounded-md">
-                    {client.avatar ? (
-                      <img src={client.avatar} alt="avatar" />
-                    ) : (
-                      <FaUser className="w-full h-full bg-base-300 p-1" />
-                    )}
-                  </div>
-                </div>
-                <div className="px-2">
-                  <p className="font-semibold">{client.userName}</p>
-                  <p className="text-xs">{client.email}</p>
-                </div>
-                <dialog
-                  id="clientDetails"
-                  className="modal modal-bottom sm:modal-middle"
-                >
-                  <div className="modal-box">
-                    <h3 className="font-bold text-lg ">{client.userName}</h3>
-                    <p className="py-4 ">{client.email}</p>
-                    <div className="modal-action">
-                      <form method="dialog">
-                        <div className="flex gap-3">
-                          <button className="btn btn-error">Close</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <form method="dialog" className="modal-backdrop">
-                    <button>close</button>
-                  </form>
-                </dialog>
-              </div>
-            ))}
           </div>
         </div>
       </div>
