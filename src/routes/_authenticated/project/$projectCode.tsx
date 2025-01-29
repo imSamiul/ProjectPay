@@ -32,7 +32,10 @@ function Project() {
         projectId={data._id}
         paymentList={data.paymentList}
       />
-      <VerifiedClientTable approvedClients={data.approvedClientList} />
+      <VerifiedClientTable
+        approvedClients={data.approvedClientList}
+        pendingClientList={data.pendingClientList}
+      />
     </div>
   );
 }

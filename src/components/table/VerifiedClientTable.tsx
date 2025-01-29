@@ -7,14 +7,17 @@ import {
 import { useMemo, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { Client } from '../../types/userType';
+import AddClientModal from '../modals/AddClientModal';
 import ClientDetailsModal from '../modals/ClientDetailsModal';
 
 const columnHelper = createColumnHelper<Client>();
 
 function VerifiedClientTable({
   approvedClients,
+  pendingClientList,
 }: {
   approvedClients: Client[];
+  pendingClientList: Client[];
 }) {
   const columns = useMemo(
     () => [
@@ -33,6 +36,7 @@ function VerifiedClientTable({
                   src={info.getValue()}
                   alt="avatar"
                   className="mask mask-squircle h-12 w-12"
+                  referrerPolicy="no-referrer"
                 />
               ) : (
                 <FaUser className="mask mask-squircle h-12 w-12 bg-base-300" />
@@ -82,7 +86,22 @@ function VerifiedClientTable({
   return (
     <div className="bg-base-200 card  shadow-xl border">
       <div className="card-body">
-        <h4 className="text-lg md:text-xl font-semibold ">Verified Clients</h4>
+        <div className="flex justify-between">
+          <h4 className="text-lg md:text-xl font-semibold ">
+            Verified Clients
+          </h4>
+          <button
+            className="btn  btn-primary"
+            onClick={() => {
+              const modal = document.getElementById(
+                'addClient',
+              ) as HTMLDialogElement;
+              modal.showModal();
+            }}
+          >
+            Add New Client
+          </button>
+        </div>
         <div className="divider my-0"></div>
         {/* table section */}
         <div className="overflow-x-auto ">
@@ -125,6 +144,10 @@ function VerifiedClientTable({
         </div>
 
         <ClientDetailsModal selectedClient={selectedClient} />
+        <AddClientModal
+          pendingClientList={pendingClientList}
+          approvedClientList={approvedClients}
+        />
       </div>
     </div>
   );
