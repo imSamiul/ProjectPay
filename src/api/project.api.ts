@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import {
   ProjectType,
   UpdateProjectStatusType,
@@ -15,10 +16,12 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
-  getProjectDetails: async (projectCode: string) => {
+  getProjectDetails: async (projectCode: string): Promise<ProjectType> => {
     try {
-      const response = await instance.get(`/projects/details/${projectCode}`);
-      return response.data;
+      const { data }: AxiosResponse<ProjectType> = await instance.get(
+        `/projects/details/${projectCode}`,
+      );
+      return data;
     } catch (error) {
       throw new Error(getErrorMessage(error));
     }
@@ -64,6 +67,17 @@ export const projectApi = {
   deleteProject: async (projectId: string) => {
     try {
       const response = await instance.delete(`/projects/delete/${projectId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
+  // send project invitation
+  sendProjectInvitation: async (projectId: string, clientId: string) => {
+    try {
+      const response = await instance.patch(`/projects/invite/${projectId}`, {
+        clientId,
+      });
       return response.data;
     } catch (error) {
       throw new Error(getErrorMessage(error));

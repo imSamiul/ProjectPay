@@ -70,7 +70,7 @@ const ProjectManagerSection: { name: string; value: ManagerSectionKeys }[] = [
 ];
 
 type ProjectDetailsPropsType = {
-  details: ProjectType & ProjectManager;
+  details: ProjectType;
 };
 
 function ProjectDetails({ details }: ProjectDetailsPropsType) {

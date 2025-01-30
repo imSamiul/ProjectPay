@@ -4,9 +4,7 @@ import { instance } from './instance.api';
 export const clientApi = {
   searchClient: async (searchQuery: string) => {
     try {
-      const response = await instance.get(
-        `/clients/search?email=${searchQuery}`,
-      );
+      const response = await instance.get(`/clients/?clientId=${searchQuery}`);
 
       return response.data;
     } catch (error) {

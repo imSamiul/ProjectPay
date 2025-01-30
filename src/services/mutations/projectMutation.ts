@@ -6,6 +6,7 @@ import {
 } from '../../types/projectType';
 
 import { useNavigate } from '@tanstack/react-router';
+import { toast } from 'react-toastify';
 import { projectApi } from '../../api/project.api';
 
 // Create a new project
@@ -86,6 +87,33 @@ export function useDeleteProject() {
         queryKey: ['projectDetails', data.projectCode],
       });
       await queryClient.invalidateQueries({ queryKey: ['projects'] });
+    },
+  });
+}
+
+// Send project invitation
+export function useSendProjectInvitation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      projectId,
+      clientId,
+    }: {
+      projectId: string;
+      clientId: string;
+    }) => projectApi.sendProjectInvitation(projectId, clientId),
+    onSuccess: () => {
+      toast.success('Project invitation sent successfully');
+    },
+    onError: () => {
+      toast.error('Failed to send project invitation');
+    },
+    onSettled: async (data) => {
+      const projectCode = data?.projectCode;
+
+      await queryClient.invalidateQueries({
+        queryKey: ['projectDetails', projectCode],
+      });
     },
   });
 }

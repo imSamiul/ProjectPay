@@ -16,7 +16,7 @@ function Project() {
   const { data, isLoading, isError, error, refetch } =
     useGetProjectDetails(projectCode);
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return <Loader className="h-screen" />;
   }
   if (isError) {
@@ -24,17 +24,18 @@ function Project() {
   }
 
   return (
-    <div className="py-4 ">
+    <div className="py-4">
       <ProjectDetails details={data} />
       <PaymentList
         projectName={data.name}
-        due={data.due}
-        projectId={data._id}
-        paymentList={data.paymentList}
+        due={data.due ?? 0}
+        projectId={data._id ?? ''}
+        paymentList={data.paymentList ?? []}
       />
       <VerifiedClientTable
-        approvedClients={data.approvedClientList}
-        pendingClientList={data.pendingClientList}
+        approvedClients={data.approvedClientList ?? []}
+        requestedClientList={data.requestedClientList ?? []}
+        projectId={data._id ?? ''}
       />
     </div>
   );

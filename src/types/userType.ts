@@ -19,6 +19,7 @@ export type ProjectManager = User & {
   clientList: string[];
 };
 export type Client = User & {
+  clientId: string;
   clientProjects: string[];
   hasProjectInvitation: boolean;
   projectInvitations: string[];

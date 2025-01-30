@@ -14,10 +14,12 @@ const columnHelper = createColumnHelper<Client>();
 
 function VerifiedClientTable({
   approvedClients,
-  pendingClientList,
+  requestedClientList,
+  projectId,
 }: {
   approvedClients: Client[];
-  pendingClientList: Client[];
+  requestedClientList: Client[];
+  projectId: string;
 }) {
   const columns = useMemo(
     () => [
@@ -145,8 +147,9 @@ function VerifiedClientTable({
 
         <ClientDetailsModal selectedClient={selectedClient} />
         <AddClientModal
-          pendingClientList={pendingClientList}
+          pendingClientList={requestedClientList}
           approvedClientList={approvedClients}
+          projectId={projectId}
         />
       </div>
     </div>

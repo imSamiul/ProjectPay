@@ -1,3 +1,4 @@
+import { PaymentType } from './paymentType';
 import { Client, ProjectManager } from './userType';
 
 export type ProjectType = {
@@ -17,7 +18,8 @@ export type ProjectType = {
   status?: boolean;
   projectManager: ProjectManager;
   approvedClientList: Client[];
-  paymentList: string[];
+  requestedClientList: Client[];
+  paymentList: PaymentType[];
 };
 
 export type UpdateProjectStatusType = {
