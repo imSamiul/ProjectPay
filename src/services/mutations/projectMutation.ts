@@ -109,8 +109,34 @@ export function useSendProjectInvitation() {
       toast.error('Failed to send project invitation');
     },
     onSettled: async (data) => {
-      const projectCode = data?.projectCode;
+      const projectCode = data?.project.projectCode;
 
+      await queryClient.invalidateQueries({
+        queryKey: ['projectDetails', projectCode],
+      });
+    },
+  });
+}
+
+// Cancel project invitation
+export function useCancelProjectInvitation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      projectId,
+      clientId,
+    }: {
+      projectId: string;
+      clientId: string;
+    }) => projectApi.cancelProjectInvitation(projectId, clientId),
+    onSuccess: () => {
+      toast.success('Invitation cancelled successfully');
+    },
+    onError: () => {
+      toast.error('Failed to cancel invitation');
+    },
+    onSettled: async (data) => {
+      const projectCode = data?.project.projectCode;
       await queryClient.invalidateQueries({
         queryKey: ['projectDetails', projectCode],
       });

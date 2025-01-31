@@ -83,4 +83,17 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
+  cancelProjectInvitation: async (projectId: string, clientId: string) => {
+    try {
+      const response = await instance.patch(
+        `/projects/cancelInvitation/${projectId}`,
+        {
+          clientId,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
 };

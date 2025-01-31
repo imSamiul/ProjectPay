@@ -6,5 +6,6 @@ export function useSearchClient(searchQuery: string) {
     queryKey: ['clientSearch', searchQuery],
     queryFn: () => clientApi.searchClient(searchQuery),
     enabled: !!searchQuery,
+    gcTime: 1000 * 60, // 60 seconds
   });
 }

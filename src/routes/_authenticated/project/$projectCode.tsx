@@ -3,7 +3,7 @@ import ErrorComponent from '../../../components/ErrorComponent';
 import Loader from '../../../components/Loader';
 import PaymentList from '../../../components/projectsDetails/PaymentList';
 import ProjectDetails from '../../../components/projectsDetails/ProjectDetails';
-import VerifiedClientTable from '../../../components/table/VerifiedClientTable';
+import VerifiedClientTable from '../../../components/table/ProjectClientTable';
 import { useGetProjectDetails } from '../../../services/queries/projectQueries';
 
 export const Route = createFileRoute('/_authenticated/project/$projectCode')({
@@ -37,6 +37,10 @@ function Project() {
         requestedClientList={data.requestedClientList ?? []}
         projectId={data._id ?? ''}
       />
+      {/* <RequestedClientTable
+        requestedClientList={data.requestedClientList ?? []}
+        projectId={data._id ?? ''}
+      /> */}
     </div>
   );
 }

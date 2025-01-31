@@ -19,7 +19,6 @@ function AddClientModal({
   const { data, isLoading } = useSearchClient(debouncedSearchTerm);
   const { mutate: sendProjectInvitation, isPending } =
     useSendProjectInvitation();
-  console.log(pendingClientList, approvedClientList);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchQuery(e.target.value);
@@ -29,7 +28,6 @@ function AddClientModal({
     const found =
       pendingClientList?.some((c) => c._id === client._id) ||
       approvedClientList?.some((c) => c._id === client._id);
-    console.log(found);
     return found;
   }
 
@@ -92,7 +90,8 @@ function AddClientModal({
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-warning">Search</button>
+
+            <button className="btn btn-error">Close</button>
           </form>
         </div>
       </div>
