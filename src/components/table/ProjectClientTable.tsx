@@ -6,7 +6,10 @@ import {
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
-import { useCancelProjectInvitation } from '../../services/mutations/projectMutation';
+import {
+  useCancelProjectInvitation,
+  useDeleteClientFromProject,
+} from '../../services/mutations/projectMutation';
 import { Client } from '../../types/userType';
 import AddClientModal from '../modals/AddClientModal';
 import ClientDetailsModal from '../modals/ClientDetailsModal';
@@ -25,6 +28,8 @@ function VerifiedClientTable({
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const { mutate: cancelInvitation, isPending: isCancelling } =
     useCancelProjectInvitation();
+  const { mutate: deleteClientFromProject, isPending: isDeleting } =
+    useDeleteClientFromProject();
 
   const columns = useMemo(
     () => [
@@ -120,10 +125,9 @@ function VerifiedClientTable({
             <button
               className="btn btn-sm btn-error"
               onClick={() => handleRemoveClient(client)}
-              // disabled={isRemoving}
+              disabled={isDeleting}
             >
-              {/* {isRemoving ? 'Removing...' : 'Remove Client'} */}
-              Remove
+              {isDeleting ? 'Removing...' : 'Remove Client'}
             </button>
           );
         },
@@ -150,8 +154,8 @@ function VerifiedClientTable({
   }
 
   function handleRemoveClient(client: Client) {
-    if (!projectId || !client.clientId) return;
-    // removeClient({ projectId, clientId: client.clientId });
+    if (!projectId || !client._id) return;
+    deleteClientFromProject({ projectId, clientId: client._id });
   }
 
   return (

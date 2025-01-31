@@ -143,3 +143,28 @@ export function useCancelProjectInvitation() {
     },
   });
 }
+// delete a client from a project
+export function useDeleteClientFromProject() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      projectId,
+      clientId,
+    }: {
+      projectId: string;
+      clientId: string;
+    }) => projectApi.deleteClientFromProject(projectId, clientId),
+    onSuccess: () => {
+      toast.success('Client deleted successfully');
+    },
+    onError: () => {
+      toast.error('Failed to delete client');
+    },
+    onSettled: async (data) => {
+      const projectCode = data?.project.projectCode;
+      await queryClient.invalidateQueries({
+        queryKey: ['projectDetails', projectCode],
+      });
+    },
+  });
+}

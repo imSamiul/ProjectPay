@@ -96,4 +96,17 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
+  deleteClientFromProject: async (projectId: string, clientId: string) => {
+    try {
+      const response = await instance.patch(
+        `/projects/removeClient/${projectId}`,
+        {
+          clientId,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
 };
