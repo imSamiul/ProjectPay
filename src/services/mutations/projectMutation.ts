@@ -168,3 +168,56 @@ export function useDeleteClientFromProject() {
     },
   });
 }
+// accept project invitation
+export function useAcceptProjectInvitation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (projectId: string) =>
+      projectApi.acceptProjectInvitation(projectId),
+    onSuccess: () => {
+      toast.success('Project invitation accepted successfully');
+    },
+    onError: () => {
+      toast.error('Failed to accept project invitation');
+    },
+    onSettled: async (data) => {
+      const projectCode = data?.project.projectCode;
+      await queryClient.invalidateQueries({
+        queryKey: ['projectDetails', projectCode],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['requestedProjects'],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['clientProjects'],
+      });
+    },
+  });
+}
+// reject project invitation
+
+export function useRejectProjectInvitation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (projectId: string) =>
+      projectApi.rejectProjectInvitation(projectId),
+    onSuccess: () => {
+      toast.success('Project invitation rejected successfully');
+    },
+    onError: () => {
+      toast.error('Failed to reject project invitation');
+    },
+    onSettled: async (data) => {
+      const projectCode = data?.project.projectCode;
+      await queryClient.invalidateQueries({
+        queryKey: ['projectDetails', projectCode],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['requestedProjects'],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ['clientProjects'],
+      });
+    },
+  });
+}

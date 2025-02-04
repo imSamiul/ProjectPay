@@ -46,6 +46,7 @@ export const authApi = {
       const { data } = await instance.post('/auth/refresh-token');
       return data;
     } catch (error) {
+      console.log(error);
       throw new Error(getErrorMessage(error));
     }
   },

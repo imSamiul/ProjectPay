@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_authenticated/client')({
 
 function RouteComponent() {
   return (
-    <div>
+    <div className="my-5">
       <Outlet />
     </div>
   );

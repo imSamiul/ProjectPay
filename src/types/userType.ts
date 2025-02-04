@@ -1,4 +1,5 @@
 import { User } from './auth.types';
+import { ProjectType } from './projectType';
 
 export type SignUpForm = {
   name: string;
@@ -20,7 +21,7 @@ export type ProjectManager = User & {
 };
 export type Client = User & {
   clientId: string;
-  clientProjects: string[];
+  clientProjects: ProjectType[];
   hasProjectInvitation: boolean;
-  projectInvitations: string[];
+  projectInvitations: ProjectType[];
 };

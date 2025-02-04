@@ -9,3 +9,17 @@ export function useSearchClient(searchQuery: string) {
     gcTime: 1000 * 60, // 60 seconds
   });
 }
+
+export function useGetClientProjects() {
+  return useQuery({
+    queryKey: ['clientProjects'],
+    queryFn: () => clientApi.getClientProjects(),
+  });
+}
+
+export function useGetRequestedProjects() {
+  return useQuery({
+    queryKey: ['requestedProjects'],
+    queryFn: () => clientApi.getRequestedProjects(),
+  });
+}

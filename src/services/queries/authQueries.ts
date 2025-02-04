@@ -17,7 +17,7 @@ export function useAuthQueries() {
     queryFn: authApi.refreshToken,
     retry: false,
     enabled: !!getLocalAccessToken(),
-    refetchInterval: 1000 * 60 * 50, // 50 minutes
+    refetchInterval: 1000 * 60 * 60 * 23, // 24 hours
   });
   return { getUserQuery, refreshTokenQuery };
 }

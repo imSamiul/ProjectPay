@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-import { authApi } from './auth.api';
 import {
   clearLocalAccessToken,
   getLocalAccessToken,
   saveLocalAccessToken,
 } from '../utils/auth';
+import { authApi } from './auth.api';
+
+import { router } from '../App';
 
 // Base API URL from environment variables
 const API_URL = `${import.meta.env.VITE_BASE_URL}/api`;
@@ -32,20 +34,28 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest.config._retry) {
+    // Check if error is 401 and not already retrying
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const { accessToken } = await authApi.refreshToken();
-        saveLocalAccessToken(accessToken); // Update the access token in localStorage
-        originalRequest.headers['x-auth-token'] = `${accessToken}`; // Retry the original request
+        saveLocalAccessToken(accessToken);
+        originalRequest.headers['x-auth-token'] = `${accessToken}`;
         return instance(originalRequest);
       } catch (refreshError) {
-        clearLocalAccessToken(); // Clear the access token from localStorage
-        window.location.href = '/'; // Redirect to login page
-        console.error('Failed to refresh token:', refreshError);
-        throw Promise.reject(refreshError);
+        // If refresh token fails, clear everything and redirect
+        clearLocalAccessToken();
+        router.navigate({ to: '/login' });
+        return Promise.reject(refreshError);
       }
     }
+
+    // If error is 403 (no token) or any other error
+    if (error.response?.status === 403) {
+      clearLocalAccessToken();
+      router.navigate({ to: '/login' });
+    }
+
     return Promise.reject(error);
   },
 );

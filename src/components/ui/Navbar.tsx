@@ -30,7 +30,7 @@ const projectManagerNavItem: NavItem[] = [
 const clientNavItem: NavItem[] = [
   {
     title: 'Overview',
-    link: '/',
+    link: '/client/clientOverview',
   },
 ];
 
@@ -90,13 +90,13 @@ function Navbar() {
                 className="menu menu-sm dropdown-content bg-base-100  rounded-box z-[1] mt-3 w-52 p-2 shadow "
               >
                 {navItem.map((item, index) => (
-                  <Link to={item.link} key={index} className="">
+                  <Link to={item.link} key={index}>
                     <li>
                       <p className=" ">{item.title}</p>
                     </li>
                   </Link>
                 ))}
-                <div className="">
+                <div>
                   <div className="divider py-1 my-1"></div>
                   {isAuthenticated ? (
                     <Modal

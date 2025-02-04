@@ -109,4 +109,24 @@ export const projectApi = {
       throw new Error(getErrorMessage(error));
     }
   },
+  acceptProjectInvitation: async (projectId: string) => {
+    try {
+      const response = await instance.patch(
+        `/projects/acceptInvite/${projectId}`,
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
+  rejectProjectInvitation: async (projectId: string) => {
+    try {
+      const response = await instance.patch(
+        `/projects/rejectInvite/${projectId}`,
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  },
 };
